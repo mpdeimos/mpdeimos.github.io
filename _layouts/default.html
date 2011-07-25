@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>{{ page.title }}</title>
+<title>{{ page.title }} | mpdeimos.com</title>
+<!--[if lt IE 9]><script src="/res/js/ie.js"> </script><![endif]-->
+<link rel="stylesheet" href="/res/css/reset.js"/>
 </head>
+
 <body>
-<head>
 <header>
-<h1>mpdeimos.com</h1>
-<p>Welcome to my wip GitHub Page</p>
+	<hgroug>
+		<h1><a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></h1>
+		<h2>Welcome to my wip GitHub Page</h2>
+	</hgroup>
 </header>
 
-{{ content }}
+<article>
+	<header>
+		<h1><a href="#" rel="bookmark" title="link to this post >{{ page.title }}</a></h1>
+	</header>
+	<p>
+		{{ content }}
+	</p>
+</article>
 
 <footer>
-<p>Copyright (c) 2011 <a href="http://mpdeimos.com" title="mpdeimos.com">mpdeimos.com</a></p>
+<p>Copyright &copy; 2011 <a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></p>
 </footer>
 </body>
 </html>
