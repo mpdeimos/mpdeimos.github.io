@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>{{ if page.title != 'X' }}{{ page.title }} | {{ endif }}mpdeimos.com</title>
+<title>{% if page.title != 'X' %}{{ page.title }} | {% endif %}mpdeimos.com</title>
 <!--[if lt IE 9]><script src="/res/js/ie.js"> </script><![endif]-->
 <link rel="stylesheet" href="/res/css/reset.js"/>
 </head>
@@ -16,11 +16,11 @@
 </header>
 
 <article>
-	{{ if page.title != 'X' }}
+	{% if page.title != 'X' %}
 	<header>
 		<h1><a href="#" rel="bookmark" title="link to this post">{{ page.title }}</a></h1>
 	</header>
-	{{ endif }}
+	{% endif %}
 	<p>
 		{{ content }}
 	</p>
