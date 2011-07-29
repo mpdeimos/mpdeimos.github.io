@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<title>{% if page.title != null %}{{ page.title }} | {% endif %}mpdeimos.com</title>
-<!--[if lt IE 9]><script src="/res/js/ie.js"> </script><![endif]-->
-<link rel="stylesheet" href="/res/css/reset.js"/>
+	<meta charset="utf-8" />
+	<title>{% if page.title != null %}{{ page.title }} | {% endif %}mpdeimos.com</title>
+	<!--[if lt IE 9]><script src="/res/js/ie.js"> </script><![endif]-->
+	<link rel="stylesheet" href="/res/css/reset.js"/>
 </head>
-
 <body>
-<header>
-	<hgroug>
-		<h1><a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></h1>
-		<h2>Welcome to my wip GitHub Page</h2>
-	</hgroup>
-	<nav>
-		<ul>
-			<li><a href="/" title="Home">Home</a></li>
-			<li><a href="/blog" title="Blog">Blog</a></li>
-			<li><a href="/contact" title="Contact">Contact</a></li>
-		</ul>
-	</nav>
-</header>
-
-<article>
-	{% if page.title != null %}
 	<header>
-		<h1><a href="#" rel="bookmark" title="link to this post">{{ page.title }}</a></h1>
+		<hgroup>
+			<h1><a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></h1>
+			<h2>Welcome to my wip GitHub Page</h2>
+		</hgroup>
+		<nav>
+			<ul>
+				<li><a href="/" title="Home">Home</a></li>
+				<li><a href="/blog" title="Blog">Blog</a></li>
+				<li><a href="/contact" title="Contact">Contact</a></li>
+			</ul>
+		</nav>
 	</header>
-	{% endif %}
-	<p>
-		{{ content }}
-	</p>
-</article>
 
-<footer>
-<p>Copyright &copy; 2011 <a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></p>
-</footer>
+	<article>
+		{% if page.title != null %}
+		<header>
+			<h1><a href="#" rel="bookmark" title="link to this post">{{ page.title }}</a></h1>
+			{% if page.date %}<time datetime="{{ page.date | date: "%Y-%m-%d" }}" pubdate>{{ page.date | date_to_string }}</time>{% endif %}
+		</header>
+		{% endif %}
+		<div>
+			{{ content }}
+		</div>
+		
+		<footer id="postFooter">
+			{% if page.categories && page.categories.size > 0 %}
+			<nav id="postTags">
+				<h3>Categories</h3>
+				<ul>
+				{% for category in page.categories %}
+					<li>{{ category.first }}</li>
+				{% endfor %}
+				</ul>
+			</nav>
+			{% endif %}
+			{% if page.tags && page.tags.size > 0 %}
+			<nav id="postCategories">
+				<h3>Categories</h3>
+				<ul>
+				{% for tag in page.tags %}
+					<li>{{ tag.first }}</li>
+				{% endfor %}
+				</ul>
+			</nav>
+			{% endif %}
+		</footer>
+	</article>
+
+	<footer>
+		<p>Copyright &copy; 2011 <a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></p>
+	</footer>
 
 </body>
 </html>
