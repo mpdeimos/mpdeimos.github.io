@@ -1,0 +1,2 @@
+#plugins: _plugins/
+permalink: /:categories/:title

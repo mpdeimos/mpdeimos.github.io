@@ -3,4 +3,24 @@ layout: default
 title: null
 ---
 
+Oh NO!!!!
 No content, yet.
+{{ tag_cloud }}
+
+
+<h2>Posts</h2>
+{% for post in site.posts limit:4 %}
+<p>
+...
+{{ post.title }}
+(featured post's content here)
+...
+</p>
+{% endfor %}
+
+<h2>Categories</h2>
+{% for cat in site.categories %}
+Cat: {{ ca.first }}</br>
+{% endfor %}
+
+
