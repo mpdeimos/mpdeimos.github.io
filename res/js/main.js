@@ -42,4 +42,4 @@ var Z =
 	}
 };
 
-Ext.onReady(Z.init, Z);
+Z.init();

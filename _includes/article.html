@@ -13,7 +13,7 @@
 			{% if article.excerpt %}
 			{{ article.excerpt }}
 			{% else %}
-			{{ article.content | truncatewords : 10 }}
+			{{ article.content | truncatewords : site.blogPostExcerptLength }}
 			{% endif %}
 			{% endif %}
 		</div>
@@ -39,13 +39,14 @@
 				</ul>
 			</nav>
 			{% endif %}
-			<div id="postComments"></div>
+			{% if page.type == 'blog-post' %}
+			<div id="disqus_thread"></div>
 			<script type="text/javascript">
 			    var disqus_shortname = 'mpdeimos';
 
-			    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-			    // var disqus_identifier = '{{ article.url }}';
-			    // var disqus_url = '{{ site.url }}{{ article.url }}';
+			    var disqus_identifier = '{{ article.url }}';
+			    var disqus_url ='http://mpdeimos.com{{ article.url }}';
+			    //var disqus_developer = 1;
 
 			    (function() {
 				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -53,7 +54,7 @@
 				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 			    })();
 			</script>
-			<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+			{% endif %}
 		</footer>
 	</article>
 </section>

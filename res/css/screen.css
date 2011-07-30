@@ -1,5 +1,5 @@
 /**** SITE ****/
-body > *
+body > header, body > footer, #siteContent
 {
 	width: 800px;
 	margin: 0 auto;

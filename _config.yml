@@ -1,3 +1,4 @@
 #plugins: _plugins/
 permalink: /:categories/:title
 sidebarNumRecentPosts: 6
+blogPostExcerptLength: 100
