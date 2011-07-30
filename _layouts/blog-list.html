@@ -1,0 +1,10 @@
+--- 
+layout: default
+type: blog-list
+title: Blog
+---
+{% for article in site.categories['blog'] %}
+<ul id="blogPostList">
+	{% include article.html %}
+</ul>
+{% endfor %}

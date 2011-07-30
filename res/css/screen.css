@@ -1,0 +1,40 @@
+/**** SITE ****/
+body > *
+{
+	width: 800px;
+	margin: 0 auto;
+	padding: 0 5px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+/**** HEADER ****/
+body > header
+{
+	background: #fafafa;
+	padding: 5px;
+}
+
+#siteNavigation > ul > li
+{
+	display: inline-block;
+}
+
+#siteNavigation > ul > li.selected > a
+{
+	color: red;
+}
+
+/**** FOOTER ****/
+body > footer
+{
+	background: #fafafa;
+	border-bottom: 1px solid black;
+	padding: 5px;
+}
+
+/**** ARTICLE ****/
+article ul, article ol
+{
+	margin-left: 20px;
+}

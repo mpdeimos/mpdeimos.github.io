@@ -1,4 +1,10 @@
 ---
 layout: default
+type: blog-post
+style:
+- twoColumn
 ---
-{{ content }}
+{% assign article = page %}
+{% capture articleContent %}{{ content }}{% endcapture %}
+{% include article.html %}
+{% include sidebar.html %}

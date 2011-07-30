@@ -30,31 +30,37 @@ git bundle create feature.bundle master
 
 *Step 2* - Import the code into a new branch of the main repository and check it out.
 
-<pre><code>
+<pre>
+<code>
 cd ..
 git fetch feature/feature.bundle master:master-feature
 git checkout master-feature
-</code></pre>
+</code>
+</pre>
 
 
 *Step 3* - Move the files into a subdirectory called @feature@. Ensure to also move hidden ones like the @.gitignore@ (run @ls -la@ in order to check)
 
-<pre><code>
+<pre>
+<code>
 mkdir feature
 git mv -k * feature
 git mv .gitignore feature/
 ls -la
 git commit -a -m"moving feature stuff in subfolder"
-</code></pre>
+</code>
+</pre>
 
 
 *Step 4* - Merge the feature into the master brnach of the main repository.
 
-<pre><code>
+<pre>
+<code>
 git checkout master
 git merge master-feature
 git branch -d master-feature
-</code></pre>
+</code>
+</pre>
 
 
 By following these steps you should be able to import any subrepositories back into the main repository.

@@ -1,0 +1,59 @@
+<section id="articleContent">
+	<article>
+		{% if article.title != null %}
+		<header>
+			<h1><a href="{{ article.url }}" rel="bookmark" title="link to this post">{{ article.title }}</a></h1>
+			{% if article.date %}<time datetime="{{ article.date | date: "%Y-%m-%d" }}" pubdate>{{ article.date | date_to_string }}</time>{% endif %}
+		</header>
+		{% endif %}
+		<div>
+			{% if page.type == 'blog-post' %}
+			{{ articleContent }}
+			{% else %}
+			{% if article.excerpt %}
+			{{ article.excerpt }}
+			{% else %}
+			{{ article.content | truncatewords : 10 }}
+			{% endif %}
+			{% endif %}
+		</div>
+		
+		<footer id="postFooter">
+			{% if article.tags && article.tags.size > 0 %}
+			<nav id="postTags">
+				<h3>Tags</h3>
+				<ul>
+				{% for tag in article.tags %}
+					<li>{{ tag.first }}</li>
+				{% endfor %}
+				</ul>
+			</nav>
+			{% endif %}
+			{% if article.categories && article.categories.size > 0 %}
+			<nav id="postCategories">
+				<h3>Categories</h3>
+				<ul>
+				{% for category in article.categories %}
+					<li>{{ category.first }}</li>
+				{% endfor %}
+				</ul>
+			</nav>
+			{% endif %}
+			<div id="postComments"></div>
+			<script type="text/javascript">
+			    var disqus_shortname = 'mpdeimos';
+
+			    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+			    // var disqus_identifier = '{{ article.url }}';
+			    // var disqus_url = '{{ site.url }}{{ article.url }}';
+
+			    (function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			    })();
+			</script>
+			<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+		</footer>
+	</article>
+</section>
