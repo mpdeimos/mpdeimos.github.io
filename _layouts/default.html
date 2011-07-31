@@ -5,22 +5,27 @@
 	<title>{% if page.title != null %}{{ page.title }} | {% endif %}mpdeimos.com</title>
 	<!--[if lt IE 9]><script src="/res/js/ie.js"> </script><![endif]-->
 	<link rel="stylesheet" href="/res/css/reset.css"/>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Ubuntu:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/res/css/screen.css"/>
 	<script src="/res/js/ext-core.js"> </script>
 </head>
 <body {% if page.style %}class="{{page.style | join : ' '}}"{% endif %}>
 	<header>
-		<hgroup>
-			<h1><a href="/" rel="bookmark" title="link to mpdeimos.com">mpdeimos.com</a></h1>
-			<h2>Welcome to my wip GitHub Page</h2>
-		</hgroup>
-		<nav id="siteNavigation">
-			<ul>
-				<li><a href="/" title="Home">Home</a></li>
-				<li><a href="/blog" title="Blog">Blog</a></li>
-				<li><a href="/contact" title="Contact">Contact</a></li>
-			</ul>
-		</nav>
+		<div>
+			<hgroup>
+				<a href="/" rel="bookmark" title="link to mpdeimos.com">
+					<h1>mpdeimos.com</h1>
+					<h2>Welcome to my wip GitHub Page</h2>
+				</a>
+			</hgroup>
+			<nav id="siteNavigation">
+				<ul>
+					<li><a href="/" title="Home">Home</a></li>
+					<li><a href="/blog" title="Blog">Blog</a></li>
+					<li><a href="/contact" title="Contact">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 
 	<section id="siteContent">
