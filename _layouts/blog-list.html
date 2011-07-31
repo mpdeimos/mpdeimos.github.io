@@ -3,8 +3,8 @@ layout: default
 type: blog-list
 title: Blog
 ---
+<ol class="blogPostList">
 {% for article in site.categories['blog'] %}
-<ul id="blogPostList">
-	{% include article.html %}
-</ul>
+	<li>{% include article.html %}</li>
 {% endfor %}
+</ol>

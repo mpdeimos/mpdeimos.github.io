@@ -13,10 +13,8 @@
 	<header>
 		<div>
 			<hgroup>
-				<a href="/" rel="bookmark" title="link to mpdeimos.com">
-					<h1>mpdeimos.com</h1>
-					<h2>Welcome to my wip GitHub Page</h2>
-				</a>
+				<h1><a href="/" rel="bookmark" title="link to mpdeimos.com"><span>mpdeimos.com</span></a></h1>
+				{% if page.title != null %}<h2>{{ page.title }}</h2>{% endif %}
 			</hgroup>
 			<nav id="siteNavigation">
 				<ul>

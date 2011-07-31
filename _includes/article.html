@@ -9,10 +9,15 @@
 		{% endif %}
 		<div>
 			{% if page.type == 'blog-post' %}
+			{% if page.excerpt && page.excerptPrepend %}
+			<p class="articleTeaser">
+				{{ page.excerpt }}
+			</p>
+			{% endif %}
 			{{ articleContent }}
 			{% else %}
 			{% if article.excerpt %}
-			{{ article.excerpt }}
+			<p>{{ article.excerpt }}</p>
 			{% else %}
 			{{ article.content | truncatewords : site.blogPostExcerptLength }}
 			{% endif %}

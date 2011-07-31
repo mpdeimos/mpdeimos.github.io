@@ -47,7 +47,9 @@ body > header > div > hgroup
 	left: -45px;
 }
 
-body > header > div > hgroup > a { display: block; height: 100%; width: 200px;}
+body > header > div > hgroup a, body > header > div > hgroup h1 { display: block; height: 100%; width: 200px;}
+
+body > header > div > hgroup span, body > header > div > hgroup h2 {display: none;}
 
 body > header nav
 {
@@ -82,11 +84,6 @@ body > header nav li
 	height: 49px;
 }
 
-body > header h1, body > header h2
-{
-	display: none;
-}
-
 /**** FOOTER ****/
 body > footer
 {
@@ -97,6 +94,8 @@ body > footer
 body > footer > p, article > footer > *:first-child { margin-top: 0; padding-top: 5px; border-top: 1px solid white; }
 
 /**** ARTICLE ****/
+article {text-align: justify;}
+
 article ul, article ol
 {
 	margin-left: 20px;
@@ -110,3 +109,7 @@ article > footer { border-top: 1px solid #AAA; }
 .calendar .calendarYear {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 4px; color: white; text-shadow: 0 -1px 1px rgba(0,0,0,0.5);}
 .calendar .calendarMonth {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 34px; color: black; text-shadow: 0 1px 1px #FFF; text-transform: uppercase;}
 .calendar .calendarDay {font-size: 14pt; width: 48px; text-align: center; position: absolute; top: 15px; color: black; text-shadow: 0 1px 1px #FFF;}
+
+article .articleTeaser {margin: 1em 0; font-size: 1.1em; }
+
+ol.blogPostList { list-style: none; }

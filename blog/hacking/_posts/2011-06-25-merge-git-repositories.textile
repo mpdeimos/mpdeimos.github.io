@@ -4,11 +4,9 @@ layout: blog-post
 tags:
 - git
 - version-control
+excerpt: When it comes to version control I am more and more convinced by Git and it's superb branching model. Lately I was confronted with the need to merge two GIT repositories. Per se this should not be difficult but if the commit history should be preserved it might become a bit tricky! This article explains an easy way to do this without the help of any third party tools.
+excerptPrepend: true
 ---
-
-When it comes to version control I am more and more convinced by Git and it's superb branching model.
-Lately I was confronted with the need to merge two GIT repositories and of course the commit logs should have been preserved!
-
 So this is the setup:
 
 * Main repository: @/repo@
