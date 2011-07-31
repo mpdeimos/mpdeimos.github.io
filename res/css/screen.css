@@ -1,11 +1,21 @@
-h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+---
+colorActive: '#9036a1'
+colorActiveHover: '#c734e3'
+textShadow: 'text-shadow: 0 1px 1px #000;'
+textHighlight: 'text-shadow: 0 1px 1px #FFF;'
+---
+
+/**** GENERAL ****/
+h1, h2, h3, h4, h5, h6, p { margin: 0.6em 0; }
 body { font-family: 'Ubuntu', sans-serif; }
 pre, code { font-family: 'Droid Sans Mono', monospace; }
-h1 { font-size: 1.7em; }
-h2 { font-size: 1.5em; }
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.4em; }
 h3 { font-size: 1.3em; }
 h4 { font-size: 1.2em; }
 h5 { font-size: 1.1em; }
+a, a:active { color: {{ page.colorActive }}; }
+a:hover { color: {{ page.colorActiveHover }}; }
 
 /**** SITE ****/
 body { background: url('/res/images/background.png'); }
@@ -46,7 +56,7 @@ body > header nav
 	right: -10px;
 }
 
-body > header nav a, body > header nav a:active
+body > header nav a, body > header nav a:active, body > header nav a:hover
 {
 	margin-top: 18px;
 	display: block;
@@ -58,7 +68,7 @@ body > header nav a, body > header nav a:active
 	border-bottom: 1px solid transparent;
 }
 
-body > header nav li.selected a { border-bottom: 1px solid #c734e3; color: #9036a1; text-shadow: 0 1px 1px #000;}
+body > header nav li.selected a { border-bottom: 1px solid {{ page.colorActiveHover }}; color: {{ page.colorActive }}; {{ page.textShadow }} }
 
 body > header nav li.selected
 {
@@ -80,13 +90,23 @@ body > header h1, body > header h2
 /**** FOOTER ****/
 body > footer
 {
-	background: #fafafa;
-	border-bottom: 1px solid black;
-	padding: 5px;
+	border-top: 1px solid {{ page.colorActive }};
+	margin-top: 10px;
 }
+
+body > footer > p, article > footer > *:first-child { margin-top: 0; padding-top: 5px; border-top: 1px solid white; }
 
 /**** ARTICLE ****/
 article ul, article ol
 {
 	margin-left: 20px;
 }
+
+article > header a { border-bottom: 1px solid #AAA; display: block; padding: 0.5em 0;}
+article > header h1 { border-bottom: 1px solid white; margin-left: 60px; {{ page.textHighlight }}}
+article > footer { border-top: 1px solid #AAA; }
+
+.calendar {height: 48px; width: 48px; background:url('../images/calendar.png'); position: relative; font-weight: bold; float: left; margin: 0;}
+.calendar .calendarYear {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 4px; color: white; text-shadow: 0 -1px 1px rgba(0,0,0,0.5);}
+.calendar .calendarMonth {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 34px; color: black; text-shadow: 0 1px 1px #FFF; text-transform: uppercase;}
+.calendar .calendarDay {font-size: 14pt; width: 48px; text-align: center; position: absolute; top: 15px; color: black; text-shadow: 0 1px 1px #FFF;}
