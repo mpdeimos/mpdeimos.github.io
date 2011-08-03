@@ -14,6 +14,9 @@
 				{{ page.excerpt }}
 			</p>
 			{% endif %}
+			{% if page.thumbnail %}
+			<div class="thumbnail"><img src="/res/blog/{{ page.thumbnail }}" title="{{ page.title }}"/></div>
+			{% endif %}
 			{{ articleContent }}
 			{% else %}
 			{% if article.excerpt %}
