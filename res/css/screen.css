@@ -97,7 +97,7 @@ body > footer > p, article > footer > *:first-child { margin-top: 0; padding-top
 
 /**** ARTICLE ****/
 article {text-align: justify;}
-article img {max-width: 100%;}
+article img {max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.5); border: 2px solid white; display: block; margin: 1em auto;}
 
 article ul, article ol
 {
@@ -105,17 +105,18 @@ article ul, article ol
 }
 
 article > header a { border-bottom: 1px dotted {{ page.colorLight }}; display: block; padding: 0.5em 0;}
-article > header h1 { border-bottom: 1px dotted white; margin-left: 60px; margin-top: 0; {{ page.textHighlight }}}
+article > header h1 { border-bottom: 1px dotted white; margin-left: 55px; margin-top: 0; {{ page.textHighlight }}}
 article > footer { border-top: 1px dotted {{ page.colorLight }}; }
 
-.calendar {height: 48px; width: 48px; background:url('../images/calendar.png'); position: relative; font-weight: bold; float: left; margin: 0;}
+.calendar {height: 48px; width: 48px; background:url('../images/calendar.png'); position: relative; font-weight: bold; float: left; margin: 0; left: -3px;}
 .calendar .calendarYear {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 4px; color: white; text-shadow: 0 -1px 1px rgba(0,0,0,0.5);}
 .calendar .calendarMonth {font-size: 7pt; width: 48px; text-align: center; position: absolute; top: 34px; color: black; text-shadow: 0 1px 1px #FFF; text-transform: uppercase;}
 .calendar .calendarDay {font-size: 14pt; width: 48px; text-align: center; position: absolute; top: 15px; color: black; text-shadow: 0 1px 1px #FFF;}
 
 article .articleTeaser {margin: 1em 0; font-size: 1.1em; }
-article .thumbnail {margin: 0 1em 1em 0; float: left;}
-article .thumbnail img { max-height: 150px; max-width: 150px; }
+article .thumbnail {float: left; margin: 0 1em 0 0;}
+article .thumbnail img { max-height: 150px; max-width: 150px; margin: 0;}
+article .centered { margin: 0 auto; display: table;}
 
 ol.blogPostList { list-style: none; }
 
