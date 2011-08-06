@@ -2,8 +2,9 @@
 title: Stratovarius - Polaris (2009)
 layout: blog-post
 tags:
-- git
-- version-control
+- music
+- metal
+- review
 thumbnail: 2009-05-15-stratovarius-polaris-2009.jpg
 ---
 

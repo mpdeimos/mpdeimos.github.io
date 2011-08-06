@@ -118,6 +118,8 @@ article .thumbnail {float: left; margin: 0 1em 0 0;}
 article .thumbnail img { max-height: 150px; max-width: 150px; margin: 0;}
 article .centered { margin: 0 auto; display: table;}
 
+article acronym { border-bottom: 1px dotted; }
+
 ol.blogPostList { list-style: none; }
 
 /**** SIDEBAR ****/

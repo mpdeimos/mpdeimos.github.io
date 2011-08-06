@@ -10,9 +10,9 @@
 		<div>
 			{% if page.type == 'blog-post' %}
 			{% if page.excerpt && page.excerptPrepend %}
-			<p class="articleTeaser">
-				{{ page.excerpt }}
-			</p>
+			<div class="articleTeaser">
+				{{ page.excerpt | textilize }}
+			</div>
 			{% endif %}
 			{% if page.thumbnail %}
 			<div class="thumbnail"><img src="/res/blog/{{ page.thumbnail }}" title="{{ page.title }}"/></div>
@@ -20,7 +20,7 @@
 			{{ articleContent }}
 			{% else %}
 			{% if article.excerpt %}
-			<p>{{ article.excerpt }}</p>
+			<div>{{ article.excerpt | textilize }}</div>
 			{% else %}
 			{{ article.content | truncatewords : site.blogPostExcerptLength }}
 			{% endif %}
