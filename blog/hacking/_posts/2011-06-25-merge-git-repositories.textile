@@ -6,13 +6,15 @@ tags:
 - version-control
 excerpt: When it comes to version control I am more and more convinced by Git and it's superb branching model. Lately I was confronted with the need to merge two GIT repositories. Per se this should not be difficult but if the commit history should be preserved it might become a bit tricky! This article explains an easy way to do this without the help of any third party tools.
 excerptPrepend: true
+thumbnail: 2011-06-25-merge-git-repositories-thumb.png
 ---
-So this is the setup:
+h2. The setup
 
 * Main repository: @/repo@
 * Feature repository: @/repo/feature@
 
-There are a few tools out there that can handle this (@git-stitch@ for example), but I wanted to keep the main repository as-is, so this wasn't an option. At least I do not know how to use/configure the tools in that manner.
+There are a few tools out there that can handle this (@git-stitch@ for example), but I wanted to keep the main repository as-is, so this wasn't an option.
+At least I do not know how to use/configure the tools in that manner and the method I discovered worked without problems, so why bother?
 
 h2. Step by Step Guide
 

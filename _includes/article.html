@@ -9,20 +9,25 @@
 		{% endif %}
 		<div>
 			{% if page.type == 'blog-post' %}
-			{% if page.excerpt && page.excerptPrepend %}
+			{% if article.excerpt && article.excerptPrepend %}
 			<div class="articleTeaser">
-				{{ page.excerpt | textilize }}
+				{{ article.excerpt | textilize }}
 			</div>
 			{% endif %}
-			{% if page.thumbnail %}
-			<div class="thumbnail"><img src="/res/blog/{{ page.thumbnail }}" title="{{ page.title }}"/></div>
+			{% if article.thumbnail %}
+			<div class="thumbnail"><img src="/res/blog/{{ article.thumbnail }}" title="{{ article.title }}"/></div>
 			{% endif %}
-			{{ articleContent }}
+			<div>{{ articleContent }}</div>
+			
 			{% else %}
+			
+			{% if article.thumbnail %}
+			<div class="thumbnail"><a href="{{ article.url }}" rel="bookmark" title="{{ article.title }}"><img src="/res/blog/{{ article.thumbnail }}" title="{{ article.title }}"/></a></div>
+			{% endif %}
 			{% if article.excerpt %}
 			<div>{{ article.excerpt | textilize }}</div>
 			{% else %}
-			{{ article.content | truncatewords : site.blogPostExcerptLength }}
+			<div>{{ article.content | truncatewords : site.blogPostExcerptLength }}</div>
 			{% endif %}
 			{% endif %}
 		</div>

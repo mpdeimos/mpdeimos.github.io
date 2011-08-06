@@ -1,0 +1,42 @@
+---
+title: Switch to Ubuntu 11.04 - Begin of a new Decade
+layout: blog-post
+tags:
+- linux
+- ubuntu
+- windows
+excerpt: Today marks the release of the all new Ubuntu 11.04. Amongst the ones that just update I'm actually moving from Windows to the Linux operating system -- after 12 years of happy Windows computing.
+thumbnail: 2011-04-28-ubuntu-begin-of-a-new-decade-thumb.png
+---
+
+h2. The past
+
+Well, I got my first WIMP(Windows, Icons, Menus and Pointers) based PC on Christmas 1999 featuring Windows 98 as operating system. Before I grew up with an old 12MHz DOS based system (this PC actually had a weight of 20kg!).
+OK, back to my Windows PC: I really liked it! I kept it for almost 4 years, expanded the RAM, HD; played games like Quake3, Medal of Honor or RTCW; and most importantly began to mess around with code: First some simple JavaScript stuff, after a while I also tried coding Winamp3 skins. From there on I tried lots of coding languages, tutorials and also got involved with interface design.
+The result was a set of Programs I really do not want to miss anymore. Here is an overview:
+* Winamp -- my first love
+* Trillian
+* Opera
+* Adobe Photoshop
+* Eclipse
+* mp3Tag
+
+h2. The now
+
+So all this was some time ago. In the meantime I enrolled at university, got some more insight to Linux, it's terminal and open source software. Nevertheless I never dared to perform a full switch to a Linux based OS and stayed with a dual boot...
+
+...Till today. The release of Ubuntu 11.04 and it's totally revamped user interface have won me over! Actually the move was easier than I thought and I didn't boot into Windows for at least two weeks :)
+
+But what happened to my _beloved_ programs? (Remark: This is written as a retrospective three months after my move to Ubuntu).
+* *Winamp* -- replaced by gmusicbrowser
+* *Trillian* -- runs via Wine. I know there is Empathy and Pidgin, but Trillian has so nice sync features with my Android phone...
+* *Opera* -- runs natively :)
+* *Adobe Photoshop* -- As I own a valid license I first tried running it via Wine, but this did not work out too well. So I needed to take the bitter pill: Running it via VirtualBox with a slim Windows Server 2003. I know about GIMP - but Photoshop is just so much better ;)
+* *Eclipse* -- based on Java... so no problems running it with Linux.
+* *mp3Tag* -- Well first I always booted Windows as soon I got a new CD. After a wile this quite annoyed me, but most of the Linux Tagging Software did not convince me :( Rescue: Running it via Wine. If you have good suggestions for a good tag editor, let me know! 
+
+h2. The future...
+
+...will for sure be Ubuntu :)
+
+!/res/blog/2011-04-28-ubuntu-begin-of-a-new-decade.png!
