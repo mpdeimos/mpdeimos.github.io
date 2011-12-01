@@ -1,0 +1,23 @@
+--- 
+layout: default
+title: Contact
+---
+
+!>/res/images/development.png!
+
+h1. Contact Me
+
+Since this personal webpage is under (heavy) development I refrain from giving detailed contact information for now.
+
+h2. But I really want to contact you...
+
+...ok dude. Best is if you follow "@mpdeimos":https://twitter.com/mpdeimos via Twitter or "send me a message via Twitter":https://twitter.com/share?test=@mpdeimos.
+
+h2. Legal Notice
+
+Some icons and images found on this website are created by the "Elementary Project":http://elementaryos.org
+
+The overall design has been created by me and is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+

@@ -1,0 +1,50 @@
+---
+title: mpdeimos.com - Beta Launch
+layout: blog-post
+tags:
+- jekyll
+- blog
+- site
+thumbnail: gears-thumb.png
+excerpt: The time has come -- mpdeimos.com finally gets a web presentation! Almost 2 years after the domain has been grabbed and some controversial ideas of what to do with it I have decided to start with a simple Jekyll-powered blog. More to come in 2012!
+---
+
+h1. Beta launch of mpdeimos.com
+
+Yep, you have heard right! I grabbed this domain on January 10th back in 2010 and almost 2 years later I came around to put some valid content on it.
+You might ask now what the heck I have done during this time? Well, the answer is quite simple: I was busy!
+
+_The long answer_
+
+...would be that I had no idea of what to do with the domain -- Ok, that is not quite correct. I know that I wanted to have some sort of personal blog and a portfolio of my work.
+
+_So why the wait?_
+
+I had no clue what software to use. You might think that's not relevant? I think it is.
+
+So first my intention was to write an own small blogging engine with Php based upon the "Woltlab Community Framework":https://github.com/WoltLab/WCF. I know this framework very well and it wouldn't be much hassle to achieve this, but I never came round to start developing the actual blogging plugin.
+
+Thus - Wordpress to the rescue! After Wordpress 3.0 has been released I've installed it on my webserver and migrated some of my old posts to this platform. Despite Wordpress being quite customizable and easy to handle I never felt home. ...Dunno, maybe it felt not _hacky_ enough?
+
+_The final descision_
+
+On some eve I stumbled across Jekyll, a static, blog-aware site generator with support for Markdown and Textile. *Great*! A few days late I found myself messing with a basic template and the raw site skeleton.
+
+h2. What's so great about Jekyll
+
+* It's free
+* Writing posts can be done using Markdown, Textile or plain Html -- enough for a simple development-oriented blog.
+* A flexible directory structure
+* Extensible
+* Can be hosted at "GitHub pages":http://pages.github.com -- for free
+
+h2. What's next?
+
+As you can see I managed to gather a few blog posts, but that's just the first step. I want to offer an overview about all my projects, some client work and other stuff.
+
+Also I am planning to use Twitter's Bootstrap framework for even easier creation of some stuff in conjunction with CoffeeScript.
+
+Stay tuned!
+-Martin
+
+
