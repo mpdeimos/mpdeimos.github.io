@@ -1,5 +1,5 @@
 ---
-title: Switch to Ubuntu 11.04 - Begin of a new Decade
+title: Switch to Ubuntu 11.04
 layout: blog-post
 tags:
 - linux
@@ -29,7 +29,7 @@ So all this was some time ago. In the meantime I enrolled at university, got som
 
 But what happened to my _beloved_ programs? (Remark: This is written as a retrospective three months after my move to Ubuntu).
 * *Winamp* -- replaced by gmusicbrowser
-* *Trillian* -- runs via Wine. I know there is Empathy and Pidgin, but Trillian has so nice sync features with my Android phone...
+* *Trillian* -- runs via Wine. I know there is Empathy and Pidgin, but Trillian has so nice sync features with my Android phone. ...
 * *Opera* -- runs natively :)
 * *Adobe Photoshop* -- As I own a valid license I first tried running it via Wine, but this did not work out too well. So I needed to take the bitter pill: Running it via VirtualBox with a slim Windows Server 2003. I know about GIMP - but Photoshop is just so much better ;)
 * *Eclipse* -- based on Java... so no problems running it with Linux.
@@ -37,6 +37,6 @@ But what happened to my _beloved_ programs? (Remark: This is written as a retros
 
 h2. The future...
 
-...will for sure be Ubuntu :)
+...will deffo be free of Windows as main operating system.
 
 !/res/blog/2011-04-28-ubuntu-begin-of-a-new-decade.png!
