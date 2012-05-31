@@ -17,6 +17,10 @@ I'm planning to divide the website in 2 main parts, but this is still a moving t
 * *Blog* -- A simple blog (powered by Jekyll) containing random thoughts, development updates, music reviews, basically everything I am involved with ;)
 * *Portfolio* -- Reference to all projects & client work I've participated in.
 
+h3. Update
+
+I'm now with "CQSE GmbH":http://www.cqse.eu
+
 
 
 Stay tuned
