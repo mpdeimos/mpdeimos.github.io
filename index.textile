@@ -12,7 +12,7 @@ I’m still in the *making* of this website and the blog. Nevertheless there are
 
 h3. Update 2
 
-I'm still in the works of getting some contentent online... life is just too busy ;) You may also want to check my open-source devleopment at "Github":http://github.com:mpdeimos
+I'm still in the works of getting some content online... life is just too busy ;) You may also want to check my open-source devleopment at "Github":http://github.com:mpdeimos
 
 h3. Update
 
