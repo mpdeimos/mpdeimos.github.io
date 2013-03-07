@@ -17,7 +17,7 @@
         <link href="http://vitobotta.com{{ post.url }}/"/>
         <updated>{{ post.date | date_to_xmlschema }}</updated>
         <id>http://vitobotta.com{{ post.url }}/</id>
-        <summary type="html">{{ post.excerpt | xml_escape }}</summary>
+        <summary type="html">{{ post.excerpt | append:'' | xml_escape }}</summary>
     </entry>
     {% endfor %}
 </feed>
