@@ -12,7 +12,7 @@ I’m still in the *making* of this website and the blog. Nevertheless there are
 
 h3. Update 2
 
-I'm still in the works of getting some contentent online... life is just too busy ;) You may also want to check my open-source devleopment at "Github":git@github.com:mpdeimos
+I'm still in the works of getting some contentent online... life is just too busy ;) You may also want to check my open-source devleopment at "Github":http://github.com:mpdeimos
 
 h3. Update
 
@@ -24,7 +24,7 @@ I'm planning to divide the website in 2 main parts, but this is still a moving t
 
 * *Blog* -- A simple blog (powered by Jekyll) containing random thoughts, development updates, music reviews, basically everything I am involved with ;)
 * *Portfolio* -- Reference to all projects & client work I've participated in.
-
+* *Research* -- Some facts and insights about my academic, personal and professional research in software engineering.
 
 
 Stay tuned
