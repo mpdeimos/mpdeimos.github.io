@@ -1,11 +1,8 @@
 ---
 layout: blank
-type: blog-post
-style:
-- twoColumn
 ---
 
-<h1 class="clear span-3 first append-1">{{ page.slug }}</h1>
+<h1 class="clear span-3 first append-1">{% if page.slug %}{{ page.slug }}{% else %}{{ page.tags.first }}{% endif %}</h1>
 <article class="span-20 last">
 	<h1><a href="{{ page.url }}" title="{{ page.title }}">{{ page.title }}</a></h1>
 	{{ content }}

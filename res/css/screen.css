@@ -32,7 +32,7 @@ body > header > hgroup > h2 { display: none; }
 	font-family: 'Condiment', sans-serif;
 	text-align: right;
 	font-size: 4em;
-	}
+}
 
 #content > article > h1
 {
@@ -44,7 +44,7 @@ body > header > hgroup > h2 { display: none; }
 #content > article > h1 > a:hover { color: {{ page.colorActiveHover }}; }
 
 article {text-align: justify;}
-article img {max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.5);  border: 2px solid white; display: block; margin: 1em auto;}
+article img {max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.5);  border: 2px solid white; display: block; margin: 1em auto; background-color: white;}
 
 footer p
 {
