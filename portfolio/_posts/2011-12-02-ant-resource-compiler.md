@@ -1,11 +1,11 @@
 --- 
-layout: default
+layout: portfolio
 title: AntResourceCompiler
 tags:
   - dev
 skills:
   - Java
-  - Swing
+  - Ant
 ---
 
 https://github.com/mpdeimos/StyleCopExecutor

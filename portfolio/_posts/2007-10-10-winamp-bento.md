@@ -1,5 +1,5 @@
 --- 
-layout: default
+layout: portfolio
 title: Winamp for PC
 slug: dev
 tags:

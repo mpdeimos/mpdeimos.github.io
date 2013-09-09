@@ -1,5 +1,5 @@
 --- 
-layout: default
+layout: portfolio
 title: Winamp 1010 Fullscreen
 tags:
   - gfx

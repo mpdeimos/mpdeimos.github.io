@@ -1,5 +1,5 @@
 --- 
-layout: default
+layout: portfolio
 title: Winamp Metallica
 tags:
   - gfx

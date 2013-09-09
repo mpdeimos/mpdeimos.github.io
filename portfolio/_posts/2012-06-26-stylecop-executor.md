@@ -1,5 +1,5 @@
 --- 
-layout: default
+layout: portfolio
 title: StyleCop Executor
 tags:
   - dev

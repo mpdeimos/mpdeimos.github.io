@@ -1,5 +1,5 @@
 --- 
-layout: default
+layout: portfolio
 title: VLC Player Interface
 tags:
   - gfx
