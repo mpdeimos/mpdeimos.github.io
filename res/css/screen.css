@@ -13,8 +13,9 @@ a, a:active { color: {{ page.colorActive }}; text-decoration: none; }
 a:hover { color: {{ page.colorActiveHover }}; }
 ul, li {list-style-position: inside;}
 .hidden {display:none;}
+html, body { height: 100% }
 
-/** ** ** HEAD ** ** **/
+/** ** ** HEADER ** ** **/
 body > header
 {
 	background: url('/res/images/head_bg.png');
@@ -27,7 +28,8 @@ body > header > hgroup > h1 > a > span { display: none; }
 body > header > hgroup > h2 { display: none; }
 
 /** ** ** CONTENT ** ** **/
-#content > h1
+
+#content > h1, footer .copy
 {
 	font-family: 'Condiment', sans-serif;
 	text-align: right;
@@ -48,9 +50,18 @@ body > header > hgroup > h2 { display: none; }
 
 #content > article ul.rundown {list-style: square; font-style: italic; padding-left: 0;}
 
-footer p
+/** ** ** FOOTER ** ** **/
+
+footer
 {
-	border-top: 2px solid {{ page.colorActive }};
-	margin-top: 4em;
-	padding: 2em 0;
+	border-top: 5px solid black;
+	box-shadow: 0 -2px 0 {{page.colorActive}};
+	margin-top: 3em !important;
+}
+
+footer .copyright
+{
+	background: url('/res/images/square.png') left center no-repeat;
+	padding-left: 45px;
+	line-height: 6em;
 }
