@@ -49,6 +49,7 @@ body > header > hgroup > h2 { display: none; }
 #content > article img {max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.5);  border: 2px solid white; display: block; margin: 1em auto; background-color: white;}
 
 #content > article ul.rundown {list-style: square; font-style: italic; padding-left: 0;}
+#content > article ul.rundown li {list-style-position: outside; margin-left: 1em;}
 
 /** ** ** FOOTER ** ** **/
 

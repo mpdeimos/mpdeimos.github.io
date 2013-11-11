@@ -3,10 +3,36 @@ layout: default
 slug: work
 ---
 
-<ul class="rundown">
-{% for period in page.period %}
-	<li>{{ period.from }} — {{ period.till }}</li>
-{% endfor %}
-</ul>
+<div class="span-14 append-1">
+	<img src="/res/portfolio/conqat.png">
+</div>
+
+<div class="span-5 last">
+	{% if page.period != null %}
+	<h3>When?</h3>
+	<ul class="rundown">
+	{% for period in page.period %}
+		{% if period.at != null %}
+		<li>{{ period.at }}</li>
+		{% else %}
+		<li>{{ period.from }}<br/>— {{ period.till }}</li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+	{% endif %}
+	
+	{% if page.skills != null %}
+	<h3>What?</h3>
+	<ul class="rundown">
+	{% for skill in page.skills %}
+		<li>{{ skill }}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+
+<div class="clear">
 
 {{ content }}
+
+</div>
