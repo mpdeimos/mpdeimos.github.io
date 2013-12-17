@@ -14,6 +14,7 @@
 
 <article class="span-9 {% cycle 'append-2', 'last' %}">
 	<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+	<img src="/res/img{{ post.id }}_thumb.png" alt="{{ post.title }}"/>
 	<p>{{ post.excerpt }}</p>
 </article>
 

@@ -7,7 +7,7 @@ textHighlight: 'text-shadow: 0 1px 1px #FFF;'
 ---
 
 /** ** ** GENERAL ** ** **/
-body { font-family: 'Arvo', sans-serif; background: url('/res/images/content_bg.png'); }
+body { font-family: 'Arvo', sans-serif; background: url('/res/gfx/content_bg.png'); }
 pre, code { font-family: 'Ubuntu Mono', monospace; }
 a, a:active { color: {{ page.colorActive }}; text-decoration: none; }
 a:hover { color: {{ page.colorActiveHover }}; }
@@ -18,12 +18,12 @@ html, body { height: 100% }
 /** ** ** HEADER ** ** **/
 body > header
 {
-	background: url('/res/images/head_bg.png');
+	background: url('/res/gfx/head_bg.png');
 	height: 175px;
 	margin-bottom: 50px;
 }
 
-body > header > hgroup > h1 > a { display: block; height: 175px; width: 175px; background: url('/res/images/head_logo.png'); }
+body > header > hgroup > h1 > a { display: block; height: 175px; width: 175px; background: url('/res/gfx/head_logo.png'); }
 body > header > hgroup > h1 > a > span { display: none; }
 body > header > hgroup > h2 { display: none; }
 
@@ -39,7 +39,7 @@ body > header > hgroup > h2 { display: none; }
 #content > article > h1
 {
 	font-size: 3em;
-	background: url('/res/images/square.png') left center no-repeat;
+	background: url('/res/gfx/square.png') left center no-repeat;
 	padding-left: 45px;
 }
 #content > article > h1 > a { color: black; }
@@ -62,7 +62,7 @@ footer
 
 footer .copyright
 {
-	background: url('/res/images/square.png') left center no-repeat;
+	background: url('/res/gfx/square.png') left center no-repeat;
 	padding-left: 45px;
 	line-height: 6em;
 }

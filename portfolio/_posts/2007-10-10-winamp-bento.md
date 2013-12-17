@@ -1,11 +1,11 @@
 --- 
 layout: portfolio
 title: Winamp for PC
-slug: dev
 tags:
   - dev
 skills:
   - MAKI Script
+  - C++
   - XML
   - Photoshop
 ---
