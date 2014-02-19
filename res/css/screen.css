@@ -11,7 +11,7 @@ body { font-family: 'Arvo', sans-serif; background: url('/res/gfx/content_bg.png
 pre, code { font-family: 'Ubuntu Mono', monospace; }
 a, a:active { color: {{ page.colorActive }}; text-decoration: none; }
 a:hover { color: {{ page.colorActiveHover }}; }
-ul, li {list-style-position: inside;}
+ul, li {list-style-position: inside; list-style: square;}
 .hidden {display:none;}
 html, body { height: 100% }
 
@@ -48,8 +48,9 @@ body > header > hgroup > h2 { display: none; }
 #content > article {text-align: justify;}
 #content > article img {max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.5);  border: 2px solid white; display: block; margin: 1em auto; background-color: white;}
 
-#content > article ul.rundown {list-style: square; font-style: italic; padding-left: 0;}
-#content > article ul.rundown li {list-style-position: outside; margin-left: 1em;}
+#content > article .rundown {margin-top: 1em;}
+#content > article .rundown ul {font-style: italic; padding-left: 0;}
+#content > article .rundown ul li {list-style-position: outside; margin-left: 1em;}
 
 /** ** ** FOOTER ** ** **/
 

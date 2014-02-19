@@ -6,10 +6,17 @@ layout: default
 	<img src="/res/img{{ page.id }}_full.png" alt="{{ page.title }}">
 </div>
 
-<div class="span-5 last">
+<div class="span-5 last rundown">
+	{% if page.company != null %}
+	<h3>Who?</h3>
+	<ul>
+		<li><a href="/work/{{ page.company | downcase }}" title="{{ page.company }}">{{ page.company }}</a></li>
+	</ul>
+	{% endif %}
+	
 	{% if page.period != null %}
 	<h3>When?</h3>
-	<ul class="rundown">
+	<ul>
 	{% for period in page.period %}
 		{% if period.at != null %}
 		<li>{{ period.at }}</li>
@@ -22,7 +29,7 @@ layout: default
 	
 	{% if page.skills != null %}
 	<h3>What?</h3>
-	<ul class="rundown">
+	<ul>
 	{% for skill in page.skills %}
 		<li>{{ skill }}</li>
 	{% endfor %}
@@ -30,7 +37,9 @@ layout: default
 	{% endif %}
 </div>
 
-<div class="clear">
+<hr class="clear prepend-top space"/>
+
+<div>
 
 {{ content }}
 

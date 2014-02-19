@@ -1,3 +1,4 @@
 permalink: /:categories/:title
 sidebarNumRecentPosts: 6
 blogPostExcerptLength: 100
+exclude: ['blog']
