@@ -3,12 +3,6 @@
 <head>
 	<meta charset="utf-8" />
 	<title>{% if page.title != null %}{{ page.title }} | {% endif %}mpdeimos.com</title>
-	<link rel="stylesheet" href="/res/css/blueprint/screen.css" type="text/css" media="screen, projection">
-	<link rel="stylesheet" href="/res/css/blueprint/print.css" type="text/css" media="print">
-	<!--[if lt IE 8]>
-	  <link rel="stylesheet" href="/res/css/blueprint/ie.css" type="text/css" media="screen, projection">
-	<![endif]-->
-	<link href='http://fonts.googleapis.com/css?family=Condiment|Ubuntu+Mono|Arvo' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/res/css/screen.css"/>
 </head>
 <body {% if page.style %}class="{{page.style | join : ' '}}"{% endif %}>

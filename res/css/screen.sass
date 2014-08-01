@@ -1,0 +1,105 @@
+---
+---
+
+@import "blueprint"
+@import "http://fonts.googleapis.com/css?family=Condiment|Ubuntu+Mono|Arvo"
+
+$colorActive: '#9036a1'
+$colorActiveHover: '#c734e3'
+
+/** ** ** GENERAL ** ** */
+
+body
+  font-family: 'Arvo', sans-serif
+  background: url('/res/gfx/content_bg.png')
+
+pre, code
+  font-family: 'Ubuntu Mono', monospace
+
+a
+  color: $colorActive
+  text-decoration: none
+  &:active
+    color: $colorActive
+    text-decoration: none
+  &:hover
+    color: $colorActiveHover
+
+ul, li
+  list-style-position: inside
+  list-style: square
+
+.hidden
+  display: none
+
+html, body
+  height: 100%
+
+/** ** ** HEADER ** ** */
+
+body
+  > header
+    background: url('/res/gfx/head_bg.png')
+    height: 175px
+    margin-bottom: 50px
+    > hgroup >
+      h1 > a
+        display: block
+        height: 175px
+        width: 175px
+        background: url('/res/gfx/head_logo.png')
+        > span
+          display: none
+      h2
+        display: none
+
+/** ** ** CONTENT ** ** */
+
+#content > h1, footer .copy
+  font-family: 'Condiment', sans-serif
+  text-align: right
+  font-size: 4em
+
+#content > article
+  > h1
+    font-size: 3em
+    background: url('/res/gfx/square.png') left center no-repeat
+    padding-left: 45px
+    > a
+      color: black
+      &:hover
+        color: $colorActiveHover
+  text-align: justify
+  img
+    max-width: 100%
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5)
+    border: 2px solid white
+    display: block
+    margin: 1em auto
+    background-color: white
+  .rundown
+    margin-top: 1em
+    ul
+      font-style: italic
+      padding-left: 0
+      li
+        list-style-position: outside
+        margin-left: 1em
+  ul.tiles
+    margin: 0
+    padding: 0
+    li
+      width: 350px
+      margin-bottom: 45px
+      list-style: none
+
+/** ** ** FOOTER ** ** */
+
+footer
+  border-top: 5px solid black
+  box-shadow: 0 -2px 0 $colorActive
+  margin-top: 3em !important
+  .copyright
+    background: url('/res/gfx/square.png') left center no-repeat
+    padding-left: 45px
+    line-height: 6em
