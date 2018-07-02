@@ -14,7 +14,7 @@ category: main
 <h1 class="clear span-3 first append-1">I am</h1>
 <article class="span-20 last">
 	<h1><a href="https://www.linkedin.com/in/martinpoehlmann/" title="My LinkedIn Profile">Software Engineer</a></h1>
-	<h1><a href="https://www.cqse.eu" title="work at CQSE">Consultant at CQSE at day</a></h1>
+	<h1><a href="https://www.cqse.eu" title="work at CQSE">Consultant at CQSE at Day</a></h1>
 	<h1><a href="https://github.com/mpdeimos" title="My GitHub Profile">Hacking at Night</a></h1>
 	<h1><a href="http://www.winamp.com" title="Get Winamp">Ex-Nullsoftie</a></h1>
 	<h1><a href="https://www.last.fm/user/mpdeimos" title="My Last.FM Profile">Music Enthusiast</a></h1>
