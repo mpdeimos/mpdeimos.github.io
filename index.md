@@ -1,7 +1,8 @@
---- 
-layout: blank
-title: null
-category: main
+---
+layout: home
+limit: 10
+show_excerpts: true
+entries_layout: list
 ---
 
 <h1 class="clear span-3 first append-1">Hi</h1>
