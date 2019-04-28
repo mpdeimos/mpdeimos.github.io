@@ -1,14 +1,16 @@
 remote_theme: mmistakes/so-simple-theme
 locale: en-US
-title: "My Awesome Site"
-description: "It really is the best."
+copyright: |
+  ⓒ 2019 mpdeimos.com
+  • [About](/about/) 
+  • [Impress](/impress/)
 baseurl: # the subpath of your site, e.g. "/blog"
 url: # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 logo: "/assets/images/logo.png"
 date_format: "%B %-d, %Y"
-read_time: # reading time estimates, e.g. true
+read_time: true # reading time estimates, e.g. true
 words_per_minute: # 200
-mathjax: # MathJax equations, e.g. true
+#mathjax: # MathJax equations, e.g. true
 google_fonts:
   - name: "Source Sans Pro"
     weights: "400,400i,700,700i"
@@ -25,7 +27,12 @@ liquid:
   error_mode: strict
 
 # Build settings
-permalink: /:categories/:title/
+permalink: /:collection/:categories/:title/
+
+collections:
+  projects:
+    output: true
+
 markdown: kramdown
 feed:
   path: atom.xml
@@ -38,8 +45,8 @@ feed:
 search_full_content: false # can have performance implications for large sites
 
 # Taxonomy pages
-# category_archive_path: "/categories/#"
-# tag_archive_path: "/tags/#"
+category_archive_path: "/posts/categories/#"
+tag_archive_path: "/posts/tags/#"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -61,13 +68,27 @@ plugins:
 
 # Front Matter Defaults
 defaults:
-  # Posts defaults
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+      share: false
+      comments: false
   - scope:
       path: "_posts"
       type: posts
     values:
       layout: post
       share: true
+      comments: true
+  - scope:
+      path: "_projects"
+      type: projects
+    values:
+      layout: page
+      share: false
+      comments: false
 
 # Site Author
 author:
