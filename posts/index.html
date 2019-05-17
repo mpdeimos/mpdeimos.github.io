@@ -1,0 +1,13 @@
+---
+title: Post Archive
+layout: home
+show_excerpts: true
+entries_layout: list
+paginate: true
+---
+
+{% capture posts-navigation %}
+{% include posts-navigation.md %}
+{% endcapture %}
+
+{{ posts-navigation | markdownify }}
