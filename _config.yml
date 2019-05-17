@@ -1,5 +1,7 @@
 remote_theme: mmistakes/so-simple-theme
 locale: en-US
+title: "mpdeimos.com"
+description: "Martin Pöhlmann"
 copyright: |
   ⓒ 2019 mpdeimos.com
   • [About](/about/) 

@@ -31,3 +31,34 @@ a
 
         svg
             margin: 0 auto
+
+// Site logo above navigation
+body
+    border-top: none
+    display: flex
+    flex-flow: column
+    *
+        order: 3
+
+.skip-links
+    order: 1
+
+.masthead
+    order: 2
+    margin: 0
+
+.site-logo-img
+    border: none
+    border-radius: 0
+    width: 2 * $site-logo-width
+    height: 2 * $site-logo-height
+
+.site-title, .site-description
+    display: none
+
+.site-nav ul
+    margin-top: -7px
+    border-radius: 0.5rem
+
+#menu-toggle
+    margin-top: -7px
