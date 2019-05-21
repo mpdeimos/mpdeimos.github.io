@@ -12,6 +12,8 @@ a
     animation: none
 
 .site-footer
+    margin-bottom: 0
+    
     .social-icon
         display: inline-flex
         flex-direction: column
@@ -37,7 +39,7 @@ body
     border-top: none
     display: flex
     flex-flow: column
-    *
+    & > *
         order: 3
 
 .skip-links
@@ -55,6 +57,9 @@ body
 
 .site-title, .site-description
     display: none
+
+.page-title
+    margin: 0.5em 0 0.75em 0
 
 .site-nav ul
     margin-top: -7px

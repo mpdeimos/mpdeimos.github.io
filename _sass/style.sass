@@ -3,3 +3,45 @@
     text-transform: uppercase
     font-size: 0.75em
     margin-bottom: 2em
+
+// Welcome box
+
+.welcome
+    background-color: $code-background-color
+    color: $text-color
+    border-radius: 50px
+    padding: 40px
+    margin-bottom: 3rem
+    &:hover
+        color: $accent-color
+
+    dt
+        display: inline-block
+        font-family: $handwriting-font-family
+        font-weight: normal
+        font-size: 3em
+        line-height: 1
+        margin-right: 0.5em
+        &:first-child
+            margin-bottom: 0.25em
+    dd
+        display: inline-block
+        font-family: $serif-font-family
+        font-size: 2.5em
+
+// Textrotate
+
+.textrotate:after
+    display: block
+    content: ""
+    animation: textrotate 8s linear infinite
+
+@keyframes textrotate
+    0%, 100%
+        content: attr(data-text-1)
+    25%
+        content: attr(data-text-2)
+    50%
+        content: attr(data-text-3)
+    75%
+        content: attr(data-text-4)
