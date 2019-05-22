@@ -5,9 +5,9 @@ show_excerpts: true
 entries_layout: list
 ---
 
-<div>
+<div class="welcome">
 	<a href="/about">
-		<dl class="welcome">
+		<dl>
 			<dt>Hi,</dt>
 			<dd>this is Martin</dd>
 			<br/>
