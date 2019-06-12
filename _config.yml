@@ -5,7 +5,7 @@ description: "Martin Pöhlmann"
 copyright: |
   ⓒ 2019 mpdeimos.com
   • [About](/about/) 
-  • [Impress](/impress/)
+  • [Impressum](/impressum/)
 baseurl: # the subpath of your site, e.g. "/blog"
 url: # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 logo: "/assets/images/logo.png"

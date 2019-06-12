@@ -51,6 +51,9 @@
 
 // make images stand out
 .page-content
-    img
+    img:not(.no-shadow):not(.entry-image)
         border: 2px solid white
         box-shadow: 0 2px 5px #0006
+
+.rotate180
+    transform: rotate(180deg)
