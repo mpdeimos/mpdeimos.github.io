@@ -3,6 +3,8 @@ layout: home
 posts_limit: 5
 show_excerpts: true
 entries_layout: list
+classes:
+  - home
 ---
 
 <div class="welcome">
@@ -19,6 +21,10 @@ entries_layout: list
 				data-text-4="Marathon Finisher"/>
 		</dl>
 	</a>
+</div>
+
+<div class="all-posts-btn">
+	<a href="/posts/" title="All Posts" class="all-posts btn btn--inverse btn--block">All Posts →</a>
 </div>
 
 <!--h1 class="clear span-3 first append-1">Hi</h1>
