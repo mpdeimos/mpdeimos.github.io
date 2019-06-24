@@ -11,7 +11,7 @@ en: &DEFAULT_EN
   menu_label: "Menu"
   by: "by"
   min_read: "min read"
-  read_more: "Read more&hellip;"
+  read_more: "Read more →"
   categories: "Categories"
   tags: "Tags"
   pages_categorized: "Pages filed under"
