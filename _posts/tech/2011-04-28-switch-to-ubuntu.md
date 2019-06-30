@@ -1,5 +1,5 @@
 ---
-title: Switch to Ubuntu 11.04
+title: Switch to Ubuntu
 categories: Tech
 tags:
 - linux
