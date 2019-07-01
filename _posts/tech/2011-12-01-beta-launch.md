@@ -7,7 +7,6 @@ image:
   path: posts/tech/2011-12-01-beta-launch/hero.png
   thumbnail: posts/tech/2011-12-01-beta-launch/hero.png
   caption: "[Rocket Ship Blast Off---CC0 Public Domain](https://www.publicdomainpictures.net/en/view-image.php?image=184072&picture=rocket-ship-blast-off)"
-excerpt: 
 ---
 
 The time has come -- mpdeimos.com finally gets a web presentation!
