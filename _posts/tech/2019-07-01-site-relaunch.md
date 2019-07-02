@@ -9,7 +9,7 @@ image:
   caption: "[CC0 Public Domain](https://www.maxpixel.net/Space-Star-Night-Rocket-Cartoon-Universe-Moon-3262811)"
 ---
 
-I was a bit too optimistic when I announced the "[Beta Launch]({% post_url 2011-12-01-beta-launch %})" of this site -- almost 8 years ago!
+I was a bit too optimistic when I announced the "[Beta Launch]({% post_url tech/2011-12-01-beta-launch %})" of this site -- almost 8 years ago!
 Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it.
 Until now!
 I decided to start all over a again and can finally announce the "first" (not final!) release of my personal place on the web.

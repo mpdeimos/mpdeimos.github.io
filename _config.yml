@@ -1,17 +1,17 @@
 remote_theme: mmistakes/so-simple-theme
 locale: en-US
-title: "mpdeimos.com"
+title: "martinpoehlmann.com"
 description: "Martin Pöhlmann"
 copyright: |
-  ⓒ 2019 mpdeimos.com
+  ⓒ 2019 martinpoehlmann.com
   • [About](/about/) 
   • [Impressum](/impressum/)
 baseurl: # the subpath of your site, e.g. "/blog"
-url: # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url: https://martinpoehlmann.com # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 logo: "/assets/images/logo.png"
 date_format: "%B %-d, %Y"
 read_time: true # reading time estimates, e.g. true
-words_per_minute: # 200
+words_per_minute: 150
 #mathjax: # MathJax equations, e.g. true
 google_fonts:
   - name: "Condiment"
@@ -35,9 +35,9 @@ liquid:
 # Build settings
 permalink: /:collection/:categories/:year-:month-:day-:title/
 
-collections:
-  projects:
-    output: true
+#collections:
+#  projects:
+#    output: true
 
 markdown: kramdown
 feed:
@@ -71,6 +71,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-paginate
+  - jemoji
 
 # Front Matter Defaults
 defaults:
@@ -97,15 +98,7 @@ defaults:
       comments: false
 
 # Site Author
-author:
-  name:
-  picture:
-  email:
-  twitter:
-  links:
-    - title:
-      url:
-      icon:
+author: mpdeimos
 
 # Footer Links
 footer_links:

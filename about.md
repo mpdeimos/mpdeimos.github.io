@@ -2,7 +2,7 @@
 title: About
 ---
 
-Hi, my name is Martin Pöhlmann --- [Software Engineer](/projects) and [Consultant](https://cqse.eu/poehlmann) hailing from Munich.
+Hi, my name is Martin Pöhlmann --- [Software Engineer](https://github.com/mpdeimos) and [Consultant](https://cqse.eu/poehlmann) hailing from Munich.
 
 ![This is me!](/assets/images/about/me.jpg)
 {: .align-left .mugshot-about }
@@ -21,7 +21,7 @@ Since then, I am working as software engineer and consultant at [CQSE](https://w
 My daily work roughly splits into three areas:
 First, I'm lead of a consulting project for one of our largest customer in the reinsurance sector.
 In this project we preserve maintainability of source code and accompany the testing activities of the complete business application portfolio.
-Second, I'm contributing to our software intelligence suite suite [Teamscale](https://teamscale.com) focusing on integration points with the Microsoft ecosystem (e.g. Visual Studio integration, Azure DevOps, .net Profiling, ...).
+Second, I'm contributing to our software intelligence suite suite [Teamscale](https://teamscale.com) focusing on integration points with the Microsoft ecosystem (e.g. Visual Studio integration, Azure DevOps, .net Profiling, ...) using Java and C#.
 Last but not least, I'm part of our small IT infrastructure and operations team and thus responsible for running and developing internal services on our Docker infrastructure.
 
 As antipole to tech I keep myself fit with running or hiking and (re-)started dancing a few years back.

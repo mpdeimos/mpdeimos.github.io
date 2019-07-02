@@ -1,3 +1,4 @@
 _site/
 .plugins/
 .sass-cache/
+local/

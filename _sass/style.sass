@@ -4,19 +4,32 @@
     font-size: 0.75em
     margin-bottom: 2em
 
+// Handwriting
+
+.handwriting
+    font-family: $handwriting-font-family
+    font-weight: normal
+    font-size: 3em
+    
+    a
+        text-decoration: none
+        color: $text-color
+        &:hover
+            color: $accent-color
+
 // Welcome box
 
 .welcome
     a
         text-decoration: none
     dl
-    background-color: $code-background-color
-    color: $text-color
+        background-color: $code-background-color
+        color: $text-color
         border-radius: 3rem
         padding: 2rem
-    margin-bottom: 3rem
-    &:hover
-        color: $accent-color
+        margin-bottom: 2rem
+        &:hover
+            color: $accent-color
 
     dt
         display: inline-block
@@ -55,8 +68,11 @@
     display: flex
     flex-flow: column
     
-    .all-posts-btn
+    #all-posts-btn
         order: 1
+    
+    #twitter-timeline
+        order: 0
 
 
 // about
@@ -66,7 +82,7 @@
 
 // make images stand out
 .page-content
-    img:not(.no-shadow):not(.entry-image)
+    img:not(.no-shadow):not(.entry-image):not(.emoji)
         border: 2px solid white
         box-shadow: 0 2px 5px #0006
 
