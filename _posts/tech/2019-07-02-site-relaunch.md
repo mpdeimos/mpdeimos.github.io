@@ -4,8 +4,8 @@ categories: Tech
 tags:
 - myself
 image:
-  path: posts/tech/2019-07-01-site-relaunch/hero.png
-  thumbnail: posts/tech/2019-07-01-site-relaunch/hero.png
+  path: posts/tech/2019-07-02-site-relaunch/hero.png
+  thumbnail: posts/tech/2019-07-02-site-relaunch/hero.png
   caption: "[CC0 Public Domain](https://www.maxpixel.net/Space-Star-Night-Rocket-Cartoon-Universe-Moon-3262811)"
 ---
 
