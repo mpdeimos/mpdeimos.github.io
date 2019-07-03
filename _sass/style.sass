@@ -9,7 +9,10 @@
 .handwriting
     font-family: $handwriting-font-family
     font-weight: normal
-    font-size: 3em
+
+    font-size: 2em
+    @include breakpoint($medium)
+        font-size: 3em
     
     a
         text-decoration: none
@@ -20,14 +23,16 @@
 // Welcome box
 
 .welcome
+    @include breakpoint($medium)
+        font-size: 1.5em
     a
         text-decoration: none
     dl
         background-color: $code-background-color
         color: $text-color
-        border-radius: 3rem
-        padding: 2rem
-        margin-bottom: 2rem
+        border-radius: 2em
+        padding: 1.3em
+        margin-bottom: 1.3em
         &:hover
             color: $accent-color
 
@@ -35,7 +40,7 @@
         display: inline-block
         font-family: $handwriting-font-family
         font-weight: normal
-        font-size: 3em
+        font-size: 2em
         line-height: 1
         margin-right: 0.5em
         &:first-child
@@ -43,7 +48,7 @@
     dd
         display: inline-block
         font-family: $serif-font-family
-        font-size: 2.5em
+        font-size: 1.7em
 
 // Textrotate
 
