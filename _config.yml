@@ -35,9 +35,9 @@ liquid:
 # Build settings
 permalink: /:collection/:categories/:year-:month-:day-:title/
 
-#collections:
-#  projects:
-#    output: true
+collections:
+  works:
+    output: true
 
 markdown: kramdown
 feed:
@@ -90,8 +90,8 @@ defaults:
       share: true
       comments: true
   - scope:
-      path: "_projects"
-      type: projects
+      path: "_works"
+      type: works
     values:
       layout: page
       share: false
