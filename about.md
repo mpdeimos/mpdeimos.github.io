@@ -26,22 +26,21 @@ Last but not least, I'm part of our small IT infrastructure and operations team 
 
 As antipole to tech I keep myself fit with running or hiking and (re-)started dancing a few years back.
 
-Connect
--------
+# Connect
 
 The easiest way to get in touch with me is to send a message to [@mpdeimos](http://twitter.com/mpdeimos) via twitter or connect via [LinkedIn](https://www.linkedin.com/in/martinpoehlmann/).
 If you want to write more than a few lines, feel free to drop a mail at *mail@insert-this-domain-name.com*.
 
+# License
 
-License
--------
-
-![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png){: .align-right .no-shadow }
+![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png){: .align-left .no-shadow }
 Written content and images on this site are licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/) unless stated otherwise.
+
+# Attribution
 
 The site is served by [GitHub Pages](https://pages.github.com/) and powered by static site generator [Jekyll](https://jekyllrb.com/) and [So Simple](https://github.com/mmistakes/so-simple-theme) theme.
 
-The fonts seen on this site are served by [Google Fonts](http://google.com/fonts) licensed under [SIL Open Font License](http://scripts.sil.org/OFL):
+The fonts seen on this site are served by [Google Fonts](http://google.com/fonts and licensed under [SIL Open Font License](http://scripts.sil.org/OFL):
 
 [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro)
 {: style="font-family: 'Source Sans Pro'" }
