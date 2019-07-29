@@ -10,7 +10,7 @@ Hi, my name is Martin Pöhlmann --- [Software Engineer](https://github.com/mpdei
 Born in a small town in the Bavarian forest my digital life begun with my [passion for music](https://www.last.fm/user/mpdeimos).
 Using the popular media player [Winamp](https://winamp.com) for listening to music on a daily basis, I became interested in designing and coding interface designs for Winamp.
 Together with some fellows we created The Skin Consortium --- a successful community for interface design and coding.
-In 2006 I was hired by AOL to develop the next user interface for Winamp.
+In 2006 I was hired by AOL to develop the [next user interface for Winamp](/works/professional/winamp-desktop).
 
 After finishing high-school in 2007, I made my way to Munich to study computer science at Technische Universität München.
 My major research and study fields were software engineering, computer vision and human-machine-interaction.
@@ -27,14 +27,13 @@ Last but not least, I'm part of our small IT infrastructure and operations team 
 As antipole to tech I keep myself fit with running or hiking and (re-)started dancing a few years back.
 
 Connect
--------
+=======
 
 The easiest way to get in touch with me is to send a message to [@mpdeimos](http://twitter.com/mpdeimos) via twitter or connect via [LinkedIn](https://www.linkedin.com/in/martinpoehlmann/).
 If you want to write more than a few lines, feel free to drop a mail at *mail@insert-this-domain-name.com*.
 
-
 License
--------
+=======
 
 ![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png){: .align-right .no-shadow }
 Written content and images on this site are licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/) unless stated otherwise.

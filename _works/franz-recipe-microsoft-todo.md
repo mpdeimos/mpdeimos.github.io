@@ -1,5 +1,6 @@
 ---
 title: Microsoft To-Do Franz Recipe
+date: 2019-01-05
 categories: Personal
 image:
   path: works/personal/franz-recipe-microsoft-todo/hero.png
