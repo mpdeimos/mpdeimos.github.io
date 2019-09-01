@@ -78,9 +78,60 @@ body
     border-radius: (2 * $border-radius) 0 (2 * $border-radius) 0
 
 .works
-    .entries-grid
         .entry
             padding-bottom: 0
+        .entry-meta, .entry-excerpt
+            display: none
 
-    .entry-meta
+    .entries-flex
+        display: flex
+        grid-gap: 1em 2em
+        flex-wrap: wrap
+
+        .entry
+            .entry-excerpt
+                display: block
+                visibility: hidden
+                width: 0
+                height: 0
+                margin: 0
+                padding: 0
+            &:hover
+                .entry-excerpt > p
+                    $arrow-height: 10px
+                    $padding: $arrow-height + 2px
+                    $background: rgba(0,0,0,0.7)
+
+                    visibility: visible
+                    position: absolute
+                    background: $background
+                    border-radius: 2 * $border-radius
+                    color: white
+                    text-shadow: 0 1px 1px black
+                    margin: 0
+                    padding: $padding - $arrow-height $padding $padding $padding
+                    width: calc(100% + 6em)
+                    left: -3em
+                    z-index: 100
+
+                    &:before
+                        display: block
+                        position: relative
+                        top: -$padding
+                        width: 0
+                        height: 0
+                        content: ''
+                        margin: 0 auto
+                        border:
+                            left: $arrow-height solid transparent
+                            right: $arrow-height solid transparent
+                            bottom: $arrow-height solid $background
+
+.entry-title
+    > a:nth-child(2)
         display: none
+
+    > .u-bookmark-of
+        &::after
+            content: " →"
+            display: inline

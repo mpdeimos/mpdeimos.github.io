@@ -1,0 +1,42 @@
+
+- title: Teamscale .NET Profiler
+  link: https://github.com/cqse/teamscale-profiler-dotnet
+  excerpt: Teamscale Ephemeral .NET Profiler---a lightweight method coverage profiler used for Test Gap Analysis.
+  date: 2019-08-15
+
+- title: So Simple
+  link: https://github.com/mmistakes/so-simple-theme
+  excerpt: A simple Jekyll theme for words and pictures---that's the theme used on this site.
+  date: 2019-08-02
+
+- title: XR.Baboon
+  link: https://github.com/inorton/XR.Baboon
+  excerpt: Code coverage toolset for profiling C# .NET applications on Linux with the Mono runtime.
+  date: 2018-02-08
+
+- title: Perlotto
+  link: https://github.com/can3p/perlotto
+  excerpt: Electron-based desktop integration for Google Play Music
+  date: 2018-11-23
+
+- title: StringTemplate
+  link: https://github.com/antlr/stringtemplate4
+  excerpt: Java template engine for generating code, HTML, etc---also powering ANTLR
+  date: 2015-02-19
+
+- title: Geary
+  link: https://github.com/GNOME/geary
+  excerpt: Conversation-based E-Mail client for the GNOME 3 Linux Desktop.
+  date: 2014-04-12
+
+- title: Doctrine ORM
+  link: https://github.com/doctrine/orm
+  excerpt: PHP object relational mapper (ORM) and powerful database abstraction layer (DBAL).
+  date: 2011-09-02
+
+- title: WCF
+  link: https://github.com/WoltLab/WCF
+  excerpt: Now known as WoltLab Suite Core---a free CMS and web-framework.
+  date: 2011-08-02
+
+  

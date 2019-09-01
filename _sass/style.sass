@@ -9,6 +9,7 @@
 .handwriting
     font-family: $handwriting-font-family
     font-weight: normal
+    line-height: initial
 
     font-size: 2em
     @include breakpoint($medium)
@@ -121,30 +122,3 @@ ol.instructions
         text-align: center
         background-color: $primary-color
         border-radius: 1em
-
-
-// ol.instruction
-//     list-style: none
-//     counter-reset: li
-//     display: grid
-//     grid-template-columns: repeat(2em, 1fr)
-//     grid-gap: 2em
-
-//     > li
-//         display: flex
-//         flex-direction: column
-//         &::before
-//             display: flex
-//             flex-direction: column
-//             width: 2em
-//             height: 2em
-//             line-height: 2em
-//             margin: 0.5em
-//             content: counter(li)
-//             counter-increment: li
-//             z-index: -1
-//             color: white
-//             font-weight: bolder
-//             text-align: center
-//             background-color: $primary-color
-//             border-radius: 1em
