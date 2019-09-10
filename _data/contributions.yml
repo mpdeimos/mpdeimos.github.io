@@ -29,6 +29,11 @@
   excerpt: Conversation-based E-Mail client for the GNOME 3 Linux Desktop.
   date: 2014-04-12
 
+- title: GNOME Drop Down Shell
+  link: https://github.com/zzrough/gs-extensions-drop-down-terminal
+  excerpt: Drop Down Terminal extension for the GNOME 3 Shell
+  date: 2014-03-17
+
 - title: Doctrine ORM
   link: https://github.com/doctrine/orm
   excerpt: PHP object relational mapper (ORM) and powerful database abstraction layer (DBAL).
