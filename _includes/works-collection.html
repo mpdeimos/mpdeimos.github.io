@@ -1,8 +1,8 @@
 {% if include.entries.size > 0 %}
 <section class="taxonomy-section">
+    <h2 class="taxonomy-title">{{ include.title }}</h2>
     {% assign entries = include.entries | where_exp: "item", "item.image.thumbnail" %}
     {% if entries.size > 0 %}
-    <h2 class="taxonomy-title">{{ include.title }}</h2>
     <div class="entries-{{ page.entries_layout | default: 'list' }}">
         {% include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
     </div>
@@ -10,7 +10,6 @@
 
     {% assign entries = include.entries | where_exp: "item", "item.image.thumbnail == nil" %}
     {% if entries.size > 0 %}
-    <br />
     <div class="entries-flex">
         {% include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
     </div>

@@ -19,14 +19,15 @@ image:
 ---
 
 > During my last year at high school I was hired[^1] by AOL (the former owner of Winamp) to revamp the whole Winamp user interface and combine separate windows (player, equalizer, playlist, ...) into a single tabbed user interface.
-> At that time Winamp was one of the most popular media players for Windows---yes, you once had audio files on your physically hard drive---with more that 80+ million unique users per month.
+> At that time Winamp was one of the most popular media players for Windows---with more that 80+ million unique users per month.
+> And yes, you once had audio files on your physical hard drive :smile:
 >
 > On October the 10<sup>th</sup> 2007 we released the new user interface titled *Bento* with Winamp 5.5 "10th anniversary edition". 
 
 # Feature Highlights
 
 * One of the first single-window user-interfaces for Winamp at this time
-* A web browser including bookmark support and music scraping (listen / download embedded music)
+* A web browser including bookmark support and music scraping (listen & download embedded music)
 * Two versions of the interface for normal and high-resolution monitors using a single code base
 
 # Main Focus of my Work
