@@ -23,7 +23,7 @@ image:
 * Custom audio playback engine (called Replicant) with advanced features like replay-gain, equalizer, ...
 * Integration of ShoutCAST internet radio and RSS music feed subscriptions
 
-# Main Focus of my Work
+# Focus of my Work
 
 * Transforming the awesome Photoshop mock-ups of [Taber Buhl](http://taberbuhl.com/) into a pixel-perfect user interface
 * Writing resource-optimized Java code for Android---at that time you only had low-spec CPUs with a single core and less than 256MB RAM available

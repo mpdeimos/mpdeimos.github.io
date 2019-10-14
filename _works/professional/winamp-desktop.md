@@ -30,7 +30,7 @@ image:
 * A web browser including bookmark support and music scraping (listen & download embedded music)
 * Two versions of the interface for normal and high-resolution monitors using a single code base
 
-# Main Focus of my Work
+# Focus of my Work
 
 * Transforming the awesome Photoshop mock-ups of [Taber Buhl](http://taberbuhl.com/) into a pixel-perfect user interface
 * Suggesting modifications to the design and provide ideas for new features

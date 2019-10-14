@@ -18,7 +18,7 @@ image:
 * Easy publishing of everything around music: Events, news, videos, photo galleries and merchandise
 * Analytics, import of data from existing platforms, sharing on social platforms
 
-# Main Focus of my Work
+# Focus of my Work
 
 * Initial framework for an mobile HTML5 app including song playback
 * Backend for artist-related content based on Symfony2 and Doctrine
