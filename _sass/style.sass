@@ -88,9 +88,13 @@
 
 // make images stand out
 .page-content
-    img:not(.no-shadow):not(.entry-image):not(.emoji)
+    video,img
+        &:not(.no-shadow):not(.entry-image):not(.emoji)
         border: 2px solid white
         box-shadow: 0 2px 5px #0006
+
+hr
+    border-style: solid
 
 .rotate180
     transform: rotate(180deg)
