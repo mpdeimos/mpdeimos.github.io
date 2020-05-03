@@ -38,5 +38,5 @@ classes:
 {: .handwriting .align-center }
 
 <div id="all-posts-btn">
-	<a href="/posts/" title="All Posts" class="all-posts btn btn--inverse btn--block">All Posts →</a>
+	<a href="/posts/" title="All Posts" class="all-posts btn btn--inverse btn--block">All Posts 🠖</a>
 </div>
