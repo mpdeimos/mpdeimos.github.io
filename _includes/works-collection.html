@@ -4,14 +4,14 @@
     {% assign entries = include.entries | where_exp: "item", "item.image.thumbnail" %}
     {% if entries.size > 0 %}
     <div class="entries-{{ page.entries_layout | default: 'list' }}">
-        {% include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
+        {%include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
     </div>
     {% endif %}
 
     {% assign entries = include.entries | where_exp: "item", "item.image.thumbnail == nil" %}
     {% if entries.size > 0 %}
     <div class="entries-flex">
-        {% include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
+        {%include documents-collection.html entries=entries sort_by=page.sort_by sort_order=page.sort_order %}
     </div>
     {% endif %}
 </section>

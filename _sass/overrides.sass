@@ -78,10 +78,10 @@ body
     border-radius: (2 * $border-radius) 0 (2 * $border-radius) 0
 
 .works
-        .entry
-            padding-bottom: 0
-        .entry-meta, .entry-excerpt
-            display: none
+    .entry
+        padding-bottom: 0
+    .entry-meta, .entry-excerpt
+        display: none
 
     .entries-flex
         margin-top: 1em
@@ -95,7 +95,7 @@ body
 
             .entry-excerpt
                 display: block
-                visibility: hidden
+                overflow: hidden
                 width: 0
                 height: 0
                 margin: 0
@@ -131,11 +131,14 @@ body
                             right: $arrow-height solid transparent
                             bottom: $arrow-height solid $background
 
-.entry-title
-    > a:nth-child(2)
-        display: none
+    .entry-title
+        > a:nth-child(2)
+            display: none
 
-    > .u-bookmark-of
-        &::after
-            content: " →"
-            display: inline
+        > .u-bookmark-of
+            &::after
+                content: " 🡵" // alternative: 🠖
+                font-style: normal
+                margin-right: 1em
+                opacity: 0.33
+                display: inline

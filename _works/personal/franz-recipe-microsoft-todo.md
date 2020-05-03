@@ -12,7 +12,7 @@ In digital life you can choose between a plethora of apps and services that want
 I've iterated through a few of these as well---especially after the shutdown of Google Inbox and my Trello "ToDo" board becoming not manageable anymore.
 Soon I have found myself very comfortable with [Microsoft To-Do](https://to-do.microsoft.com/) [^1], a lightweight task management solution that focuses on getting stuff done *today*. You basically fill an one day micro-iteration from one ore more of your backlogs (=lists).
 
-As I prefer keeping my communication and task management hub separate from the webbrowser I use [Franz](https://meetfranz.com/) for these kind of webservices.
+As I prefer keeping my communication and task management hub separate from the webbrowser I use [Ferdi](https://getferdi.com/) for these kind of webservices.
 Microsoft To-Do, however, was missing in the list of supported services.
 Fortunately Franz has a neat mechanism to add further services, called recipes.
 So I've spent the hour to create a recipe for Microsoft To-Do.
@@ -29,3 +29,4 @@ Besides adding the service to Franz, it displays the count of today's open tasks
 {: .instructions }
 
 [^1]: Microsoft To-Do is the successor of Wunderlist after its Microsoft acquisition
+[^2]: Ferdi is a fork of [Franz](https://meetfranz.com/) with additional features and removed bloat
