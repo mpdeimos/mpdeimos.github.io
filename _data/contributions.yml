@@ -3,11 +3,6 @@
   excerpt: Analyzes C# source code to enforce a set of style and consistency rules.
   date: 2020-03-25
 
-- title: Teamscale .NET Profiler
-  link: https://github.com/cqse/teamscale-profiler-dotnet
-  excerpt: Teamscale Ephemeral .NET Profiler---a lightweight method coverage profiler used for Test Gap Analysis.
-  date: 2019-08-15
-
 - title: So Simple
   link: https://github.com/mmistakes/so-simple-theme
   excerpt: A simple Jekyll theme for words and pictures---that's the theme used on this site.
