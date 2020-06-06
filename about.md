@@ -40,7 +40,7 @@ Written content and images on this site are licensed under a [Creative Commons A
 
 The site is served by [GitHub Pages](https://pages.github.com/) and powered by static site generator [Jekyll](https://jekyllrb.com/) and [So Simple](https://github.com/mmistakes/so-simple-theme) theme.
 
-The fonts seen on this site are served by [Google Fonts](http://google.com/fonts and licensed under [SIL Open Font License](http://scripts.sil.org/OFL):
+The fonts seen on this site are served by [Google Fonts](http://google.com/fonts) and licensed under [SIL Open Font License](http://scripts.sil.org/OFL):
 
 [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro)
 {: style="font-family: 'Source Sans Pro'" }
