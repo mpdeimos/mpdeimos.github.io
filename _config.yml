@@ -1,4 +1,6 @@
-remote_theme: mmistakes/so-simple-theme
+remote_theme: mpdeimos/so-simple-theme@downstream
+# LOCAL: development of theme
+#theme: jekyll-theme-so-simple
 locale: en-US
 title: "martinpoehlmann.com"
 description: "Martin Pöhlmann"
@@ -35,9 +37,9 @@ liquid:
 # Build settings
 permalink: /:collection/:categories/:year-:month-:day-:title/
 
-#collections:
-#  projects:
-#    output: true
+collections:
+  works:
+    output: true
 
 markdown: kramdown
 feed:
@@ -90,8 +92,8 @@ defaults:
       share: true
       comments: true
   - scope:
-      path: "_projects"
-      type: projects
+      path: "_works"
+      type: works
     values:
       layout: page
       share: false

@@ -9,6 +9,7 @@
 .handwriting
     font-family: $handwriting-font-family
     font-weight: normal
+    line-height: initial
 
     font-size: 2em
     @include breakpoint($medium)
@@ -87,9 +88,13 @@
 
 // make images stand out
 .page-content
-    img:not(.no-shadow):not(.entry-image):not(.emoji)
-        border: 2px solid white
-        box-shadow: 0 2px 5px #0006
+    video,img
+        &:not(.no-shadow):not(.entry-image):not(.emoji)
+            border: 2px solid white
+            box-shadow: 0 2px 5px #0006
+
+hr
+    border-style: solid
 
 .rotate180
     transform: rotate(180deg)
@@ -99,3 +104,25 @@
 [data-lity="500px"]
     width: 100%
     max-width: 500px
+
+ol.instructions
+    list-style: none
+    counter-reset: item
+    margin-left: 0.5em
+    
+    > li:first-child::before
+        margin-top: 0
+    > li::before
+        display: inline-block
+        width: 2em
+        height: 2em
+        line-height: 2em
+        margin: 1em 0.5em -1em -2.5em
+        content: counter(item)
+        counter-increment: item
+        z-index: -1
+        color: white
+        font-weight: bolder
+        text-align: center
+        background-color: $primary-color
+        border-radius: 1em
