@@ -1,4 +1,6 @@
-remote_theme: mmistakes/so-simple-theme
+remote_theme: mpdeimos/so-simple-theme@downstream
+# LOCAL: development of theme
+#theme: jekyll-theme-so-simple
 locale: en-US
 title: "martinpoehlmann.com"
 description: "Martin Pöhlmann"
