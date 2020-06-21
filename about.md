@@ -14,7 +14,7 @@ In 2006 I was hired by AOL to develop the [next user interface for Winamp](/work
 
 After finishing high-school in 2007, I made my way to Munich to study computer science at Technische Universität München.
 My major research and study fields were software engineering, computer vision and human-machine-interaction.
-During these years I co-founded a mobile music promotion platform called Songpier and worked again for AOL on the Winamp for Android App.
+During these years I co-founded a mobile music promotion platform called [Songpier](/works/professional/songpier/) and worked again for AOL on the [Winamp for Android App](http://localhost:4000/works/professional/winamp-android/).
 After a total of 9 semesters, I obtained the Master Degree in Computer Science in early 2012.
 
 Since then, I am working as software engineer and consultant at [CQSE](https://www.cqse.eu).
@@ -43,13 +43,13 @@ The site is served by [GitHub Pages](https://pages.github.com/) and powered by s
 The fonts seen on this site are served by [Google Fonts](http://google.com/fonts) and licensed under [SIL Open Font License](http://scripts.sil.org/OFL):
 
 [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro)
-{: style="font-family: 'Source Sans Pro'" }
+{: .btn .btn--light-outline style="font-family: 'Source Sans Pro';" }
 
 [Lora](https://fonts.google.com/specimen/Lora)
-{: style="font-family: 'Lora'" }
+{: .btn .btn--light-outline style="font-family: 'Lora'" }
 
 [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
-{: style="font-family: 'Source Code Pro'" }
+{: .btn .btn--light-outline style="font-family: 'Source Code Pro'" }
 
 [Condiment](https://fonts.google.com/specimen/Condiment)
-{: style="font-family: 'Condiment'" }
+{: .btn .btn--light-outline style="font-family: 'Condiment'" }
