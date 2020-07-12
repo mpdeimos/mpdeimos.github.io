@@ -18,10 +18,10 @@ During these years I co-founded a mobile music promotion platform called [Songpi
 After a total of 9 semesters, I obtained the Master Degree in Computer Science in early 2012.
 
 Since then, I am working as software engineer and consultant at [CQSE](https://www.cqse.eu).
-My daily work roughly splits into three areas:
-First, I'm lead of a consulting project for one of our largest customer in the reinsurance sector.
-In this project we preserve maintainability of source code and accompany the testing activities of the complete business application portfolio.
-Second, I'm contributing to our software intelligence suite suite [Teamscale](https://teamscale.com) focusing on integration points with the Microsoft ecosystem (e.g. Visual Studio integration, Azure DevOps, .net Profiling, ...) using Java and C#.
+I started in a consulting project for one of our largest customer in the reinsurance sector.
+Our main focus there is to preserve maintainability of source code and accompany the testing activities of the complete business application portfolio.
+I led this project till mid 2019 and joined in our development team thereafter.
+I am focusing on integration points of our software intelligence suite suite [Teamscale](https://teamscale.com) with code collaboration platforms like GitHub or Azure DevOps and the Microsoft ecosystem (e.g. Visual Studio integration, .net Profiling, ...) using Java and C#.
 Last but not least, I'm part of our small IT infrastructure and operations team and thus responsible for running and developing internal services on our Docker infrastructure.
 
 As antipole to tech I keep myself fit with running or hiking and (re-)started dancing a few years back.
