@@ -1,4 +1,4 @@
-* [Posts by Year 🠖](/posts/year)
-* [Posts by Category 🠖](/posts/categories)
-* [Posts by Tag 🠖](/posts/tags)
+* [Posts by Year <span><i class="fas fa-arrow-right fa-xs"></i></span>](/posts/year)
+* [Posts by Category <span><i class="fas fa-arrow-right fa-xs"></i></span>](/posts/categories)
+* [Posts by Tag <span><i class="fas fa-arrow-right fa-xs"></i></span>](/posts/tags)
 {: .taxonomy-index .posts-navigation }
