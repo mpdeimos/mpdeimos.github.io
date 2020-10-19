@@ -1,0 +1,184 @@
+a {
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.site-nav {
+  a {
+    font-weight: bold;
+    border: none;
+  }
+}
+
+// Get rid of annyoing animations
+.site-nav, .site-title, .site-description, .site-logo-img {
+  animation: none;
+}
+
+.site-footer {
+  margin-bottom: 0;
+
+  .social-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    margin: 0 4px;
+    border-radius: 16px;
+    font-size: 10px;
+    color: white;
+    background-color: $accent-color;
+
+    &:hover {
+      background-color: $hover-color;
+      border-color: $hover-color;
+    }
+
+    svg {
+      margin: 0 auto;
+    }
+  }
+}
+
+// Site logo above navigation
+body {
+  border-top: none;
+  display: flex;
+  flex-flow: column;
+
+  & > * {
+    order: 3;
+  }
+}
+
+.skip-links {
+  order: 1;
+}
+
+.masthead {
+  order: 2;
+  margin: 0;
+}
+
+.site-logo-img {
+  border: none;
+  border-radius: 0;
+  width: 2 * $site-logo-width;
+  height: 2 * $site-logo-height;
+}
+
+.site-title, .site-description {
+  display: none;
+}
+
+.site-nav ul {
+  margin-top: -7px;
+  border-radius: 2 * $border-radius;
+}
+
+#menu-toggle {
+  margin-top: -7px;
+}
+
+.page-title {
+  margin: 0.5em 0 0.75em 0;
+}
+
+.page-image {
+  margin: 0 auto;
+  max-width: $large;
+}
+
+.entry-image, .entry-feature-image {
+  border-radius: 2 * $border-radius;
+}
+
+.page-image-caption {
+  border-radius: (2 * $border-radius) 0 (2 * $border-radius) 0;
+}
+
+.works {
+  .entry {
+    padding-bottom: 0;
+  }
+
+  .entry-meta, .entry-excerpt {
+    display: none;
+  }
+
+  .entries-flex {
+    margin-top: 2em;
+    display: flex;
+    grid-gap: 1em 2em;
+    flex-wrap: wrap;
+
+    .entry {
+      .entry-title {
+        color: lighten($text-color, 40%);
+      }
+
+      .entry-excerpt {
+        display: block;
+        overflow: hidden;
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      &:hover {
+        .entry-excerpt > p {
+          $arrow-height: 10px;
+          $padding: $arrow-height + 2px;
+          $background: rgba(0, 0, 0, 0.7);
+
+          visibility: visible;
+          position: absolute;
+          background: $background;
+          border-radius: 2 * $border-radius;
+          color: white;
+          text-shadow: 0 1px 1px black;
+          margin: 0;
+          padding: ($padding - $arrow-height) $padding $padding $padding;
+          width: calc(100% + 6em);
+          left: -3em;
+          z-index: 100;
+
+          &:before {
+            display: block;
+            position: relative;
+            top: -$padding;
+            width: 0;
+            height: 0;
+            content: "";
+            margin: 0 auto;
+            border: {
+              left: $arrow-height solid transparent;
+              right: $arrow-height solid transparent;
+              bottom: $arrow-height solid $background;
+            };
+          }
+        }
+      }
+    }
+  }
+
+  .entry-title {
+    > a:nth-child(2) {
+      display: none;
+    }
+
+    > .u-bookmark-of {
+      &::after {
+        content: url(/assets/images/fa-arrow.svg);
+        opacity: 0.33;
+        display: inline-block;
+        width: 0.875em;
+        transform: translate(0.3em, 0.1em) rotate(-45deg);
+      }
+    }
+  }
+}
