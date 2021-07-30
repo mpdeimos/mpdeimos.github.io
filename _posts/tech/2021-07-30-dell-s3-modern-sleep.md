@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "S3 Sleep on Dell XPS 13 (7390 2-in-1)"
+title:  "Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)"
 categories: Tech
 image: 
   path: posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png
