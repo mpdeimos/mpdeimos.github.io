@@ -1,4 +1,4 @@
-# [martinpoehlmann.com](https://martinpoehlmann.com)
+# [martinpoehlmann.com](https://martinpoehlmann.com) [![Build and deploy jekyll site](https://github.com/mpdeimos/mpdeimos.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/mpdeimos/mpdeimos.github.io/actions/workflows/ci.yml)
 
 ## LICENSE
 
@@ -9,5 +9,5 @@ This work is licensed under a Creative Commons Attribution-NonCommercial-NoDeriv
 ## Build & Run
 
     gem install bundler
-    bundler install
-    bundler exec jekyll serve --port 4000
+    bundle install
+    bundle exec jekyll serve
