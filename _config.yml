@@ -66,6 +66,8 @@ tag_archive_path: "/posts/tags/#"
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+exclude:
+  - .github/
 
 plugins:
   - jekyll-seo-tag
