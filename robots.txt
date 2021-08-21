@@ -1,1 +1,1 @@
-Sitemap: https://martinpoehlmann.com/nil/sitemap.xml
+Sitemap: https://martinpoehlmann.com/sitemap.xml
