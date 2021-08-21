@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Hacking a ZTE ZXDSL-931VII Router | martinpoehlmann.com</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Hacking a ZTE ZXDSL-931VII Router" />
+<meta name="author" content="Martin Pöhlmann" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell." />
+<meta property="og:description" content="Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell." />
+<link rel="canonical" href="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/" />
+<meta property="og:url" content="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/" />
+<meta property="og:site_name" content="martinpoehlmann.com" />
+<meta property="og:image" content="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" />
+<meta property="twitter:title" content="Hacking a ZTE ZXDSL-931VII Router" />
+<meta name="twitter:site" content="@mpdeimos" />
+<meta name="twitter:creator" content="@mpdeimos" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Martin Pöhlmann"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://martinpoehlmann.com/nil/assets/images/logo.png"},"name":"Martin Pöhlmann"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/"},"description":"Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.","image":{"thumbnail":"posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png","url":"https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png","@type":"imageObject"},"url":"https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/","headline":"Hacking a ZTE ZXDSL-931VII Router","dateModified":"2020-06-05T00:00:00+00:00","datePublished":"2020-06-05T00:00:00+00:00","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/nil/assets/css/main.css">
+  <link rel="stylesheet" href="/nil/assets/css/skin.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Condiment:400|Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i|Source+Code+Pro:400,700">
+  <link rel="alternate" type="application/atom+xml" title="martinpoehlmann.com" href="/nil/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+
+  <body class="layout--post  hacking-a-zte-zxdsl-931vii-router">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/nil/">Home</a></li><li><a href="/nil/posts/">Posts</a></li><li><a href="/nil/works/">Works</a></li><li><a href="/nil/about/">About</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/nil/" class="site-logo" rel="home" title="martinpoehlmann.com">
+        <img src="/nil/assets/images/logo.png" class="site-logo-img animated fadeInDown" alt="martinpoehlmann.com">
+      </a>
+    
+    
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+  
+  
+  
+
+  <div class="page-image">
+    <img src="/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" class="entry-feature-image u-photo" alt="Hacking a ZTE ZXDSL-931VII Router" >
+    
+  </div>
+
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Hacking a ZTE ZXDSL-931VII Router
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><img src="/nil/assets/images/about/me-small.jpg" class="author-avatar u-photo" alt="Martin Pöhlmann"><div class="author-info"><div class="author-name">
+        <em>by</em> <span class="p-name">Martin Pöhlmann</span>
+      </div>
+
+<span class="read-time">6 min read</span>
+
+    <time class="page-date dt-published" datetime="2020-06-05T00:00:00+00:00"><a class="u-url" href="">June 5, 2020</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/nil/posts/categories/#tech" title="Pages filed under Tech">Tech</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/nil/posts/tags/#hacking" title="Pages tagged hacking" rel="tag">hacking</a></li>
+  </ul>
+
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <p>Recently I got my hands on an old <em>ZTE ZXDSL-931VII</em> router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time.
+In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.</p>
+
+<p class="notice--danger">The mentioned router is quite old, hence, I think it’s okay to write an article that exposes the security risks of this device.
+But maybe keep this as a reminder that I highly encourage everyone to install security updates and switch devices as soon they reach end of support / updates.</p>
+
+<p>All I knew about the device was its WiFi password, so connecting to the router was no problem (besides that the wireless signal was really bad).
+The IP 192.168.1.10 had been assigned to my laptop, hence I tried entering <code class="language-plaintext highlighter-rouge">http://192.168.1.1</code> in my browser for accessing the admin interface. As expected I was greeted with a login prompt.</p>
+
+<p><img src="login.png" alt="Login Page" class="align-center" /></p>
+
+<p>I’ve asked my friend who owned the router for the password, but he did not remember it. Apparently he only ever changed the WiFi key.
+Googling brought me to this picture in the ZTE manual:</p>
+
+<p><img src="manual.png" alt="Router Manual" class="align-center" /></p>
+
+<p>Alright so I have to login with <em>user</em> and the router serial number as password. I turned the router to search for the serial number on the bottom, but the sticker was gone… what a bummer.</p>
+
+<p>Google brought up some default passwords (like <em>admin/admin</em> or <em>user/user</em>), but none of these worked.
+After a bit more time I found an <a href="https://www.exploit-db.com/exploits/34680">exploit</a> for easily dumping the router configuration without being logged in.
+Following the guide I fired up <code class="language-plaintext highlighter-rouge">http://192.168.1.1/manager_dev_config_t.gch</code> in my browser and in deed, there are no access restrictions to this site nor to the configuration dump.</p>
+
+<p><img src="dump.png" alt="Router Manual" class="align-center" /></p>
+
+<p>The binary dump can be converted to an XML config with the provided Python script.
+The password (or better the serial) of the <em>user</em> login is simply stated in the XML (cf. <em>ZTE{serial}</em> in XML below).
+The login mask also accepts this credentials and I can access the configuration interface now.</p>
+
+<p>However, I am already sidetracked by the three other credentials stated in the XML.
+There are logins for and admin, tech and unnamed user.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Tbl</span> <span class="na">name=</span><span class="s">"DevAuthInfo"</span> <span class="na">RowCount=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"administrator"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"!tc0MhtZTE{serial}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"user"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"ZTE{serial}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU3"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"tech"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"!M1PhoIAD2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU4"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"zte"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+<span class="nt">&lt;/Tbl&gt;</span>
+</code></pre></div></div>
+
+<p>Wait—empty username and password <em>zte</em> might have done the trick as well?
+I can’t believe this… but <em>luckily</em> the login mask rejects the empty username.
+The validation is done on JS side, but also if I turn this off and send the request with empty username directly, an invalid credentials warning pops up.
+The <em>tech</em> user does not seem to work via the web interface as well.
+The <em>administrator</em> user with default password <em>!tc0MhtZTE{serial}</em> works, however.
+The configuration interface shows now a plethora of menu points allowing me to configure lots of stuff.</p>
+
+<p>But the two other login credentials still badgered me.
+Why are these not working?
+Looking closer to the <code class="language-plaintext highlighter-rouge">DM</code> attributes reveal that these are meant for a <em>second</em> application.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>What can that be? A second web interface?
+I googled a bit, but nothing showed up, so I tried SSH’ing to the rooter—no success.
+FTP’ing is possible, but with another pair of credentials that defaults to <em>admin/admin</em> (also visible in the XML). The folder listing is empty, tho.
+But there are some hints for a Telnet interface in the XML:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Tbl</span> <span class="na">name=</span><span class="s">"TelnetCfg"</span> <span class="na">RowCount=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Wan_Enable"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Lan_Enable"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_Port"</span> <span class="na">val=</span><span class="s">"23"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_UName"</span> <span class="na">val=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_UPwd"</span> <span class="na">val=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Max_Con_Num"</span> <span class="na">val=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ProcType"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+<span class="nt">&lt;/Tbl&gt;</span>
+</code></pre></div></div>
+
+<p>Accessing the telnet interface was not possible as well.
+So I logged into the web interface as administrator again and searched if this can be enabled somehow.
+Under <em>Security &gt; Service Control</em> there was an entry that discarded Telnet access from LAN.</p>
+
+<p><img src="telnet.png" alt="Telnet restriction" class="align-center" /></p>
+
+<p>I’ve added a new entry that permits Telnet access and here we go… it gives me Telnet access!
+I tried <em>root</em> as username first as it was mentioned in the <code class="language-plaintext highlighter-rouge">TelnetCfg</code>, but it was rejected.
+Then I tried the <em>second application</em> user <em>tech</em> and its password. Bingo!</p>
+
+<p>Entering <code class="language-plaintext highlighter-rouge">?</code> reveals a help menu that advertises <code class="language-plaintext highlighter-rouge">enable</code> as the privileged mode.
+Entering that command will show another password prompt.
+Here I’ve put in <em>zte</em>, as this is has administrative level according to the XML config. Bingo#2.</p>
+
+<p>Another listing of available commands brings attention to the <code class="language-plaintext highlighter-rouge">shell</code> command.
+Again a password prompt is shown.
+One of my first guess <em>root/root</em> (from XML) was right.</p>
+
+<p><img src="shell.png" alt="Shell access" class="align-center" /></p>
+
+<p>Now I’ve got a root shell on the router just by accessing the device via HTTP initially.
+It’s known that old routers have security holes, but I haven’t imagined that it is that easy to get thus far.
+It also looks like the default config of the router exposes the HTTP interface directly to the internet, which means that you can dump the config and login without problems.
+Have I mentioned that the XML also contains your ISP credentials?</p>
+
+<p>I can just encourage anyone to keep your devices up to date or replace them. I’ll toss the router into the bin right now.</p>
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2020-06-05-hacking-zte-zxdsl-931vii%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Hacking+a+ZTE+ZXDSL-931VII+Router%20https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2020-06-05-hacking-zte-zxdsl-931vii%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2020-06-05-hacking-zte-zxdsl-931vii%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Hacking+a+ZTE+ZXDSL-931VII+Router&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2020-06-05-hacking-zte-zxdsl-931vii%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/nil/posts/tech/2019-07-02-site-relaunch/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Site Relaunch
+
+      </span>
+    </a>
+  
+
+  
+    <a class="page-next" href="/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/">
+      <h4 class="page-pagination-label">Next</h4>
+      <span class="page-pagination-title">
+        Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)
+ <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/nil/atom.xml"><i class="fas fa-rss fa-2x" title="Feed"></i></a><a class="social-icon" href="https://twitter.com/mpdeimos"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/mpdeimos"><i class="fab fa-github fa-2x" title="GitHub"></i></a><a class="social-icon" href="https://www.linkedin.com/in/martinpoehlmann/"><i class="fab fa-linkedin-in fa-2x" title="LinkedIn"></i></a><a class="social-icon" href="https://www.strava.com/athletes/181593"><i class="fab fa-strava fa-2x" title="Strava"></i></a><a class="social-icon" href="https://www.last.fm/user/mpdeimos"><i class="fab fa-lastfm fa-2x" title="Last.FM"></i></a></div><div class="copyright">
+    
+      <p>ⓒ 2021 martinpoehlmann.com
+• <a href="/about/">About</a> 
+• <a href="/impressum/">Impressum</a></p>
+
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/nil/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>

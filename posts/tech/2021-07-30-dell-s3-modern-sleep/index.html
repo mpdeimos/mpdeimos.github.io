@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1) | martinpoehlmann.com</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" />
+<meta name="author" content="Martin Pöhlmann" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating." />
+<meta property="og:description" content="I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating." />
+<link rel="canonical" href="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/" />
+<meta property="og:url" content="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/" />
+<meta property="og:site_name" content="martinpoehlmann.com" />
+<meta property="og:image" content="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" />
+<meta property="twitter:title" content="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" />
+<meta name="twitter:site" content="@mpdeimos" />
+<meta name="twitter:creator" content="@mpdeimos" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Martin Pöhlmann"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://martinpoehlmann.com/nil/assets/images/logo.png"},"name":"Martin Pöhlmann"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/"},"description":"I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.","image":{"thumbnail":"posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png","caption":"[CC0 Public Domain](https://www.maxpixel.net/White-Sleeping-Animal-Tiger-Lazy-Zoo-Cat-1285229)\n","url":"https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png","@type":"imageObject"},"url":"https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/","headline":"Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)","dateModified":"2021-07-30T00:00:00+00:00","datePublished":"2021-07-30T00:00:00+00:00","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/nil/assets/css/main.css">
+  <link rel="stylesheet" href="/nil/assets/css/skin.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Condiment:400|Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i|Source+Code+Pro:400,700">
+  <link rel="alternate" type="application/atom+xml" title="martinpoehlmann.com" href="/nil/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+
+  <body class="layout--post  enabling-s3-sleep-on-dell-xps-13-7390-2-in-1">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/nil/">Home</a></li><li><a href="/nil/posts/">Posts</a></li><li><a href="/nil/works/">Works</a></li><li><a href="/nil/about/">About</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/nil/" class="site-logo" rel="home" title="martinpoehlmann.com">
+        <img src="/nil/assets/images/logo.png" class="site-logo-img animated fadeInDown" alt="martinpoehlmann.com">
+      </a>
+    
+    
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+  
+  
+  
+
+  <div class="page-image">
+    <img src="/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" class="entry-feature-image u-photo" alt="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" >
+    
+      <div class="page-image-caption"><p><a href="https://www.maxpixel.net/White-Sleeping-Animal-Tiger-Lazy-Zoo-Cat-1285229">CC0 Public Domain</a></p>
+</div>
+    
+  </div>
+
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><img src="/nil/assets/images/about/me-small.jpg" class="author-avatar u-photo" alt="Martin Pöhlmann"><div class="author-info"><div class="author-name">
+        <em>by</em> <span class="p-name">Martin Pöhlmann</span>
+      </div>
+
+<span class="read-time">6 min read</span>
+
+    <time class="page-date dt-published" datetime="2021-07-30T00:00:00+00:00"><a class="u-url" href="">July 30, 2021</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/nil/posts/categories/#tech" title="Pages filed under Tech">Tech</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/nil/posts/tags/#windows" title="Pages tagged windows" rel="tag">windows</a></li><li class="page-taxonomy"><a href="/nil/posts/tags/#linux" title="Pages tagged linux" rel="tag">linux</a></li>
+  </ul>
+
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <p>I hate when things that used to work no longer do and this especially holds for the <em>basic</em> stuff.
+When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default.
+This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.</p>
+
+<p>I never was a big fan of closing all programs and shutting down my laptop (or formerly my desktop) in the evening.
+While I was in school and university I mostly used suspend to disk (hibernate) instead of standby, which consumed way more power.
+But with increasing battery power the standby penalty became negligible and nowadays I rarely shut down my laptop completely.</p>
+
+<p>My new Dell XPS 13, however, gave me a headache:
+After closing the lid or pressing the power button to enter standby I noticed the next day in the morning that the laptop is slightly warm.
+Even worse, when putting the laptop in a bag it slowly heated and exited standby to activate cooling on full speed.
+A bit of googling revealed that Dell defaults to modern standby for this model.
+Maybe this was the same for my previous XPS 13, but it had no overheating problems.</p>
+
+<h2 id="system-power-states">System Power States</h2>
+
+<p>Before focusing on the solution, let’s briefly explain the <a href="https://docs.microsoft.com/en-us/windows/win32/power/system-power-states">power states</a> of computers.</p>
+
+<ul>
+  <li><strong>S0</strong>: The system is running. All required hardware is powered on, unused components may save power in a low power mode.</li>
+  <li><strong>S0 low power idle</strong>: This state is also called <em>modern standby</em>. The system is running in low power mode. Some components may stay powered on, e.g. to keep a network connection. This is similar what cell phones do. A benefit of this power state is that it can resume quickly from standby .</li>
+  <li><strong>S1-S3</strong>: The next three states refer to sleep states where the system appears off. Most components but RAM are powered off. Power usage decreases from S1 to S3. Usually only one of these states is supported by a device.</li>
+  <li><strong>S4</strong>: Hibernate or suspend RAM to disk. This offers the lowest level of power consumption but keeping your apps open.</li>
+  <li><strong>S5</strong>: Soft off, full reboot required.</li>
+  <li><strong>G3</strong>: Mechanical off, full reboot required. No power can be consumed.</li>
+</ul>
+
+<p>The benefits of modern standby are explained in <a href="https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-vs-s3">this article</a>.
+S1-S3 has to be implemented and executed on the firmware (BIOS) level, hence resume is a lot slower in contrast to modern standby.
+If a SoC supports low power idle this standby method is preferred.</p>
+
+<h2 id="re-enabling-s3">Re-enabling S3</h2>
+
+<p>If modern standby works as expected there are usually no reasons to disable it unless you are very power-savvy.
+But the net if full of complains that modern standby is not reliable.</p>
+
+<h3 id="linux">Linux</h3>
+
+<p>The Arch Linux Wiki covers all <a href="https://wiki.archlinux.org/title/Dell_XPS_13_2-in-1_(7390)#S3_Sleep">details</a> of how to enable S3.
+Basically, you have to add <code class="language-plaintext highlighter-rouge">mem_sleep_default=deep</code> to your kernel command line.
+If you are using systemd-boot as boot manager, just add it to your boot entry <code class="language-plaintext highlighter-rouge">options</code>.</p>
+
+<p>There is one caveat, the screen sometimes does not wake up.
+You have to disable <em>Early Dell Logo Display</em> in the BIOS (<em>POST Behavior &gt; Sign of Life</em>) to get this fixed.</p>
+
+<h3 id="windows">Windows</h3>
+
+<p>On Windows the story is quite similar, but depends on the used Windows version.
+Before you fix it, check which stand-by modes are available by executing <code class="language-plaintext highlighter-rouge">powercfg /a</code> on the command line.
+This will yield an output similar to the following, mentioning that S0 low power idle is in use and S3 is not available:</p>
+
+<div class="language-batch highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S0</span> <span class="kd">Low</span> <span class="kd">Power</span> <span class="kd">Idle</span><span class="o">)</span> <span class="kd">Network</span> <span class="kd">Connected</span>
+    <span class="kd">Hibernate</span>
+    <span class="kd">Fast</span> <span class="kd">Startup</span>
+
+<span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="ow">not</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S1</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
+
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S2</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
+
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span>
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
+
+    <span class="kd">Hybrid</span> <span class="kd">Sleep</span>
+        <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span> <span class="kd">is</span> <span class="ow">not</span> <span class="kd">available</span>.
+        <span class="kd">The</span> <span class="kd">hypervisor</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+</code></pre></div></div>
+
+<p>On versions before Windows 20H1 you have to set the <a href="https://www.itprotoday.com/mobile-management-and-security/disabling-windows-connected-standby">following</a> registry key to zero:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+CsEnabled=0
+</code></pre></div></div>
+
+<p>But it seems that Microsoft wants to push modern standby forward and removed this feature.
+So after the update to 20H1 I was left with modern standby again. Bummer.
+Luckily, In 20H2 Microsoft added back a new <a href="https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/">registry hack</a> for enabling S3:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[HKLM\System\CurrentControlSet\Control\Power]
+PlatformAoAcOverride=0
+</code></pre></div></div>
+
+<p>So just add this DWORD and you have S3 back.
+<code class="language-plaintext highlighter-rouge">powercfg /a</code> should yield now the following:</p>
+
+<div class="language-batch highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span>
+    <span class="kd">Hibernate</span>
+    <span class="kd">Fast</span> <span class="kd">Startup</span>
+
+<span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="ow">not</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S1</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S2</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S0</span> <span class="kd">Low</span> <span class="kd">Power</span> <span class="kd">Idle</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+
+    <span class="kd">Hybrid</span> <span class="kd">Sleep</span>
+        <span class="kd">The</span> <span class="kd">hypervisor</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+</code></pre></div></div>
+
+<h3 id="the-efi-approach">The EFI approach</h3>
+
+<p>While googling for a solution I also stumbled over <a href="https://github.com/ElectronicElephant/Modern-Standby-Byby">this</a> idea to fix the problem with an <a href="https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/">EFI application</a>.
+It simply patches the ACPI tables and disables modern standby completely – regardless of the used operating system.
+Drawbacks are that secure boot will no longer work and you obviously have to use a boot manager like rEFInd.
+System-d boot does not seem to <a href="https://github.com/systemd/systemd/issues/15617">support EFI drivers</a>.</p>
+
+<p>I did not go this route but patched Linux and Windows separately, but I keep it here for future reference or when Microsoft removes the new registry hack again.</p>
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2021-07-30-dell-s3-modern-sleep%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Enabling+S3+Sleep+on+Dell+XPS+13+%287390+2-in-1%29%20https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2021-07-30-dell-s3-modern-sleep%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2021-07-30-dell-s3-modern-sleep%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Enabling+S3+Sleep+on+Dell+XPS+13+%287390+2-in-1%29&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2021-07-30-dell-s3-modern-sleep%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Hacking a ZTE ZXDSL-931VII Router
+
+      </span>
+    </a>
+  
+
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/nil/atom.xml"><i class="fas fa-rss fa-2x" title="Feed"></i></a><a class="social-icon" href="https://twitter.com/mpdeimos"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/mpdeimos"><i class="fab fa-github fa-2x" title="GitHub"></i></a><a class="social-icon" href="https://www.linkedin.com/in/martinpoehlmann/"><i class="fab fa-linkedin-in fa-2x" title="LinkedIn"></i></a><a class="social-icon" href="https://www.strava.com/athletes/181593"><i class="fab fa-strava fa-2x" title="Strava"></i></a><a class="social-icon" href="https://www.last.fm/user/mpdeimos"><i class="fab fa-lastfm fa-2x" title="Last.FM"></i></a></div><div class="copyright">
+    
+      <p>ⓒ 2021 martinpoehlmann.com
+• <a href="/about/">About</a> 
+• <a href="/impressum/">Impressum</a></p>
+
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/nil/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>

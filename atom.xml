@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://martinpoehlmann.com/nil/atom.xml" rel="self" type="application/atom+xml" /><link href="https://martinpoehlmann.com/nil/" rel="alternate" type="text/html" /><updated>2021-08-21T22:14:23+00:00</updated><id>https://martinpoehlmann.com/nil/atom.xml</id><title type="html">martinpoehlmann.com</title><subtitle>Martin Pöhlmann</subtitle><author><name>mpdeimos</name></author><entry><title type="html">Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)</title><link href="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/" rel="alternate" type="text/html" title="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" /><published>2021-07-30T00:00:00+00:00</published><updated>2021-07-30T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/dell-s3-modern-sleep</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/">&lt;p&gt;I hate when things that used to work no longer do and this especially holds for the &lt;em&gt;basic&lt;/em&gt; stuff.
+When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default.
+This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.&lt;/p&gt;
+
+&lt;p&gt;I never was a big fan of closing all programs and shutting down my laptop (or formerly my desktop) in the evening.
+While I was in school and university I mostly used suspend to disk (hibernate) instead of standby, which consumed way more power.
+But with increasing battery power the standby penalty became negligible and nowadays I rarely shut down my laptop completely.&lt;/p&gt;
+
+&lt;p&gt;My new Dell XPS 13, however, gave me a headache:
+After closing the lid or pressing the power button to enter standby I noticed the next day in the morning that the laptop is slightly warm.
+Even worse, when putting the laptop in a bag it slowly heated and exited standby to activate cooling on full speed.
+A bit of googling revealed that Dell defaults to modern standby for this model.
+Maybe this was the same for my previous XPS 13, but it had no overheating problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;system-power-states&quot;&gt;System Power States&lt;/h2&gt;
+
+&lt;p&gt;Before focusing on the solution, let’s briefly explain the &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/win32/power/system-power-states&quot;&gt;power states&lt;/a&gt; of computers.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;S0&lt;/strong&gt;: The system is running. All required hardware is powered on, unused components may save power in a low power mode.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;S0 low power idle&lt;/strong&gt;: This state is also called &lt;em&gt;modern standby&lt;/em&gt;. The system is running in low power mode. Some components may stay powered on, e.g. to keep a network connection. This is similar what cell phones do. A benefit of this power state is that it can resume quickly from standby .&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;S1-S3&lt;/strong&gt;: The next three states refer to sleep states where the system appears off. Most components but RAM are powered off. Power usage decreases from S1 to S3. Usually only one of these states is supported by a device.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;S4&lt;/strong&gt;: Hibernate or suspend RAM to disk. This offers the lowest level of power consumption but keeping your apps open.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;S5&lt;/strong&gt;: Soft off, full reboot required.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;G3&lt;/strong&gt;: Mechanical off, full reboot required. No power can be consumed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The benefits of modern standby are explained in &lt;a href=&quot;https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-vs-s3&quot;&gt;this article&lt;/a&gt;.
+S1-S3 has to be implemented and executed on the firmware (BIOS) level, hence resume is a lot slower in contrast to modern standby.
+If a SoC supports low power idle this standby method is preferred.&lt;/p&gt;
+
+&lt;h2 id=&quot;re-enabling-s3&quot;&gt;Re-enabling S3&lt;/h2&gt;
+
+&lt;p&gt;If modern standby works as expected there are usually no reasons to disable it unless you are very power-savvy.
+But the net if full of complains that modern standby is not reliable.&lt;/p&gt;
+
+&lt;h3 id=&quot;linux&quot;&gt;Linux&lt;/h3&gt;
+
+&lt;p&gt;The Arch Linux Wiki covers all &lt;a href=&quot;https://wiki.archlinux.org/title/Dell_XPS_13_2-in-1_(7390)#S3_Sleep&quot;&gt;details&lt;/a&gt; of how to enable S3.
+Basically, you have to add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mem_sleep_default=deep&lt;/code&gt; to your kernel command line.
+If you are using systemd-boot as boot manager, just add it to your boot entry &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;options&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;There is one caveat, the screen sometimes does not wake up.
+You have to disable &lt;em&gt;Early Dell Logo Display&lt;/em&gt; in the BIOS (&lt;em&gt;POST Behavior &amp;gt; Sign of Life&lt;/em&gt;) to get this fixed.&lt;/p&gt;
+
+&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;/h3&gt;
+
+&lt;p&gt;On Windows the story is quite similar, but depends on the used Windows version.
+Before you fix it, check which stand-by modes are available by executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powercfg /a&lt;/code&gt; on the command line.
+This will yield an output similar to the following, mentioning that S0 low power idle is in use and S3 is not available:&lt;/p&gt;
+
+&lt;div class=&quot;language-batch highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Idle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Network&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Connected&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;Hibernate&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;Fast&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Startup&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Hybrid&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Sleep&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt;.
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;hypervisor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;On versions before Windows 20H1 you have to set the &lt;a href=&quot;https://www.itprotoday.com/mobile-management-and-security/disabling-windows-connected-standby&quot;&gt;following&lt;/a&gt; registry key to zero:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+CsEnabled=0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;But it seems that Microsoft wants to push modern standby forward and removed this feature.
+So after the update to 20H1 I was left with modern standby again. Bummer.
+Luckily, In 20H2 Microsoft added back a new &lt;a href=&quot;https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/&quot;&gt;registry hack&lt;/a&gt; for enabling S3:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HKLM\System\CurrentControlSet\Control\Power]
+PlatformAoAcOverride=0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So just add this DWORD and you have S3 back.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powercfg /a&lt;/code&gt; should yield now the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-batch highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;Hibernate&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;Fast&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Startup&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Idle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+
+    &lt;span class=&quot;kd&quot;&gt;Hybrid&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Sleep&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;hypervisor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-efi-approach&quot;&gt;The EFI approach&lt;/h3&gt;
+
+&lt;p&gt;While googling for a solution I also stumbled over &lt;a href=&quot;https://github.com/ElectronicElephant/Modern-Standby-Byby&quot;&gt;this&lt;/a&gt; idea to fix the problem with an &lt;a href=&quot;https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/&quot;&gt;EFI application&lt;/a&gt;.
+It simply patches the ACPI tables and disables modern standby completely – regardless of the used operating system.
+Drawbacks are that secure boot will no longer work and you obviously have to use a boot manager like rEFInd.
+System-d boot does not seem to &lt;a href=&quot;https://github.com/systemd/systemd/issues/15617&quot;&gt;support EFI drivers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I did not go this route but patched Linux and Windows separately, but I keep it here for future reference or when Microsoft removes the new registry hack again.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="windows" /><category term="linux" /><summary type="html">I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking a ZTE ZXDSL-931VII Router</title><link href="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/" rel="alternate" type="text/html" title="Hacking a ZTE ZXDSL-931VII Router" /><published>2020-06-05T00:00:00+00:00</published><updated>2020-06-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/hacking-zte-zxdsl-931vii</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/">&lt;p&gt;Recently I got my hands on an old &lt;em&gt;ZTE ZXDSL-931VII&lt;/em&gt; router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time.
+In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.&lt;/p&gt;
+
+&lt;p class=&quot;notice--danger&quot;&gt;The mentioned router is quite old, hence, I think it’s okay to write an article that exposes the security risks of this device.
+But maybe keep this as a reminder that I highly encourage everyone to install security updates and switch devices as soon they reach end of support / updates.&lt;/p&gt;
+
+&lt;p&gt;All I knew about the device was its WiFi password, so connecting to the router was no problem (besides that the wireless signal was really bad).
+The IP 192.168.1.10 had been assigned to my laptop, hence I tried entering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.1&lt;/code&gt; in my browser for accessing the admin interface. As expected I was greeted with a login prompt.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;login.png&quot; alt=&quot;Login Page&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve asked my friend who owned the router for the password, but he did not remember it. Apparently he only ever changed the WiFi key.
+Googling brought me to this picture in the ZTE manual:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;manual.png&quot; alt=&quot;Router Manual&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Alright so I have to login with &lt;em&gt;user&lt;/em&gt; and the router serial number as password. I turned the router to search for the serial number on the bottom, but the sticker was gone… what a bummer.&lt;/p&gt;
+
+&lt;p&gt;Google brought up some default passwords (like &lt;em&gt;admin/admin&lt;/em&gt; or &lt;em&gt;user/user&lt;/em&gt;), but none of these worked.
+After a bit more time I found an &lt;a href=&quot;https://www.exploit-db.com/exploits/34680&quot;&gt;exploit&lt;/a&gt; for easily dumping the router configuration without being logged in.
+Following the guide I fired up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.1/manager_dev_config_t.gch&lt;/code&gt; in my browser and in deed, there are no access restrictions to this site nor to the configuration dump.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;dump.png&quot; alt=&quot;Router Manual&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The binary dump can be converted to an XML config with the provided Python script.
+The password (or better the serial) of the &lt;em&gt;user&lt;/em&gt; login is simply stated in the XML (cf. &lt;em&gt;ZTE{serial}&lt;/em&gt; in XML below).
+The login mask also accepts this credentials and I can access the configuration interface now.&lt;/p&gt;
+
+&lt;p&gt;However, I am already sidetracked by the three other credentials stated in the XML.
+There are logins for and admin, tech and unnamed user.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Tbl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DevAuthInfo&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;RowCount=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;administrator&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;!tc0MhtZTE{serial}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ZTE{serial}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tech&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;!M1PhoIAD2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zte&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Tbl&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Wait—empty username and password &lt;em&gt;zte&lt;/em&gt; might have done the trick as well?
+I can’t believe this… but &lt;em&gt;luckily&lt;/em&gt; the login mask rejects the empty username.
+The validation is done on JS side, but also if I turn this off and send the request with empty username directly, an invalid credentials warning pops up.
+The &lt;em&gt;tech&lt;/em&gt; user does not seem to work via the web interface as well.
+The &lt;em&gt;administrator&lt;/em&gt; user with default password &lt;em&gt;!tc0MhtZTE{serial}&lt;/em&gt; works, however.
+The configuration interface shows now a plethora of menu points allowing me to configure lots of stuff.&lt;/p&gt;
+
+&lt;p&gt;But the two other login credentials still badgered me.
+Why are these not working?
+Looking closer to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DM&lt;/code&gt; attributes reveal that these are meant for a &lt;em&gt;second&lt;/em&gt; application.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;What can that be? A second web interface?
+I googled a bit, but nothing showed up, so I tried SSH’ing to the rooter—no success.
+FTP’ing is possible, but with another pair of credentials that defaults to &lt;em&gt;admin/admin&lt;/em&gt; (also visible in the XML). The folder listing is empty, tho.
+But there are some hints for a Telnet interface in the XML:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Tbl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TelnetCfg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;RowCount=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Wan_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Lan_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_Port&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;23&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_UName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;root&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_UPwd&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;root&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Max_Con_Num&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ProcType&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Tbl&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Accessing the telnet interface was not possible as well.
+So I logged into the web interface as administrator again and searched if this can be enabled somehow.
+Under &lt;em&gt;Security &amp;gt; Service Control&lt;/em&gt; there was an entry that discarded Telnet access from LAN.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;telnet.png&quot; alt=&quot;Telnet restriction&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve added a new entry that permits Telnet access and here we go… it gives me Telnet access!
+I tried &lt;em&gt;root&lt;/em&gt; as username first as it was mentioned in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TelnetCfg&lt;/code&gt;, but it was rejected.
+Then I tried the &lt;em&gt;second application&lt;/em&gt; user &lt;em&gt;tech&lt;/em&gt; and its password. Bingo!&lt;/p&gt;
+
+&lt;p&gt;Entering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?&lt;/code&gt; reveals a help menu that advertises &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enable&lt;/code&gt; as the privileged mode.
+Entering that command will show another password prompt.
+Here I’ve put in &lt;em&gt;zte&lt;/em&gt;, as this is has administrative level according to the XML config. Bingo#2.&lt;/p&gt;
+
+&lt;p&gt;Another listing of available commands brings attention to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shell&lt;/code&gt; command.
+Again a password prompt is shown.
+One of my first guess &lt;em&gt;root/root&lt;/em&gt; (from XML) was right.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;shell.png&quot; alt=&quot;Shell access&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now I’ve got a root shell on the router just by accessing the device via HTTP initially.
+It’s known that old routers have security holes, but I haven’t imagined that it is that easy to get thus far.
+It also looks like the default config of the router exposes the HTTP interface directly to the internet, which means that you can dump the config and login without problems.
+Have I mentioned that the XML also contains your ISP credentials?&lt;/p&gt;
+
+&lt;p&gt;I can just encourage anyone to keep your devices up to date or replace them. I’ll toss the router into the bin right now.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="hacking" /><summary type="html">Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Site Relaunch</title><link href="https://martinpoehlmann.com/nil/posts/tech/2019-07-02-site-relaunch/" rel="alternate" type="text/html" title="Site Relaunch" /><published>2019-07-02T00:00:00+00:00</published><updated>2019-07-02T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/site-relaunch</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2019-07-02-site-relaunch/">&lt;p&gt;I was a bit too optimistic when I announced the “&lt;a href=&quot;/nil/posts/tech/2011-12-01-beta-launch/&quot;&gt;Beta Launch&lt;/a&gt;” of this site – almost 8 years ago!
+Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it.
+Until now!
+I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.&lt;/p&gt;
+
+&lt;h1 id=&quot;a-bit-of-history&quot;&gt;A bit of history&lt;/h1&gt;
+
+&lt;p&gt;As mentioned in the post regarding the beta launch, I’ve already spent some time on the concept of this site in 2011.
+I’ve iterated through several blog/website engines like “code my own” or Wordpress, but finally ended up with Jekyll.
+The mistake I’ve made was that I decided to build the Jekyll theme and thus also the blog and content engine on my own.
+I was at a stage where most of the stuff was finished but still had rough edges here and there.&lt;/p&gt;
+
+&lt;p&gt;At the time I was also busy with university, the startup Songpier, which I was part of, and last but not least the Winamp for Android app.
+Finishing the website was just not my top prio at that time.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-hiatus&quot;&gt;The hiatus&lt;/h1&gt;
+
+&lt;p&gt;Somewhen in 2014 I’ve decided to take all content off and just place my Twitter feed and link to social accounts (like LinkedIn and Strava) on the site until I find time to finish it.&lt;/p&gt;
+
+&lt;p&gt;The result was rather bold and looked like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;hiatus.png&quot; alt=&quot;Intermediate site&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the meantime I posted tech-savvy posts on my company’s blog, so the immediate need for a personal blog was no longer given.
+Still, I had ideas for more controversial or personal posts that did not fit on the company blog.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-relaunch&quot;&gt;The relaunch&lt;/h1&gt;
+
+&lt;p&gt;In 2019 I decided to increase my priority for the website as I have lots of time while &lt;em&gt;working&lt;/em&gt; on my “vacation-backlog”.
+Soon I decided that using the old markup and stylesheets will not play ball as Jekyll has seen several new releases with breaking changes.
+I also did not want to lose momentum by migrating these or even starting on a green field.
+So it was pretty clear that I wanted to use an existing theme for Jekyll.
+I evaluated several themes but have finally chosen &lt;a href=&quot;https://mmistakes.github.io/so-simple-theme/&quot;&gt;So Simple&lt;/a&gt; by Michael Rose.
+It’s a very basic theme and turned out to be quite customizable with CSS.&lt;/p&gt;
+
+&lt;p&gt;As next step I changed a few bits and pieces regarding the theme to make it fitting my personal taste and started to migrate content step by step from the old site.
+It also turned out that the folks behind Jekyll decided to ditch the Textile markup support, so I had to migrate the posts to Markdown as well – don’t ask me why I’ve chosen Textile a few years (or better a decade) back…
+I also cross-linked the posts on my &lt;a href=&quot;/posts/tags/#cqse&quot;&gt;company blog&lt;/a&gt; to bridge the gap between the old content and today.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-result&quot;&gt;The result&lt;/h1&gt;
+
+&lt;p&gt;Roughly three months later—at the end of my vacation period—I am done with the first iteration.
+The site features all old blog posts, an up-to-date bio and also some required legal information.
+In addition I’ve added &lt;a href=&quot;https://help.github.com/en/articles/securing-your-github-pages-site-with-https&quot;&gt;SSL encryption&lt;/a&gt; and changed the primary domain from &lt;a href=&quot;https://mpdeimos.com&quot;&gt;mpdeimos.com&lt;/a&gt; to the more professional looking &lt;a href=&quot;https://martinpoehlmann.com&quot;&gt;martinpoehlmann.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The time for a relaunch is finally there!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I also have some new posts in the pipeline that I’ll release step by step.
+Of course a project or portfolio section is planned as well, but putting these pieces together might take some additional time…&lt;/p&gt;
+
+&lt;h1 id=&quot;some-early-mockups&quot;&gt;Some early mockups&lt;/h1&gt;
+
+&lt;p&gt;For your viewing pleasure I want to share some early mockups of the site.
+Btw, the very first mockup (pre-2010) already had a “dark-mode” :)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;design1.png&quot; alt=&quot;Initial design&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;design2.png&quot; alt=&quot;Brighter revamp&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;vacation backlog
+martinpoehlmann.com&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="myself" /><summary type="html">I was a bit too optimistic when I announced the “Beta Launch” of this site – almost 8 years ago! Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it. Until now! I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2019-07-02-site-relaunch/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2019-07-02-site-relaunch/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Shrinking the Size of our Teamscale Docker Image</title><link href="https://martinpoehlmann.com/nil/posts/tech/2018-07-04-shrinking-docker-image-size/" rel="alternate" type="text/html" title="Shrinking the Size of our Teamscale Docker Image" /><published>2018-07-04T00:00:00+00:00</published><updated>2018-07-04T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/shrinking-docker-image-size</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2018-07-04-shrinking-docker-image-size/">&lt;p&gt;In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="docker" /><category term="cqse" /><summary type="html">In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Freedoms of working at CQSE</title><link href="https://martinpoehlmann.com/nil/posts/tech/2018-04-20-freedoms-of-working-at-cqse/" rel="alternate" type="text/html" title="Freedoms of working at CQSE" /><published>2018-04-20T00:00:00+00:00</published><updated>2018-04-20T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/freedoms-of-working-at-cqse</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2018-04-20-freedoms-of-working-at-cqse/">&lt;p&gt;I often get asked by friends why I stick working at CQSE for almost six years now.
+One reason simply is that I’m quite free in arranging my workday in a way that it fits for me.
+Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><summary type="html">I often get asked by friends why I stick working at CQSE for almost six years now. One reason simply is that I’m quite free in arranging my workday in a way that it fits for me. Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT—One year later</title><link href="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/" rel="alternate" type="text/html" title="Our Journey to GIT—One year later" /><published>2017-12-01T00:00:00+00:00</published><updated>2017-12-01T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/our-journey-to-git-one-year-later</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/">&lt;p&gt;The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process.
+This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="git" /><category term="continuous integration" /><summary type="html">The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process. This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT</title><link href="https://martinpoehlmann.com/nil/posts/tech/2016-11-09-our-journey-to-git/" rel="alternate" type="text/html" title="Our Journey to GIT" /><published>2016-11-09T00:00:00+00:00</published><updated>2016-11-09T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/our-journey-to-git</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2016-11-09-our-journey-to-git/">&lt;p&gt;This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed &lt;em&gt;svn:exterenal&lt;/em&gt; links.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="git" /><category term="cqse" /><summary type="html">This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed svn:exterenal links.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code</title><link href="https://martinpoehlmann.com/nil/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code" /><published>2016-03-21T00:00:00+00:00</published><updated>2016-03-21T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/lessons-from-code-reviews-pt2</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/">&lt;p&gt;This is the second post of two posts concerning code reviews on my company’s blog.
+This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Beginners do not write verbose code out of malice. They do it to help themselves. To make the code readable to them.&lt;/p&gt;
+
+  &lt;p&gt;&lt;cite&gt;&lt;a href=&quot;https://github.com/kbilsted/CodeQualityAndReadability/blob/master/Articles/Readability/TheChangingNotionOfReadability.md&quot;&gt;Kasper B. Graversen&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html">This is the second post of two posts concerning code reviews on my company’s blog. This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist</title><link href="https://martinpoehlmann.com/nil/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist" /><published>2015-08-05T00:00:00+00:00</published><updated>2015-08-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/lessons-from-code-reviews-pt1</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/">&lt;p&gt;This is the first post of two posts concerning code reviews on my company’s blog.
+I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html">This is the first post of two posts concerning code reviews on my company’s blog. I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Is Your Build Ready for Continuous Deployment? A Large-Scale Benchmark of Cloning in Build Systems</title><link href="https://martinpoehlmann.com/nil/posts/tech/2015-02-04-buildsystem-clone-benchmark/" rel="alternate" type="text/html" title="Is Your Build Ready for Continuous Deployment? A Large-Scale Benchmark of Cloning in Build Systems" /><published>2015-02-04T00:00:00+00:00</published><updated>2015-02-04T00:00:00+00:00</updated><id>https://martinpoehlmann.com/nil/posts/tech/buildsystem-clone-benchmark</id><content type="html" xml:base="https://martinpoehlmann.com/nil/posts/tech/2015-02-04-buildsystem-clone-benchmark/">&lt;p&gt;My first post on my company’s blog concerns a benchmark regarding redundancy in build (continuous integration) systems.
+It is the result of a scientific study I performed together with &lt;a href=&quot;http://shanemcintosh.org/&quot;&gt;Shane McIntosh&lt;/a&gt;.
+In addition, it outlines the achievements of refactoring a large-scale build infrastructure of one of our customers.&lt;/p&gt;
+
+&lt;p&gt;For further in-depth information and statistical details, I’d recommend reading the scientific article &lt;a href=&quot;https://www.cqse.eu/publications/2014-collecting-and-leveraging-a-benchmark-of-build-system-clones-to-aid-in-quality-assessments.pdf&quot;&gt;Collecting and Leveraging a Benchmark of Build System Clones to Aid in Quality Assessments we published together with Shane McIntosh, Audris Mockus, Bram Adams, Ahmed E. Hassan, Brigitte Haupt and Christian Wagner&lt;/a&gt; in the proceedings of the 36th International Conference on Software Engineering 2014.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="study" /><category term="continuous integration" /><summary type="html">My first post on my company’s blog concerns a benchmark regarding redundancy in build (continuous integration) systems. It is the result of a scientific study I performed together with Shane McIntosh. In addition, it outlines the achievements of refactoring a large-scale build infrastructure of one of our customers.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/nil/posts/tech/2015-02-04-buildsystem-clone-benchmark/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/nil/posts/tech/2015-02-04-buildsystem-clone-benchmark/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

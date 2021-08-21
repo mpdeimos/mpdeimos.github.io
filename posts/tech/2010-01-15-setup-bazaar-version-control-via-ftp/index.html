@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Setup Bazaar Version Control via FTP with multiple users | martinpoehlmann.com</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Setup Bazaar Version Control via FTP with multiple users" />
+<meta name="author" content="Martin Pöhlmann" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Have you ever been in need to setup a cheap Version Control System? Well, there are plenty of free alternatives out in the web that offer this service for free. GitHub, GoogleCode and SourceForge being the most popular ones. But all of them have one disadvantage: They require you to publish the code to the wild and release it under an open source license. This may not be a problem if you are releasing the source of your software anyways, but sometimes you might feel “I’m not ready to publish the code” or “This project is commercial, I cannot offer the source on the web.”." />
+<meta property="og:description" content="Have you ever been in need to setup a cheap Version Control System? Well, there are plenty of free alternatives out in the web that offer this service for free. GitHub, GoogleCode and SourceForge being the most popular ones. But all of them have one disadvantage: They require you to publish the code to the wild and release it under an open source license. This may not be a problem if you are releasing the source of your software anyways, but sometimes you might feel “I’m not ready to publish the code” or “This project is commercial, I cannot offer the source on the web.”." />
+<link rel="canonical" href="https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/" />
+<meta property="og:url" content="https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/" />
+<meta property="og:site_name" content="martinpoehlmann.com" />
+<meta property="og:image" content="https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-15T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/hero.png" />
+<meta property="twitter:title" content="Setup Bazaar Version Control via FTP with multiple users" />
+<meta name="twitter:site" content="@mpdeimos" />
+<meta name="twitter:creator" content="@mpdeimos" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Martin Pöhlmann"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://martinpoehlmann.com/nil/assets/images/logo.png"},"name":"Martin Pöhlmann"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/"},"description":"Have you ever been in need to setup a cheap Version Control System? Well, there are plenty of free alternatives out in the web that offer this service for free. GitHub, GoogleCode and SourceForge being the most popular ones. But all of them have one disadvantage: They require you to publish the code to the wild and release it under an open source license. This may not be a problem if you are releasing the source of your software anyways, but sometimes you might feel “I’m not ready to publish the code” or “This project is commercial, I cannot offer the source on the web.”.","image":{"thumbnail":"posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/hero.png","url":"https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/hero.png","@type":"imageObject"},"url":"https://martinpoehlmann.com/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/","headline":"Setup Bazaar Version Control via FTP with multiple users","dateModified":"2010-01-15T00:00:00+00:00","datePublished":"2010-01-15T00:00:00+00:00","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/nil/assets/css/main.css">
+  <link rel="stylesheet" href="/nil/assets/css/skin.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Condiment:400|Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i|Source+Code+Pro:400,700">
+  <link rel="alternate" type="application/atom+xml" title="martinpoehlmann.com" href="/nil/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+
+  <body class="layout--post  setup-bazaar-version-control-via-ftp-with-multiple-users">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/nil/">Home</a></li><li><a href="/nil/posts/">Posts</a></li><li><a href="/nil/works/">Works</a></li><li><a href="/nil/about/">About</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/nil/" class="site-logo" rel="home" title="martinpoehlmann.com">
+        <img src="/nil/assets/images/logo.png" class="site-logo-img animated fadeInDown" alt="martinpoehlmann.com">
+      </a>
+    
+    
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+  
+  
+  
+
+  <div class="page-image">
+    <img src="/nil/posts/tech/2010-01-15-setup-bazaar-version-control-via-ftp/hero.png" class="entry-feature-image u-photo" alt="Setup Bazaar Version Control via FTP with multiple users" >
+    
+  </div>
+
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Setup Bazaar Version Control via FTP with multiple users
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><img src="/nil/assets/images/about/me-small.jpg" class="author-avatar u-photo" alt="Martin Pöhlmann"><div class="author-info"><div class="author-name">
+        <em>by</em> <span class="p-name">Martin Pöhlmann</span>
+      </div>
+
+<span class="read-time">4 min read</span>
+
+    <time class="page-date dt-published" datetime="2010-01-15T00:00:00+00:00"><a class="u-url" href="">January 15, 2010</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/nil/posts/categories/#tech" title="Pages filed under Tech">Tech</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/nil/posts/tags/#git" title="Pages tagged git" rel="tag">git</a></li><li class="page-taxonomy"><a href="/nil/posts/tags/#hacking" title="Pages tagged hacking" rel="tag">hacking</a></li>
+  </ul>
+
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <p><em>Have you ever been in need to setup a cheap Version Control System?</em>
+Well, there are plenty of free alternatives out in the web that offer
+this service for free. GitHub, GoogleCode and SourceForge being the
+most popular ones.
+But all of them have one disadvantage: They require you to publish the
+code to the wild and release it under an open source license. This may
+not be a problem if you are releasing the source of your software
+anyways, but sometimes you might feel “I’m not ready to publish the
+code” or “This project is commercial, I cannot offer the source on the
+web.”.</p>
+
+<p class="notice--info">This guide is quite old, nowadays with GitHub offering free private repositories,
+I’d simply go that route or use GitLab instead.
+Still the guide might be useful for someone—even if it’s just entertainment.</p>
+
+<p>Buying a private SVN is expensive, so I’ve searched for another
+solution: Wouldn’t it be cool to host the project data on my webspace?
+My first idea was to use <a href="http://top-cat.com/intraversion.php">IntraVersion</a>, a
+lightweight version control that uses FTP for storing data. But it turned out to
+be too difficult to use. Especially if you want just use commandline
+tools or a Tortoise-like explorer integration. IntraVersion is just
+web-based, so doesn’t feature any of these requirements.
+The second idea was to write an own software solution, but due to lack
+of time I never came to this step.
+Finally I stumbled on <a href="http://bazaar.canonical.com">Bazzar Version Control</a>. Among lots of features (like
+distributed version control) Bazaar offers to store project files and
+a repository via FTP/SFTP – so exactly what I was searching for.
+Setting things up was quite easy, but I had another requirement:
+Access to selected project repositories for different FTP users - an with a
+few tricks you can get this quite easy:</p>
+
+<h2 id="step-by-step-guide-to-setup-a-hosted-bazaar-version-control-on-your-webserver-for-multiple-users">Step-by-Step guide to setup a hosted Bazaar Version Control on your webserver for multiple users</h2>
+
+<p><strong>Requirements:</strong> SSH access to your webspace, ability to
+create multiple FTP Users (both fulfilled by the cheapest GoDaddy
+Shared Linux Hosting solution). Bazaar being installed on your computer.</p>
+
+<p><strong>(1)</strong> Access your webspace using SHH (best to use PuTTY for this)</p>
+
+<p><strong>(2)</strong> Navigate to the root of your html folder (this is where your html,php,… files ly)</p>
+
+<p><strong>(3)</strong> Create a new folder called <code class="language-plaintext highlighter-rouge">bazaar</code> and open it</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir bazaar
+cd bazaar
+</code></pre></div></div>
+
+<p><strong>(4)</strong> Create for each FTP user (including yourself) a
+directory. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir userMe
+mkdir userOne
+mkdir userTwo
+</code></pre></div></div>
+
+<p><strong>(5)</strong> Open your Hosting Manager via a Webbrowser and
+navigate to Manage FTP Users. Here you add as much users as you have
+created directories before. Name them according to the folder names
+(easier to maintain later on) and specify the user path according to
+<code class="language-plaintext highlighter-rouge">/bazaar/%username%</code>. After these changes are applied try to connect
+with one of these users to your FTP Server (using FileZilla for example).
+If you get a blank directory listing everything went fine.</p>
+
+<p><strong>(6)</strong> Now we setup a repository using your FTP account.
+Open the Console and navigate to the directory where you want to store your project (or already store it).
+Then create a Bazaar project via your FTP account and check it out.
+You will be asked for your password each time.
+You can prevent this by adding the password to the url (insecure)
+<em>ftp://userMe:password@yourserver.com/myproject1</em>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bzr init ftp://userMe@yourserver.com/myproject1
+bzr checkout ftp://userMe@yourserver.com/myproject1 .
+</code></pre></div></div>
+
+<p>If you have already project files (otherwise create a few dummy files),
+add them and do a commit:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bzr add
+bzr commit -m "Initial Import."
+</code></pre></div></div>
+
+<p>If you want to have better branching (not recommended for beginners)
+please refer to <a href="http://doc.bazaar.canonical.com/bzr.dev/en/user-guide/publishing_a_branch.html">this site</a>.</p>
+
+<p><strong>(7)</strong> Check if everything went fine</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+mkdir testcheckout
+cd testcheckout
+bzr checkout ftp://userMe@yourserver.com/myproject1 .
+</code></pre></div></div>
+
+<p>Now you should see project files files in this directory as well.</p>
+
+<p><strong>(8)</strong> If you want give userOne access to this project as
+well, take advance of directory soft links. Open the SSH connection
+again and navigate to the <code class="language-plaintext highlighter-rouge">bazaar</code> directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ln -s ~/html/bazaar/userMe/myproject1 userOne
+cd userOne
+ls -l
+</code></pre></div></div>
+
+<p>If everything went fine you should see a soft link from <code class="language-plaintext highlighter-rouge">myproject1</code> to <code class="language-plaintext highlighter-rouge">~/html/bazaar/userMe/myproject1</code>.</p>
+
+<p><strong>(9)</strong> Check if everything went fine using the shell (I asume you are still in the test scheckout directory)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+mkdir testcheckout2
+cd testcheckout2
+bzr checkout ftp://userOne@yourserver.com/myproject1 .
+</code></pre></div></div>
+
+<p>Now you should see project files files in this directory as well.</p>
+
+<p>I hope, that this will help you setting up a cheap Bazaar Version Control on your webserver.</p>
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2010-01-15-setup-bazaar-version-control-via-ftp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Setup+Bazaar+Version+Control+via+FTP+with+multiple+users%20https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2010-01-15-setup-bazaar-version-control-via-ftp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2010-01-15-setup-bazaar-version-control-via-ftp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Setup+Bazaar+Version+Control+via+FTP+with+multiple+users&url=https%3A%2F%2Fmartinpoehlmann.com%2Fnil%2Fposts%2Ftech%2F2010-01-15-setup-bazaar-version-control-via-ftp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/nil/posts/music/2009-05-15-stratovarius-polaris-2009/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Stratovarius - Polaris (2009)
+
+      </span>
+    </a>
+  
+
+  
+    <a class="page-next" href="/nil/posts/tech/2010-05-03-xubuntu-10-4-on-eee-pc-701/">
+      <h4 class="page-pagination-label">Next</h4>
+      <span class="page-pagination-title">
+        Xubuntu 10.4 on Eee PC 701
+ <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/nil/atom.xml"><i class="fas fa-rss fa-2x" title="Feed"></i></a><a class="social-icon" href="https://twitter.com/mpdeimos"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/mpdeimos"><i class="fab fa-github fa-2x" title="GitHub"></i></a><a class="social-icon" href="https://www.linkedin.com/in/martinpoehlmann/"><i class="fab fa-linkedin-in fa-2x" title="LinkedIn"></i></a><a class="social-icon" href="https://www.strava.com/athletes/181593"><i class="fab fa-strava fa-2x" title="Strava"></i></a><a class="social-icon" href="https://www.last.fm/user/mpdeimos"><i class="fab fa-lastfm fa-2x" title="Last.FM"></i></a></div><div class="copyright">
+    
+      <p>ⓒ 2021 martinpoehlmann.com
+• <a href="/about/">About</a> 
+• <a href="/impressum/">Impressum</a></p>
+
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/nil/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>
