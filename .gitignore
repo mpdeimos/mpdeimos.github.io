@@ -1,5 +1,7 @@
 _site/
 .plugins/
 .sass-cache/
+.bin/
+.jekyll-cache/
 local/
 *~

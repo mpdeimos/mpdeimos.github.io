@@ -1,0 +1,29 @@
+{% comment %}
+This is a copy of a MIT license so-simple file to support passing of entries instead of collections
+https://github.com/mpdeimos/so-simple-theme/commit/0e731ce4fd32d1d5db1e8c3174a9e0779d737638
+Credits go to Michael Rose. https://mmistakes.github.io/so-simple-theme/
+{% endcomment %}
+
+{% if include.entries %}
+  {% assign entries = include.entries %}
+{% else %}
+  {% assign entries = site[include.collection] %}
+{% endif %}
+
+{% if include.sort_by == 'title' %}
+  {% if include.sort_order == 'reverse' %}
+    {% assign entries = entries | sort: 'title' | reverse %}
+  {% else %}
+    {% assign entries = entries | sort: 'title' %}
+  {% endif %}
+{% elsif include.sort_by == 'date' %}
+  {% if include.sort_order == 'reverse' %}
+    {% assign entries = entries | sort: 'date' | reverse %}
+  {% else %}
+    {% assign entries = entries | sort: 'date' %}
+  {% endif %}
+{% endif %}
+
+{%- for entry in entries -%}
+  {% include entry.html %}
+{%- endfor -%}
