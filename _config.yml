@@ -7,7 +7,7 @@ copyright: |
   ⓒ 2021 martinpoehlmann.com
   • [About](/about/) 
   • [Impressum](/impressum/)
-baseurl: nil # the subpath of your site, e.g. "/blog"
+baseurl: / # the subpath of your site, e.g. "/blog"
 url: https://martinpoehlmann.com # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 logo: "/assets/images/logo.png"
 date_format: "%B %-d, %Y"
