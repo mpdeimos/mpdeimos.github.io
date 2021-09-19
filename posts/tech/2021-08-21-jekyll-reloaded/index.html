@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Jekyll Reloaded | martinpoehlmann.com</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Jekyll Reloaded" />
+<meta name="author" content="Martin Pöhlmann" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="It’s now two years since Jekyll 4.0 has been released. The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update. In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release. This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead." />
+<meta property="og:description" content="It’s now two years since Jekyll 4.0 has been released. The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update. In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release. This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead." />
+<link rel="canonical" href="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/" />
+<meta property="og:url" content="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/" />
+<meta property="og:site_name" content="martinpoehlmann.com" />
+<meta property="og:image" content="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-21T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" />
+<meta property="twitter:title" content="Jekyll Reloaded" />
+<meta name="twitter:site" content="@mpdeimos" />
+<meta name="twitter:creator" content="@mpdeimos" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Martin Pöhlmann"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://martinpoehlmann.com/assets/images/logo.png"},"name":"Martin Pöhlmann"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/"},"description":"It’s now two years since Jekyll 4.0 has been released. The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update. In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release. This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.","image":{"thumbnail":"posts/tech/2021-08-21-jekyll-reloaded/hero.png","caption":"[Ocean Shoreline Jekyll Island \\| CC0 Public Domain](https://www.maxpixel.net/Ocean-Shoreline-Jekyll-Island-Atlantic-Coastline-684152)\n","url":"https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png","@type":"imageObject"},"url":"https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/","headline":"Jekyll Reloaded","dateModified":"2021-08-21T00:00:00+00:00","datePublished":"2021-08-21T00:00:00+00:00","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/skin.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Condiment:400|Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i|Source+Code+Pro:400,700">
+  <link rel="alternate" type="application/atom+xml" title="martinpoehlmann.com" href="/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+
+  <body class="layout--post  jekyll-reloaded">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li><a href="/works/">Works</a></li><li><a href="/about/">About</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/" class="site-logo" rel="home" title="martinpoehlmann.com">
+        <img src="/assets/images/logo.png" class="site-logo-img animated fadeInDown" alt="martinpoehlmann.com">
+      </a>
+    
+    
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+  
+  
+  
+
+  <div class="page-image">
+    <img src="/posts/tech/2021-08-21-jekyll-reloaded/hero.png" class="entry-feature-image u-photo" alt="Jekyll Reloaded" >
+    
+      <div class="page-image-caption"><p><a href="https://www.maxpixel.net/Ocean-Shoreline-Jekyll-Island-Atlantic-Coastline-684152">Ocean Shoreline Jekyll Island | CC0 Public Domain</a></p>
+</div>
+    
+  </div>
+
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Jekyll Reloaded
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><img src="/assets/images/about/me-small.jpg" class="author-avatar u-photo" alt="Martin Pöhlmann"><div class="author-info"><div class="author-name">
+        <em>by</em> <span class="p-name">Martin Pöhlmann</span>
+      </div>
+
+<span class="read-time">5 min read</span>
+
+    <time class="page-date dt-published" datetime="2021-08-21T00:00:00+00:00"><a class="u-url" href="">August 21, 2021</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/posts/categories/#tech" title="Pages filed under Tech">Tech</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/posts/tags/#myself" title="Pages tagged myself" rel="tag">myself</a></li><li class="page-taxonomy"><a href="/posts/tags/#jekyll" title="Pages tagged jekyll" rel="tag">jekyll</a></li>
+  </ul>
+
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <p>It’s now two years since <a href="https://jekyllrb.com/news/2019/08/20/jekyll-4-0-0-released/">Jekyll 4.0 has been released</a>.
+The release fosters several build performance improvements, but sadly GitHub Pages <a href="https://github.com/github/pages-gem/issues/651">remains at Jekyll 3.9</a> and there is no willingness to update.
+In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release.
+This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.</p>
+
+<h1 id="rotting">Rotting</h1>
+
+<p>I really <a href="/posts/tech/2011-12-01-beta-launch/">liked</a> the idea of Jekyll and the ease of hosting a personal site using GitHub Pages—especially that there is no need to run a CMS or manage a webspace.
+I’m loosely following the development of Jekyll and was exited to read that version 4.0 will improve compilation times of Liquid, Markdown and SCSS due to extensive caching.
+As Jekyll is (was?) developed at GitHub, I expected to see an update to the newest version on GitHub Pages as well.
+Sadly they did not update—and the initial 4.0 release is now already two years old.</p>
+
+<p>While there might be reasons of not breaking existing sites, they leave users with an outdated Ruby Gem stack.
+GitHub Dependabot already <a href="https://github.com/mpdeimos/mpdeimos.github.io/pull/4">moaned</a> about several dependencies with security issues.
+Moreover, also the Ruby community moved on to Ruby 3.0.
+Even worse, after the Ruby package has been updated on my Arch Linux workstation I was left with a <a href="https://talk.jekyllrb.com/t/error-no-implicit-conversion-of-hash-into-integer/5890">compilation error</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/git/mpdeimos.github.io$ bundle exec jekyll serve
+Configuration file: /home/mpdeimos/git/mpdeimos.github.io/_config.yml
+            Source: /home/mpdeimos/git/mpdeimos.github.io
+      Destination: /home/mpdeimos/git/mpdeimos.github.io/_site
+Incremental build: disabled. Enable with --incremental
+      Generating... 
+      Remote Theme: Using theme mpdeimos/so-simple-theme
+      Jekyll Feed: Generating feed for posts
+                    done in 4.18 seconds.
+jekyll 3.9.0 | Error:  no implicit conversion of Hash into Integer
+/home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read': no implicit conversion of Hash into Integer (TypeError)
+        from /home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read'
+        from /home/mpdeimos/.gem/gems/jekyll-3.9.0/lib/jekyll/utils/platforms.rb:75:in `proc_version'
+</code></pre></div></div>
+
+<p>I worked around this issue with <a href="https://github.com/postmodern/chruby">chruby</a> to keep Ruby 2.7 installed alongside 3.0.
+Still, this requires to switch environments each time I want to change something on the site.
+So I searched for alternatives.</p>
+
+<h1 id="modernization-plan">Modernization Plan</h1>
+
+<p>The immediate goal was to modernize the stack and make things more reliable and reproducible—just as you would do with regular CI/CD.
+This means an upgrade to Ruby 3.0, latest Jekyll and replace the automatic compilation and publishing by a CD pipeline.</p>
+
+<p>Thankfully GitHub Pages supports not only Jekyll-powered websites but also plain HTML sites.
+Moreover, with the advent of GitHub Actions, also a CI/CD service is available for free on the same platform.</p>
+
+<p>The idea is simple:</p>
+
+<ol>
+  <li>Compile the site using GitHub Actions using the <strong>same</strong> Ruby version as I have locally.</li>
+  <li>Publish the site as plain HTML to the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch, which GitHub will serve.</li>
+</ol>
+
+<h1 id="required-changes">Required changes</h1>
+
+<p>The outlined modernization required less changes than I initially anticipated.</p>
+
+<h2 id="gemfile">Gemfile</h2>
+
+<p>The first step is to update the <code class="language-plaintext highlighter-rouge">Gemfile</code> and replace the <code class="language-plaintext highlighter-rouge">github-pages</code> dependency by <code class="language-plaintext highlighter-rouge">jekyll</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+</code></pre></div></div>
+
+<p>…will turn into…</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"jekyll"</span><span class="p">,</span> <span class="s2">"~&gt; 4.2.0"</span>
+<span class="n">gem</span> <span class="s2">"webrick"</span><span class="p">,</span> <span class="s2">"~&gt; 1.7"</span>
+</code></pre></div></div>
+
+<p>If you are running on Ruby 3 or newer <a href="https://github.com/jekyll/jekyll/issues/8523">also add</a> the <code class="language-plaintext highlighter-rouge">webrick</code> dependency. 
+In addition, add any themes and used plugins as dependency.</p>
+
+<p>You may also want to add the directories <code class="language-plaintext highlighter-rouge">.bin</code> and <code class="language-plaintext highlighter-rouge">.jekyll-cache</code> to your <code class="language-plaintext highlighter-rouge">.gitignore</code>.</p>
+
+<h2 id="github-action">GitHub Action</h2>
+
+<p>That was already all that’s required to compile the site with latest dependencies.
+The next step is to create the GitHub Action.
+The official Jekyll documentation <a href="https://jekyllrb.com/docs/continuous-integration/github-actions/">covers this topic</a> as well, hence I’ll just briefly outline my variant.</p>
+
+<p>Basically you need to create an action workflow file, e.g. <code class="language-plaintext highlighter-rouge">.github/workflows/ci.yml</code>, like this:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Build and deploy jekyll site</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">jekyll</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-20.04</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">📂 checkout</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">💎 setup ruby</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">ruby/setup-ruby@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">ruby-version</span><span class="pi">:</span> <span class="s">3.0.2</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 install dependencies &amp; build site</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">limjh16/jekyll-action-ts@v2</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">enable_cache</span><span class="pi">:</span> <span class="no">true</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🚀 deploy</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">peaceiris/actions-gh-pages@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">github_token</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">publish_dir</span><span class="pi">:</span> <span class="s">./_site</span>
+          <span class="na">publish_branch</span><span class="pi">:</span> <span class="s">gh-pages</span>
+</code></pre></div></div>
+
+<p>This wil do the following things each time a commit is pushed to <code class="language-plaintext highlighter-rouge">master</code>:</p>
+
+<ol>
+  <li>Checkout the repository</li>
+  <li>Setup the environment using Ruby 3</li>
+  <li><a href="https://github.com/limjh16/jekyll-action-ts">jekyll-action-ts</a> is used to compile the site. You can also use the <a href="https://github.com/helaili/jekyll-action">Docker-based variant</a> or simply compile ‘by hand’ as you would do locally.</li>
+  <li>The last step will publish everything that is compiled into the <code class="language-plaintext highlighter-rouge">_site</code> folder to the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch. You will need to create a <a href="https://github.com/settings/tokens">deploy token</a> for this.</li>
+</ol>
+
+<p class="notice--warning">Please note that the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch will be reset on each action execution.</p>
+
+<p>With the action in place, you should also exclude the <code class="language-plaintext highlighter-rouge">.github</code> folder in your <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">exclude</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">.github/</span>
+</code></pre></div></div>
+
+<p>That’s it.
+Commit and push the changes to GitHub and the action will be executed and update the site automatically.</p>
+
+<h1 id="further-improvements">Further improvements</h1>
+
+<p>Instead of relying on GitHub for compiling and hosting and alternative would have been to migrate to <a href="https://www.netlify.com/blog/2020/04/02/a-step-by-step-guide-jekyll-4.0-on-netlify/">Netlify</a> or <a href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-jekyll-site">Cloudflare</a>.
+But in the end I was too lazy to change CNAMEs and familiarize with yet another stack.</p>
+
+<p>I’d also favor to remove the ‘local part’ of the tech stack altogether and edit and preview the site using a Web IDE like <a href="https://github.com/features/codespaces">GitHub Code Spaces</a> or <a href="https://www.gitpod.io/">GitPod</a>.
+This would eliminate the problems with keeping the local and remote ruby versions in sync.
+On the other hand, I’m forced to stay up to date with the current setup.</p>
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmartinpoehlmann.com%2Fposts%2Ftech%2F2021-08-21-jekyll-reloaded%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Jekyll+Reloaded%20https%3A%2F%2Fmartinpoehlmann.com%2Fposts%2Ftech%2F2021-08-21-jekyll-reloaded%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmartinpoehlmann.com%2Fposts%2Ftech%2F2021-08-21-jekyll-reloaded%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Jekyll+Reloaded&url=https%3A%2F%2Fmartinpoehlmann.com%2Fposts%2Ftech%2F2021-08-21-jekyll-reloaded%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/posts/tech/2021-07-30-dell-s3-modern-sleep/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)
+
+      </span>
+    </a>
+  
+
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/atom.xml"><i class="fas fa-rss fa-2x" title="Feed"></i></a><a class="social-icon" href="https://twitter.com/mpdeimos"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/mpdeimos"><i class="fab fa-github fa-2x" title="GitHub"></i></a><a class="social-icon" href="https://www.linkedin.com/in/martinpoehlmann/"><i class="fab fa-linkedin-in fa-2x" title="LinkedIn"></i></a><a class="social-icon" href="https://www.strava.com/athletes/181593"><i class="fab fa-strava fa-2x" title="Strava"></i></a><a class="social-icon" href="https://www.last.fm/user/mpdeimos"><i class="fab fa-lastfm fa-2x" title="Last.FM"></i></a></div><div class="copyright">
+    
+      <p>ⓒ 2021 martinpoehlmann.com
+• <a href="/about/">About</a> 
+• <a href="/impressum/">Impressum</a></p>
+
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>

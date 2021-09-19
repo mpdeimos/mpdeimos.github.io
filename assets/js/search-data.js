@@ -31,7 +31,7 @@ var store = [{
       },{
         "title": "mpdeimos.com - Beta Launch",
         "excerpt":"The time has come – mpdeimos.com finally gets a web presentation!Almost 2 years after I’ve grabbed the domain and some controversial ideas of what to do with it I have decided to start with a simple Jekyll-powered blog. Beta launch of mpdeimos.com Yep, you have heard right! I grabbed this...","categories": ["Tech"],
-        "tags": ["myself"],
+        "tags": ["myself","jekyll"],
         "url": "https://martinpoehlmann.com/posts/tech/2011-12-01-beta-launch/"
       },{
         "title": "Santa brought... a Galaxy Nexus",
@@ -81,7 +81,7 @@ var store = [{
       },{
         "title": "Site Relaunch",
         "excerpt":"I was a bit too optimistic when I announced the “Beta Launch” of this site – almost 8 years ago!Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it.Until now!I decided to start all over...","categories": ["Tech"],
-        "tags": ["myself"],
+        "tags": ["myself","jekyll"],
         "url": "https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/"
       },{
         "title": "Hacking a ZTE ZXDSL-931VII Router",
@@ -93,6 +93,11 @@ var store = [{
         "excerpt":"I hate when things that used to work no longer do and this especially holds for the basic stuff.When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default.This post explains briefly how to re-enable legacy—but reliable—standby on...","categories": ["Tech"],
         "tags": ["windows","linux"],
         "url": "https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/"
+      },{
+        "title": "Jekyll Reloaded",
+        "excerpt":"It’s now two years since Jekyll 4.0 has been released.The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update.In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby...","categories": ["Tech"],
+        "tags": ["myself","jekyll"],
+        "url": "https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/"
       },{
         "title": "Winamp Desktop UI Revamp",
         "excerpt":"During my last year at high school I was hired1 by AOL (the former owner of Winamp) to revamp the whole Winamp user interface and combine separate windows (player, equalizer, playlist, …) into a single tabbed user interface.At that time Winamp was one of the most popular media players for...","categories": ["Professional"],
