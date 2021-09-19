@@ -3,6 +3,7 @@ title: mpdeimos.com - Beta Launch
 categories: Tech
 tags:
 - myself
+- jekyll
 image:
   path: posts/tech/2011-12-01-beta-launch/hero.png
   thumbnail: posts/tech/2011-12-01-beta-launch/hero.png

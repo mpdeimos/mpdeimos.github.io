@@ -3,6 +3,7 @@ title: Site Relaunch
 categories: Tech
 tags:
 - myself
+- jekyll
 image:
   path: posts/tech/2019-07-02-site-relaunch/hero.png
   thumbnail: posts/tech/2019-07-02-site-relaunch/hero.png
