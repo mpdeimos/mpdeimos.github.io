@@ -124,6 +124,9 @@ The following sleep states are not available on this system:
         The hypervisor does not support this standby state.
 ```
 
+Windows 11 also supports S3 via `PlatformAoAcOverride`.
+However, you might need to set this setting again after the upgrade.
+
 ### The EFI approach
 
 While googling for a solution I also stumbled over [this](https://github.com/ElectronicElephant/Modern-Standby-Byby) idea to fix the problem with an [EFI application](https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/).
