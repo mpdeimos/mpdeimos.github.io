@@ -27,7 +27,7 @@ Since 2021 I am leading the CQSE IT team.
 I am responsible for developing and running internal services on our Docker infrastructure, as well as integrating and administrating cloud services (Google Workspace, Atlassian Cloud, ...).
 As ISO I also have to keep an eye on all security relevant aspects of our company.
 
-As antipole to tech I keep myself fit with running or hiking and (re-)started dancing a few years back.
+As antipole to tech I keep myself in shape with running or hiking, (re-)started dancing a few years back and vastly enjoy metal and dark electronic music.
 
 # Connect
 
