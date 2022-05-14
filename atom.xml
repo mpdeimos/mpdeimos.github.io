@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://martinpoehlmann.com/atom.xml" rel="self" type="application/atom+xml" /><link href="https://martinpoehlmann.com/" rel="alternate" type="text/html" /><updated>2022-05-14T20:29:30+00:00</updated><id>https://martinpoehlmann.com/atom.xml</id><title type="html">martinpoehlmann.com</title><subtitle>Martin Pöhlmann</subtitle><author><name>mpdeimos</name></author><entry><title type="html">Jekyll Reloaded</title><link href="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/" rel="alternate" type="text/html" title="Jekyll Reloaded" /><published>2021-08-21T00:00:00+00:00</published><updated>2021-08-21T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/jekyll-reloaded</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/">&lt;p&gt;It’s now two years since &lt;a href=&quot;https://jekyllrb.com/news/2019/08/20/jekyll-4-0-0-released/&quot;&gt;Jekyll 4.0 has been released&lt;/a&gt;.
-The release fosters several build performance improvements, but sadly GitHub Pages &lt;a href=&quot;https://github.com/github/pages-gem/issues/651&quot;&gt;remains at Jekyll 3.9&lt;/a&gt; and there is no willingness to update.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://martinpoehlmann.com/atom.xml" rel="self" type="application/atom+xml" /><link href="https://martinpoehlmann.com/" rel="alternate" type="text/html" /><updated>2022-05-14T21:54:58+00:00</updated><id>https://martinpoehlmann.com/atom.xml</id><title type="html">martinpoehlmann.com</title><subtitle>Martin Pöhlmann</subtitle><author><name>mpdeimos</name></author><entry><title type="html">Jekyll Reloaded</title><link href="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/" rel="alternate" type="text/html" title="Jekyll Reloaded" /><published>2021-08-21T00:00:00+00:00</published><updated>2021-08-21T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/jekyll-reloaded</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/"><![CDATA[<p>It’s now two years since <a href="https://jekyllrb.com/news/2019/08/20/jekyll-4-0-0-released/">Jekyll 4.0 has been released</a>.
+The release fosters several build performance improvements, but sadly GitHub Pages <a href="https://github.com/github/pages-gem/issues/651">remains at Jekyll 3.9</a> and there is no willingness to update.
 In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release.
-This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.&lt;/p&gt;
+This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.</p>
 
-&lt;h1 id=&quot;rotting&quot;&gt;Rotting&lt;/h1&gt;
+<h1 id="rotting">Rotting</h1>
 
-&lt;p&gt;I really &lt;a href=&quot;/posts/tech/2011-12-01-beta-launch/&quot;&gt;liked&lt;/a&gt; the idea of Jekyll and the ease of hosting a personal site using GitHub Pages—especially that there is no need to run a CMS or manage a webspace.
+<p>I really <a href="/posts/tech/2011-12-01-beta-launch/">liked</a> the idea of Jekyll and the ease of hosting a personal site using GitHub Pages—especially that there is no need to run a CMS or manage a webspace.
 I’m loosely following the development of Jekyll and was exited to read that version 4.0 will improve compilation times of Liquid, Markdown and SCSS due to extensive caching.
 As Jekyll is (was?) developed at GitHub, I expected to see an update to the newest version on GitHub Pages as well.
-Sadly they did not update—and the initial 4.0 release is now already two years old.&lt;/p&gt;
+Sadly they did not update—and the initial 4.0 release is now already two years old.</p>
 
-&lt;p&gt;While there might be reasons of not breaking existing sites, they leave users with an outdated Ruby Gem stack.
-GitHub Dependabot already &lt;a href=&quot;https://github.com/mpdeimos/mpdeimos.github.io/pull/4&quot;&gt;moaned&lt;/a&gt; about several dependencies with security issues.
+<p>While there might be reasons of not breaking existing sites, they leave users with an outdated Ruby Gem stack.
+GitHub Dependabot already <a href="https://github.com/mpdeimos/mpdeimos.github.io/pull/4">moaned</a> about several dependencies with security issues.
 Moreover, also the Ruby community moved on to Ruby 3.0.
-Even worse, after the Ruby package has been updated on my Arch Linux workstation I was left with a &lt;a href=&quot;https://talk.jekyllrb.com/t/error-no-implicit-conversion-of-hash-into-integer/5890&quot;&gt;compilation error&lt;/a&gt;:&lt;/p&gt;
+Even worse, after the Ruby package has been updated on my Arch Linux workstation I was left with a <a href="https://talk.jekyllrb.com/t/error-no-implicit-conversion-of-hash-into-integer/5890">compilation error</a>:</p>
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/git/mpdeimos.github.io$ bundle exec jekyll serve
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/git/mpdeimos.github.io$ bundle exec jekyll serve
 Configuration file: /home/mpdeimos/git/mpdeimos.github.io/_config.yml
             Source: /home/mpdeimos/git/mpdeimos.github.io
       Destination: /home/mpdeimos/git/mpdeimos.github.io/_site
@@ -25,442 +25,442 @@ Incremental build: disabled. Enable with --incremental
       Jekyll Feed: Generating feed for posts
                     done in 4.18 seconds.
 jekyll 3.9.0 | Error:  no implicit conversion of Hash into Integer
-/home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read&apos;: no implicit conversion of Hash into Integer (TypeError)
-        from /home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read&apos;
-        from /home/mpdeimos/.gem/gems/jekyll-3.9.0/lib/jekyll/utils/platforms.rb:75:in `proc_version&apos;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+/home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read': no implicit conversion of Hash into Integer (TypeError)
+        from /home/mpdeimos/.gem/gems/pathutil-0.16.2/lib/pathutil.rb:502:in `read'
+        from /home/mpdeimos/.gem/gems/jekyll-3.9.0/lib/jekyll/utils/platforms.rb:75:in `proc_version'
+</code></pre></div></div>
 
-&lt;p&gt;I worked around this issue with &lt;a href=&quot;https://github.com/postmodern/chruby&quot;&gt;chruby&lt;/a&gt; to keep Ruby 2.7 installed alongside 3.0.
+<p>I worked around this issue with <a href="https://github.com/postmodern/chruby">chruby</a> to keep Ruby 2.7 installed alongside 3.0.
 Still, this requires to switch environments each time I want to change something on the site.
-So I searched for alternatives.&lt;/p&gt;
+So I searched for alternatives.</p>
 
-&lt;h1 id=&quot;modernization-plan&quot;&gt;Modernization Plan&lt;/h1&gt;
+<h1 id="modernization-plan">Modernization Plan</h1>
 
-&lt;p&gt;The immediate goal was to modernize the stack and make things more reliable and reproducible—just as you would do with regular CI/CD.
-This means an upgrade to Ruby 3.0, latest Jekyll and replace the automatic compilation and publishing by a CD pipeline.&lt;/p&gt;
+<p>The immediate goal was to modernize the stack and make things more reliable and reproducible—just as you would do with regular CI/CD.
+This means an upgrade to Ruby 3.0, latest Jekyll and replace the automatic compilation and publishing by a CD pipeline.</p>
 
-&lt;p&gt;Thankfully GitHub Pages supports not only Jekyll-powered websites but also plain HTML sites.
-Moreover, with the advent of GitHub Actions, also a CI/CD service is available for free on the same platform.&lt;/p&gt;
+<p>Thankfully GitHub Pages supports not only Jekyll-powered websites but also plain HTML sites.
+Moreover, with the advent of GitHub Actions, also a CI/CD service is available for free on the same platform.</p>
 
-&lt;p&gt;The idea is simple:&lt;/p&gt;
+<p>The idea is simple:</p>
 
-&lt;ol&gt;
-  &lt;li&gt;Compile the site using GitHub Actions using the &lt;strong&gt;same&lt;/strong&gt; Ruby version as I have locally.&lt;/li&gt;
-  &lt;li&gt;Publish the site as plain HTML to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch, which GitHub will serve.&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>Compile the site using GitHub Actions using the <strong>same</strong> Ruby version as I have locally.</li>
+  <li>Publish the site as plain HTML to the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch, which GitHub will serve.</li>
+</ol>
 
-&lt;h1 id=&quot;required-changes&quot;&gt;Required changes&lt;/h1&gt;
+<h1 id="required-changes">Required changes</h1>
 
-&lt;p&gt;The outlined modernization required less changes than I initially anticipated.&lt;/p&gt;
+<p>The outlined modernization required less changes than I initially anticipated.</p>
 
-&lt;h2 id=&quot;gemfile&quot;&gt;Gemfile&lt;/h2&gt;
+<h2 id="gemfile">Gemfile</h2>
 
-&lt;p&gt;The first step is to update the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt; and replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github-pages&lt;/code&gt; dependency by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll&lt;/code&gt;:&lt;/p&gt;
+<p>The first step is to update the <code class="language-plaintext highlighter-rouge">Gemfile</code> and replace the <code class="language-plaintext highlighter-rouge">github-pages</code> dependency by <code class="language-plaintext highlighter-rouge">jekyll</code>:</p>
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;github-pages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;group: :jekyll_plugins&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+</code></pre></div></div>
 
-&lt;p&gt;…will turn into…&lt;/p&gt;
+<p>…will turn into…</p>
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;jekyll&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~&amp;gt; 4.2.0&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;webrick&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~&amp;gt; 1.7&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"jekyll"</span><span class="p">,</span> <span class="s2">"~&gt; 4.2.0"</span>
+<span class="n">gem</span> <span class="s2">"webrick"</span><span class="p">,</span> <span class="s2">"~&gt; 1.7"</span>
+</code></pre></div></div>
 
-&lt;p&gt;If you are running on Ruby 3 or newer &lt;a href=&quot;https://github.com/jekyll/jekyll/issues/8523&quot;&gt;also add&lt;/a&gt; the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webrick&lt;/code&gt; dependency. 
-In addition, add any themes and used plugins as dependency.&lt;/p&gt;
+<p>If you are running on Ruby 3 or newer <a href="https://github.com/jekyll/jekyll/issues/8523">also add</a> the <code class="language-plaintext highlighter-rouge">webrick</code> dependency. 
+In addition, add any themes and used plugins as dependency.</p>
 
-&lt;p&gt;You may also want to add the directories &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bin&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.jekyll-cache&lt;/code&gt; to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
+<p>You may also want to add the directories <code class="language-plaintext highlighter-rouge">.bin</code> and <code class="language-plaintext highlighter-rouge">.jekyll-cache</code> to your <code class="language-plaintext highlighter-rouge">.gitignore</code>.</p>
 
-&lt;h2 id=&quot;github-action&quot;&gt;GitHub Action&lt;/h2&gt;
+<h2 id="github-action">GitHub Action</h2>
 
-&lt;p&gt;That was already all that’s required to compile the site with latest dependencies.
+<p>That was already all that’s required to compile the site with latest dependencies.
 The next step is to create the GitHub Action.
-The official Jekyll documentation &lt;a href=&quot;https://jekyllrb.com/docs/continuous-integration/github-actions/&quot;&gt;covers this topic&lt;/a&gt; as well, hence I’ll just briefly outline my variant.&lt;/p&gt;
+The official Jekyll documentation <a href="https://jekyllrb.com/docs/continuous-integration/github-actions/">covers this topic</a> as well, hence I’ll just briefly outline my variant.</p>
 
-&lt;p&gt;Basically you need to create an action workflow file, e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows/ci.yml&lt;/code&gt;, like this:&lt;/p&gt;
+<p>Basically you need to create an action workflow file, e.g. <code class="language-plaintext highlighter-rouge">.github/workflows/ci.yml</code>, like this:</p>
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build and deploy jekyll site&lt;/span&gt;
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Build and deploy jekyll site</span>
 
-&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
 
-&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;jekyll&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-20.04&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;📂 checkout&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v2&lt;/span&gt;
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">jekyll</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-20.04</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">📂 checkout</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
 
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;💎 setup ruby&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ruby/setup-ruby@v1&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;ruby-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;3.0.2&lt;/span&gt;
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">💎 setup ruby</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">ruby/setup-ruby@v1</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">ruby-version</span><span class="pi">:</span> <span class="s">3.0.2</span>
 
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;🔨 install dependencies &amp;amp; build site&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;limjh16/jekyll-action-ts@v2&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;enable_cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🔨 install dependencies &amp; build site</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">limjh16/jekyll-action-ts@v2</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">enable_cache</span><span class="pi">:</span> <span class="no">true</span>
 
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;🚀 deploy&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;peaceiris/actions-gh-pages@v3&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;github_token&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;publish_dir&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./_site&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;publish_branch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;gh-pages&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">🚀 deploy</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">peaceiris/actions-gh-pages@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">github_token</span><span class="pi">:</span> <span class="s">$</span>
+          <span class="na">publish_dir</span><span class="pi">:</span> <span class="s">./_site</span>
+          <span class="na">publish_branch</span><span class="pi">:</span> <span class="s">gh-pages</span>
+</code></pre></div></div>
 
-&lt;p&gt;This wil do the following things each time a commit is pushed to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;:&lt;/p&gt;
+<p>This wil do the following things each time a commit is pushed to <code class="language-plaintext highlighter-rouge">master</code>:</p>
 
-&lt;ol&gt;
-  &lt;li&gt;Checkout the repository&lt;/li&gt;
-  &lt;li&gt;Setup the environment using Ruby 3&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/limjh16/jekyll-action-ts&quot;&gt;jekyll-action-ts&lt;/a&gt; is used to compile the site. You can also use the &lt;a href=&quot;https://github.com/helaili/jekyll-action&quot;&gt;Docker-based variant&lt;/a&gt; or simply compile ‘by hand’ as you would do locally.&lt;/li&gt;
-  &lt;li&gt;The last step will publish everything that is compiled into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch. You will need to create a &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;deploy token&lt;/a&gt; for this.&lt;/li&gt;
-&lt;/ol&gt;
+<ol>
+  <li>Checkout the repository</li>
+  <li>Setup the environment using Ruby 3</li>
+  <li><a href="https://github.com/limjh16/jekyll-action-ts">jekyll-action-ts</a> is used to compile the site. You can also use the <a href="https://github.com/helaili/jekyll-action">Docker-based variant</a> or simply compile ‘by hand’ as you would do locally.</li>
+  <li>The last step will publish everything that is compiled into the <code class="language-plaintext highlighter-rouge">_site</code> folder to the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch. You will need to create a <a href="https://github.com/settings/tokens">deploy token</a> for this.</li>
+</ol>
 
-&lt;p class=&quot;notice--warning&quot;&gt;Please note that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch will be reset on each action execution.&lt;/p&gt;
+<p class="notice--warning">Please note that the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch will be reset on each action execution.</p>
 
-&lt;p&gt;With the action in place, you should also exclude the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github&lt;/code&gt; folder in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+<p>With the action in place, you should also exclude the <code class="language-plaintext highlighter-rouge">.github</code> folder in your <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;exclude&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.github/&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">exclude</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">.github/</span>
+</code></pre></div></div>
 
-&lt;p&gt;That’s it.
-Commit and push the changes to GitHub and the action will be executed and update the site automatically.&lt;/p&gt;
+<p>That’s it.
+Commit and push the changes to GitHub and the action will be executed and update the site automatically.</p>
 
-&lt;h1 id=&quot;further-improvements&quot;&gt;Further improvements&lt;/h1&gt;
+<h1 id="further-improvements">Further improvements</h1>
 
-&lt;p&gt;Instead of relying on GitHub for compiling and hosting and alternative would have been to migrate to &lt;a href=&quot;https://www.netlify.com/blog/2020/04/02/a-step-by-step-guide-jekyll-4.0-on-netlify/&quot;&gt;Netlify&lt;/a&gt; or &lt;a href=&quot;https://developers.cloudflare.com/pages/framework-guides/deploy-a-jekyll-site&quot;&gt;Cloudflare&lt;/a&gt;.
-But in the end I was too lazy to change CNAMEs and familiarize with yet another stack.&lt;/p&gt;
+<p>Instead of relying on GitHub for compiling and hosting and alternative would have been to migrate to <a href="https://www.netlify.com/blog/2020/04/02/a-step-by-step-guide-jekyll-4.0-on-netlify/">Netlify</a> or <a href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-jekyll-site">Cloudflare</a>.
+But in the end I was too lazy to change CNAMEs and familiarize with yet another stack.</p>
 
-&lt;p&gt;I’d also favor to remove the ‘local part’ of the tech stack altogether and edit and preview the site using a Web IDE like &lt;a href=&quot;https://github.com/features/codespaces&quot;&gt;GitHub Code Spaces&lt;/a&gt; or &lt;a href=&quot;https://www.gitpod.io/&quot;&gt;GitPod&lt;/a&gt;.
+<p>I’d also favor to remove the ‘local part’ of the tech stack altogether and edit and preview the site using a Web IDE like <a href="https://github.com/features/codespaces">GitHub Code Spaces</a> or <a href="https://www.gitpod.io/">GitPod</a>.
 This would eliminate the problems with keeping the local and remote ruby versions in sync.
-On the other hand, I’m forced to stay up to date with the current setup.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="myself" /><category term="jekyll" /><summary type="html">It’s now two years since Jekyll 4.0 has been released. The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update. In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release. This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)</title><link href="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/" rel="alternate" type="text/html" title="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" /><published>2021-07-30T00:00:00+00:00</published><updated>2021-07-30T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/dell-s3-modern-sleep</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/">&lt;p&gt;I hate when things that used to work no longer do and this especially holds for the &lt;em&gt;basic&lt;/em&gt; stuff.
+On the other hand, I’m forced to stay up to date with the current setup.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="myself" /><category term="jekyll" /><summary type="html"><![CDATA[It’s now two years since Jekyll 4.0 has been released. The release fosters several build performance improvements, but sadly GitHub Pages remains at Jekyll 3.9 and there is no willingness to update. In addition, compiling this site locally became an increasing problem after my Arch Linux workstation was upgraded to the Ruby 3.0 release. This post explains how to ditch GitHub Pages automatic Jekyll compilation and use GitHub Actions instead.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2021-08-21-jekyll-reloaded/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)</title><link href="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/" rel="alternate" type="text/html" title="Enabling S3 Sleep on Dell XPS 13 (7390 2-in-1)" /><published>2021-07-30T00:00:00+00:00</published><updated>2021-07-30T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/dell-s3-modern-sleep</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/"><![CDATA[<p>I hate when things that used to work no longer do and this especially holds for the <em>basic</em> stuff.
 When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default.
-This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.&lt;/p&gt;
+This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.</p>
 
-&lt;p&gt;I never was a big fan of closing all programs and shutting down my laptop (or formerly my desktop) in the evening.
+<p>I never was a big fan of closing all programs and shutting down my laptop (or formerly my desktop) in the evening.
 While I was in school and university I mostly used suspend to disk (hibernate) instead of standby, which consumed way more power.
-But with increasing battery power the standby penalty became negligible and nowadays I rarely shut down my laptop completely.&lt;/p&gt;
+But with increasing battery power the standby penalty became negligible and nowadays I rarely shut down my laptop completely.</p>
 
-&lt;p&gt;My new Dell XPS 13, however, gave me a headache:
+<p>My new Dell XPS 13, however, gave me a headache:
 After closing the lid or pressing the power button to enter standby I noticed the next day in the morning that the laptop is slightly warm.
 Even worse, when putting the laptop in a bag it slowly heated and exited standby to activate cooling on full speed.
 A bit of googling revealed that Dell defaults to modern standby for this model.
-Maybe this was the same for my previous XPS 13, but it had no overheating problems.&lt;/p&gt;
+Maybe this was the same for my previous XPS 13, but it had no overheating problems.</p>
 
-&lt;h2 id=&quot;system-power-states&quot;&gt;System Power States&lt;/h2&gt;
+<h2 id="system-power-states">System Power States</h2>
 
-&lt;p&gt;Before focusing on the solution, let’s briefly explain the &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/win32/power/system-power-states&quot;&gt;power states&lt;/a&gt; of computers.&lt;/p&gt;
+<p>Before focusing on the solution, let’s briefly explain the <a href="https://docs.microsoft.com/en-us/windows/win32/power/system-power-states">power states</a> of computers.</p>
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;S0&lt;/strong&gt;: The system is running. All required hardware is powered on, unused components may save power in a low power mode.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;S0 low power idle&lt;/strong&gt;: This state is also called &lt;em&gt;modern standby&lt;/em&gt;. The system is running in low power mode. Some components may stay powered on, e.g. to keep a network connection. This is similar what cell phones do. A benefit of this power state is that it can resume quickly from standby .&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;S1-S3&lt;/strong&gt;: The next three states refer to sleep states where the system appears off. Most components but RAM are powered off. Power usage decreases from S1 to S3. Usually only one of these states is supported by a device.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;S4&lt;/strong&gt;: Hibernate or suspend RAM to disk. This offers the lowest level of power consumption but keeping your apps open.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;S5&lt;/strong&gt;: Soft off, full reboot required.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;G3&lt;/strong&gt;: Mechanical off, full reboot required. No power can be consumed.&lt;/li&gt;
-&lt;/ul&gt;
+<ul>
+  <li><strong>S0</strong>: The system is running. All required hardware is powered on, unused components may save power in a low power mode.</li>
+  <li><strong>S0 low power idle</strong>: This state is also called <em>modern standby</em>. The system is running in low power mode. Some components may stay powered on, e.g. to keep a network connection. This is similar what cell phones do. A benefit of this power state is that it can resume quickly from standby .</li>
+  <li><strong>S1-S3</strong>: The next three states refer to sleep states where the system appears off. Most components but RAM are powered off. Power usage decreases from S1 to S3. Usually only one of these states is supported by a device.</li>
+  <li><strong>S4</strong>: Hibernate or suspend RAM to disk. This offers the lowest level of power consumption but keeping your apps open.</li>
+  <li><strong>S5</strong>: Soft off, full reboot required.</li>
+  <li><strong>G3</strong>: Mechanical off, full reboot required. No power can be consumed.</li>
+</ul>
 
-&lt;p&gt;The benefits of modern standby are explained in &lt;a href=&quot;https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-vs-s3&quot;&gt;this article&lt;/a&gt;.
+<p>The benefits of modern standby are explained in <a href="https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-vs-s3">this article</a>.
 S1-S3 has to be implemented and executed on the firmware (BIOS) level, hence resume is a lot slower in contrast to modern standby.
-If a SoC supports low power idle this standby method is preferred.&lt;/p&gt;
+If a SoC supports low power idle this standby method is preferred.</p>
 
-&lt;h2 id=&quot;re-enabling-s3&quot;&gt;Re-enabling S3&lt;/h2&gt;
+<h2 id="re-enabling-s3">Re-enabling S3</h2>
 
-&lt;p&gt;If modern standby works as expected there are usually no reasons to disable it unless you are very power-savvy.
-But the net if full of complains that modern standby is not reliable.&lt;/p&gt;
+<p>If modern standby works as expected there are usually no reasons to disable it unless you are very power-savvy.
+But the net if full of complains that modern standby is not reliable.</p>
 
-&lt;h3 id=&quot;linux&quot;&gt;Linux&lt;/h3&gt;
+<h3 id="linux">Linux</h3>
 
-&lt;p&gt;The Arch Linux Wiki covers all &lt;a href=&quot;https://wiki.archlinux.org/title/Dell_XPS_13_2-in-1_(7390)#S3_Sleep&quot;&gt;details&lt;/a&gt; of how to enable S3.
-Basically, you have to add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mem_sleep_default=deep&lt;/code&gt; to your kernel command line.
-If you are using systemd-boot as boot manager, just add it to your boot entry &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;options&lt;/code&gt;.&lt;/p&gt;
+<p>The Arch Linux Wiki covers all <a href="https://wiki.archlinux.org/title/Dell_XPS_13_2-in-1_(7390)#S3_Sleep">details</a> of how to enable S3.
+Basically, you have to add <code class="language-plaintext highlighter-rouge">mem_sleep_default=deep</code> to your kernel command line.
+If you are using systemd-boot as boot manager, just add it to your boot entry <code class="language-plaintext highlighter-rouge">options</code>.</p>
 
-&lt;p&gt;There is one caveat, the screen sometimes does not wake up.
-You have to disable &lt;em&gt;Early Dell Logo Display&lt;/em&gt; in the BIOS (&lt;em&gt;POST Behavior &amp;gt; Sign of Life&lt;/em&gt;) to get this fixed.&lt;/p&gt;
+<p>There is one caveat, the screen sometimes does not wake up.
+You have to disable <em>Early Dell Logo Display</em> in the BIOS (<em>POST Behavior &gt; Sign of Life</em>) to get this fixed.</p>
 
-&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;/h3&gt;
+<h3 id="windows">Windows</h3>
 
-&lt;p&gt;On Windows the story is quite similar, but depends on the used Windows version.
-Before you fix it, check which stand-by modes are available by executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powercfg /a&lt;/code&gt; on the command line.
-This will yield an output similar to the following, mentioning that S0 low power idle is in use and S3 is not available:&lt;/p&gt;
+<p>On Windows the story is quite similar, but depends on the used Windows version.
+Before you fix it, check which stand-by modes are available by executing <code class="language-plaintext highlighter-rouge">powercfg /a</code> on the command line.
+This will yield an output similar to the following, mentioning that S0 low power idle is in use and S3 is not available:</p>
 
-&lt;div class=&quot;language-batch highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Idle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Network&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Connected&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;Hibernate&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;Fast&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Startup&lt;/span&gt;
+<div class="language-batch highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S0</span> <span class="kd">Low</span> <span class="kd">Power</span> <span class="kd">Idle</span><span class="o">)</span> <span class="kd">Network</span> <span class="kd">Connected</span>
+    <span class="kd">Hibernate</span>
+    <span class="kd">Fast</span> <span class="kd">Startup</span>
 
-&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
-        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+<span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="ow">not</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S1</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
-        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S2</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;idle&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;supported&lt;/span&gt;.
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span>
+        <span class="kd">This</span> <span class="kd">standby</span> <span class="kd">state</span> <span class="kd">is</span> <span class="kd">disabled</span> <span class="kd">when</span> <span class="kd">S0</span> <span class="kd">low</span> <span class="kd">power</span> <span class="kd">idle</span> <span class="kd">is</span> <span class="kd">supported</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Hybrid&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Sleep&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt;.
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;hypervisor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    <span class="kd">Hybrid</span> <span class="kd">Sleep</span>
+        <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span> <span class="kd">is</span> <span class="ow">not</span> <span class="kd">available</span>.
+        <span class="kd">The</span> <span class="kd">hypervisor</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+</code></pre></div></div>
 
-&lt;p&gt;On versions before Windows 20H1 you have to set the &lt;a href=&quot;https://www.itprotoday.com/mobile-management-and-security/disabling-windows-connected-standby&quot;&gt;following&lt;/a&gt; registry key to zero:&lt;/p&gt;
+<p>On versions before Windows 20H1 you have to set the <a href="https://www.itprotoday.com/mobile-management-and-security/disabling-windows-connected-standby">following</a> registry key to zero:</p>
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
 CsEnabled=0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</code></pre></div></div>
 
-&lt;p&gt;But it seems that Microsoft wants to push modern standby forward and removed this feature.
+<p>But it seems that Microsoft wants to push modern standby forward and removed this feature.
 So after the update to 20H1 I was left with modern standby again. Bummer.
-Luckily, In 20H2 Microsoft added back a new &lt;a href=&quot;https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/&quot;&gt;registry hack&lt;/a&gt; for enabling S3:&lt;/p&gt;
+Luckily, In 20H2 Microsoft added back a new <a href="https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/">registry hack</a> for enabling S3:</p>
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[HKLM\System\CurrentControlSet\Control\Power]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[HKLM\System\CurrentControlSet\Control\Power]
 PlatformAoAcOverride=0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</code></pre></div></div>
 
-&lt;p&gt;So just add this DWORD and you have S3 back.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;powercfg /a&lt;/code&gt; should yield now the following:&lt;/p&gt;
+<p>So just add this DWORD and you have S3 back.
+<code class="language-plaintext highlighter-rouge">powercfg /a</code> should yield now the following:</p>
 
-&lt;div class=&quot;language-batch highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;Hibernate&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;Fast&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Startup&lt;/span&gt;
+<div class="language-batch highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S3</span><span class="o">)</span>
+    <span class="kd">Hibernate</span>
+    <span class="kd">Fast</span> <span class="kd">Startup</span>
 
-&lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;following&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;states&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;available&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt;:
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+<span class="kd">The</span> <span class="kd">following</span> <span class="nb">sleep</span> <span class="kd">states</span> <span class="kd">are</span> <span class="ow">not</span> <span class="kd">available</span> <span class="na">on</span> <span class="kd">this</span> <span class="kd">system</span>:
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S1</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S2</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Standby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;S0&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Low&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Power&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Idle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;firmware&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
+    <span class="kd">Standby</span> <span class="o">(</span><span class="kd">S0</span> <span class="kd">Low</span> <span class="kd">Power</span> <span class="kd">Idle</span><span class="o">)</span>
+        <span class="kd">The</span> <span class="kd">system</span> <span class="kd">firmware</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
 
-    &lt;span class=&quot;kd&quot;&gt;Hybrid&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;Sleep&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;The&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;hypervisor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;support&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;standby&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;state&lt;/span&gt;.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    <span class="kd">Hybrid</span> <span class="kd">Sleep</span>
+        <span class="kd">The</span> <span class="kd">hypervisor</span> <span class="kd">does</span> <span class="ow">not</span> <span class="kd">support</span> <span class="kd">this</span> <span class="kd">standby</span> <span class="kd">state</span>.
+</code></pre></div></div>
 
-&lt;p&gt;Windows 11 also supports S3 via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PlatformAoAcOverride&lt;/code&gt;.
-However, you might need to set this setting again after the upgrade.&lt;/p&gt;
+<p>Windows 11 also supports S3 via <code class="language-plaintext highlighter-rouge">PlatformAoAcOverride</code>.
+However, you might need to set this setting again after the upgrade.</p>
 
-&lt;h3 id=&quot;the-efi-approach&quot;&gt;The EFI approach&lt;/h3&gt;
+<h3 id="the-efi-approach">The EFI approach</h3>
 
-&lt;p&gt;While googling for a solution I also stumbled over &lt;a href=&quot;https://github.com/ElectronicElephant/Modern-Standby-Byby&quot;&gt;this&lt;/a&gt; idea to fix the problem with an &lt;a href=&quot;https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/&quot;&gt;EFI application&lt;/a&gt;.
+<p>While googling for a solution I also stumbled over <a href="https://github.com/ElectronicElephant/Modern-Standby-Byby">this</a> idea to fix the problem with an <a href="https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/">EFI application</a>.
 It simply patches the ACPI tables and disables modern standby completely – regardless of the used operating system.
 Drawbacks are that secure boot will no longer work and you obviously have to use a boot manager like rEFInd.
-System-d boot does not seem to &lt;a href=&quot;https://github.com/systemd/systemd/issues/15617&quot;&gt;support EFI drivers&lt;/a&gt;.&lt;/p&gt;
+System-d boot does not seem to <a href="https://github.com/systemd/systemd/issues/15617">support EFI drivers</a>.</p>
 
-&lt;p&gt;I did not go this route but patched Linux and Windows separately, but I keep it here for future reference or when Microsoft removes the new registry hack again.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="windows" /><category term="linux" /><summary type="html">I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking a ZTE ZXDSL-931VII Router</title><link href="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/" rel="alternate" type="text/html" title="Hacking a ZTE ZXDSL-931VII Router" /><published>2020-06-05T00:00:00+00:00</published><updated>2020-06-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/hacking-zte-zxdsl-931vii</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/">&lt;p&gt;Recently I got my hands on an old &lt;em&gt;ZTE ZXDSL-931VII&lt;/em&gt; router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time.
-In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.&lt;/p&gt;
+<p>I did not go this route but patched Linux and Windows separately, but I keep it here for future reference or when Microsoft removes the new registry hack again.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="windows" /><category term="linux" /><summary type="html"><![CDATA[I hate when things that used to work no longer do and this especially holds for the basic stuff. When I got my new Dell XPS 13 (7390 2-in-1) is was really frustrated by the modern standby implementation it uses by default. This post explains briefly how to re-enable legacy—but reliable—standby on this and likely other laptop models to prevent overheating.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2021-07-30-dell-s3-modern-sleep/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Hacking a ZTE ZXDSL-931VII Router</title><link href="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/" rel="alternate" type="text/html" title="Hacking a ZTE ZXDSL-931VII Router" /><published>2020-06-05T00:00:00+00:00</published><updated>2020-06-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/hacking-zte-zxdsl-931vii</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/"><![CDATA[<p>Recently I got my hands on an old <em>ZTE ZXDSL-931VII</em> router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time.
+In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.</p>
 
-&lt;p class=&quot;notice--danger&quot;&gt;The mentioned router is quite old, hence, I think it’s okay to write an article that exposes the security risks of this device.
-But maybe keep this as a reminder that I highly encourage everyone to install security updates and switch devices as soon they reach end of support / updates.&lt;/p&gt;
+<p class="notice--danger">The mentioned router is quite old, hence, I think it’s okay to write an article that exposes the security risks of this device.
+But maybe keep this as a reminder that I highly encourage everyone to install security updates and switch devices as soon they reach end of support / updates.</p>
 
-&lt;p&gt;All I knew about the device was its WiFi password, so connecting to the router was no problem (besides that the wireless signal was really bad).
-The IP 192.168.1.10 had been assigned to my laptop, hence I tried entering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.1&lt;/code&gt; in my browser for accessing the admin interface. As expected I was greeted with a login prompt.&lt;/p&gt;
+<p>All I knew about the device was its WiFi password, so connecting to the router was no problem (besides that the wireless signal was really bad).
+The IP 192.168.1.10 had been assigned to my laptop, hence I tried entering <code class="language-plaintext highlighter-rouge">http://192.168.1.1</code> in my browser for accessing the admin interface. As expected I was greeted with a login prompt.</p>
 
-&lt;p&gt;&lt;img src=&quot;login.png&quot; alt=&quot;Login Page&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<p><img src="login.png" alt="Login Page" class="align-center" /></p>
 
-&lt;p&gt;I’ve asked my friend who owned the router for the password, but he did not remember it. Apparently he only ever changed the WiFi key.
-Googling brought me to this picture in the ZTE manual:&lt;/p&gt;
+<p>I’ve asked my friend who owned the router for the password, but he did not remember it. Apparently he only ever changed the WiFi key.
+Googling brought me to this picture in the ZTE manual:</p>
 
-&lt;p&gt;&lt;img src=&quot;manual.png&quot; alt=&quot;Router Manual&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<p><img src="manual.png" alt="Router Manual" class="align-center" /></p>
 
-&lt;p&gt;Alright so I have to login with &lt;em&gt;user&lt;/em&gt; and the router serial number as password. I turned the router to search for the serial number on the bottom, but the sticker was gone… what a bummer.&lt;/p&gt;
+<p>Alright so I have to login with <em>user</em> and the router serial number as password. I turned the router to search for the serial number on the bottom, but the sticker was gone… what a bummer.</p>
 
-&lt;p&gt;Google brought up some default passwords (like &lt;em&gt;admin/admin&lt;/em&gt; or &lt;em&gt;user/user&lt;/em&gt;), but none of these worked.
-After a bit more time I found an &lt;a href=&quot;https://www.exploit-db.com/exploits/34680&quot;&gt;exploit&lt;/a&gt; for easily dumping the router configuration without being logged in.
-Following the guide I fired up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.1.1/manager_dev_config_t.gch&lt;/code&gt; in my browser and in deed, there are no access restrictions to this site nor to the configuration dump.&lt;/p&gt;
+<p>Google brought up some default passwords (like <em>admin/admin</em> or <em>user/user</em>), but none of these worked.
+After a bit more time I found an <a href="https://www.exploit-db.com/exploits/34680">exploit</a> for easily dumping the router configuration without being logged in.
+Following the guide I fired up <code class="language-plaintext highlighter-rouge">http://192.168.1.1/manager_dev_config_t.gch</code> in my browser and in deed, there are no access restrictions to this site nor to the configuration dump.</p>
 
-&lt;p&gt;&lt;img src=&quot;dump.png&quot; alt=&quot;Router Manual&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<p><img src="dump.png" alt="Router Manual" class="align-center" /></p>
 
-&lt;p&gt;The binary dump can be converted to an XML config with the provided Python script.
-The password (or better the serial) of the &lt;em&gt;user&lt;/em&gt; login is simply stated in the XML (cf. &lt;em&gt;ZTE{serial}&lt;/em&gt; in XML below).
-The login mask also accepts this credentials and I can access the configuration interface now.&lt;/p&gt;
+<p>The binary dump can be converted to an XML config with the provided Python script.
+The password (or better the serial) of the <em>user</em> login is simply stated in the XML (cf. <em>ZTE{serial}</em> in XML below).
+The login mask also accepts this credentials and I can access the configuration interface now.</p>
 
-&lt;p&gt;However, I am already sidetracked by the three other credentials stated in the XML.
-There are logins for and admin, tech and unnamed user.&lt;/p&gt;
+<p>However, I am already sidetracked by the three other credentials stated in the XML.
+There are logins for and admin, tech and unnamed user.</p>
 
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Tbl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DevAuthInfo&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;RowCount=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;administrator&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;!tc0MhtZTE{serial}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ZTE{serial}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tech&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;!M1PhoIAD2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ViewName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IGD.AU4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zte&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Level&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Extra&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ExtraInt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Tbl&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Tbl</span> <span class="na">name=</span><span class="s">"DevAuthInfo"</span> <span class="na">RowCount=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"administrator"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"!tc0MhtZTE{serial}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"user"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"ZTE{serial}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU3"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">"tech"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"!M1PhoIAD2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ViewName"</span> <span class="na">val=</span><span class="s">"IGD.AU4"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Pass"</span> <span class="na">val=</span><span class="s">"zte"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Level"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Extra"</span> <span class="na">val=</span><span class="s">""</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ExtraInt"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+<span class="nt">&lt;/Tbl&gt;</span>
+</code></pre></div></div>
 
-&lt;p&gt;Wait—empty username and password &lt;em&gt;zte&lt;/em&gt; might have done the trick as well?
-I can’t believe this… but &lt;em&gt;luckily&lt;/em&gt; the login mask rejects the empty username.
+<p>Wait—empty username and password <em>zte</em> might have done the trick as well?
+I can’t believe this… but <em>luckily</em> the login mask rejects the empty username.
 The validation is done on JS side, but also if I turn this off and send the request with empty username directly, an invalid credentials warning pops up.
-The &lt;em&gt;tech&lt;/em&gt; user does not seem to work via the web interface as well.
-The &lt;em&gt;administrator&lt;/em&gt; user with default password &lt;em&gt;!tc0MhtZTE{serial}&lt;/em&gt; works, however.
-The configuration interface shows now a plethora of menu points allowing me to configure lots of stuff.&lt;/p&gt;
+The <em>tech</em> user does not seem to work via the web interface as well.
+The <em>administrator</em> user with default password <em>!tc0MhtZTE{serial}</em> works, however.
+The configuration interface shows now a plethora of menu points allowing me to configure lots of stuff.</p>
 
-&lt;p&gt;But the two other login credentials still badgered me.
+<p>But the two other login credentials still badgered me.
 Why are these not working?
-Looking closer to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DM&lt;/code&gt; attributes reveal that these are meant for a &lt;em&gt;second&lt;/em&gt; application.&lt;/p&gt;
+Looking closer to the <code class="language-plaintext highlighter-rouge">DM</code> attributes reveal that these are meant for a <em>second</em> application.</p>
 
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AppID&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"AppID"</span> <span class="na">val=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
 
-&lt;p&gt;What can that be? A second web interface?
+<p>What can that be? A second web interface?
 I googled a bit, but nothing showed up, so I tried SSH’ing to the rooter—no success.
-FTP’ing is possible, but with another pair of credentials that defaults to &lt;em&gt;admin/admin&lt;/em&gt; (also visible in the XML). The folder listing is empty, tho.
-But there are some hints for a Telnet interface in the XML:&lt;/p&gt;
+FTP’ing is possible, but with another pair of credentials that defaults to <em>admin/admin</em> (also visible in the XML). The folder listing is empty, tho.
+But there are some hints for a Telnet interface in the XML:</p>
 
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Tbl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TelnetCfg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;RowCount=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Row&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;No=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Wan_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Lan_Enable&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_Port&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;23&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_UName&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;root&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TS_UPwd&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;root&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Max_Con_Num&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DM&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ProcType&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;val=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Row&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Tbl&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Tbl</span> <span class="na">name=</span><span class="s">"TelnetCfg"</span> <span class="na">RowCount=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Row</span> <span class="na">No=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_Enable"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Wan_Enable"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Lan_Enable"</span> <span class="na">val=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_Port"</span> <span class="na">val=</span><span class="s">"23"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_UName"</span> <span class="na">val=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"TS_UPwd"</span> <span class="na">val=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"Max_Con_Num"</span> <span class="na">val=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;DM</span> <span class="na">name=</span><span class="s">"ProcType"</span> <span class="na">val=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/Row&gt;</span>
+<span class="nt">&lt;/Tbl&gt;</span>
+</code></pre></div></div>
 
-&lt;p&gt;Accessing the telnet interface was not possible as well.
+<p>Accessing the telnet interface was not possible as well.
 So I logged into the web interface as administrator again and searched if this can be enabled somehow.
-Under &lt;em&gt;Security &amp;gt; Service Control&lt;/em&gt; there was an entry that discarded Telnet access from LAN.&lt;/p&gt;
+Under <em>Security &gt; Service Control</em> there was an entry that discarded Telnet access from LAN.</p>
 
-&lt;p&gt;&lt;img src=&quot;telnet.png&quot; alt=&quot;Telnet restriction&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<p><img src="telnet.png" alt="Telnet restriction" class="align-center" /></p>
 
-&lt;p&gt;I’ve added a new entry that permits Telnet access and here we go… it gives me Telnet access!
-I tried &lt;em&gt;root&lt;/em&gt; as username first as it was mentioned in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TelnetCfg&lt;/code&gt;, but it was rejected.
-Then I tried the &lt;em&gt;second application&lt;/em&gt; user &lt;em&gt;tech&lt;/em&gt; and its password. Bingo!&lt;/p&gt;
+<p>I’ve added a new entry that permits Telnet access and here we go… it gives me Telnet access!
+I tried <em>root</em> as username first as it was mentioned in the <code class="language-plaintext highlighter-rouge">TelnetCfg</code>, but it was rejected.
+Then I tried the <em>second application</em> user <em>tech</em> and its password. Bingo!</p>
 
-&lt;p&gt;Entering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?&lt;/code&gt; reveals a help menu that advertises &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enable&lt;/code&gt; as the privileged mode.
+<p>Entering <code class="language-plaintext highlighter-rouge">?</code> reveals a help menu that advertises <code class="language-plaintext highlighter-rouge">enable</code> as the privileged mode.
 Entering that command will show another password prompt.
-Here I’ve put in &lt;em&gt;zte&lt;/em&gt;, as this is has administrative level according to the XML config. Bingo#2.&lt;/p&gt;
+Here I’ve put in <em>zte</em>, as this is has administrative level according to the XML config. Bingo#2.</p>
 
-&lt;p&gt;Another listing of available commands brings attention to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shell&lt;/code&gt; command.
+<p>Another listing of available commands brings attention to the <code class="language-plaintext highlighter-rouge">shell</code> command.
 Again a password prompt is shown.
-One of my first guess &lt;em&gt;root/root&lt;/em&gt; (from XML) was right.&lt;/p&gt;
+One of my first guess <em>root/root</em> (from XML) was right.</p>
 
-&lt;p&gt;&lt;img src=&quot;shell.png&quot; alt=&quot;Shell access&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+<p><img src="shell.png" alt="Shell access" class="align-center" /></p>
 
-&lt;p&gt;Now I’ve got a root shell on the router just by accessing the device via HTTP initially.
+<p>Now I’ve got a root shell on the router just by accessing the device via HTTP initially.
 It’s known that old routers have security holes, but I haven’t imagined that it is that easy to get thus far.
 It also looks like the default config of the router exposes the HTTP interface directly to the internet, which means that you can dump the config and login without problems.
-Have I mentioned that the XML also contains your ISP credentials?&lt;/p&gt;
+Have I mentioned that the XML also contains your ISP credentials?</p>
 
-&lt;p&gt;I can just encourage anyone to keep your devices up to date or replace them. I’ll toss the router into the bin right now.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="hacking" /><summary type="html">Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Site Relaunch</title><link href="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/" rel="alternate" type="text/html" title="Site Relaunch" /><published>2019-07-02T00:00:00+00:00</published><updated>2019-07-02T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/site-relaunch</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/">&lt;p&gt;I was a bit too optimistic when I announced the “&lt;a href=&quot;/posts/tech/2011-12-01-beta-launch/&quot;&gt;Beta Launch&lt;/a&gt;” of this site – almost 8 years ago!
+<p>I can just encourage anyone to keep your devices up to date or replace them. I’ll toss the router into the bin right now.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="hacking" /><summary type="html"><![CDATA[Recently I got my hands on an old ZTE ZXDSL-931VII router that I grabbed after it had been ditched – it’s always fun to play with old hardware from time to time. In this post I’ll shortly outline some of the security issues of the device like extracting login data and obtaining a root shell.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2020-06-05-hacking-zte-zxdsl-931vii/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Site Relaunch</title><link href="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/" rel="alternate" type="text/html" title="Site Relaunch" /><published>2019-07-02T00:00:00+00:00</published><updated>2019-07-02T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/site-relaunch</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/"><![CDATA[<p>I was a bit too optimistic when I announced the “<a href="/posts/tech/2011-12-01-beta-launch/">Beta Launch</a>” of this site – almost 8 years ago!
 Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it.
 Until now!
-I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.&lt;/p&gt;
+I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.</p>
 
-&lt;h1 id=&quot;a-bit-of-history&quot;&gt;A bit of history&lt;/h1&gt;
+<h1 id="a-bit-of-history">A bit of history</h1>
 
-&lt;p&gt;As mentioned in the post regarding the beta launch, I’ve already spent some time on the concept of this site in 2011.
+<p>As mentioned in the post regarding the beta launch, I’ve already spent some time on the concept of this site in 2011.
 I’ve iterated through several blog/website engines like “code my own” or Wordpress, but finally ended up with Jekyll.
 The mistake I’ve made was that I decided to build the Jekyll theme and thus also the blog and content engine on my own.
-I was at a stage where most of the stuff was finished but still had rough edges here and there.&lt;/p&gt;
+I was at a stage where most of the stuff was finished but still had rough edges here and there.</p>
 
-&lt;p&gt;At the time I was also busy with university, the startup Songpier, which I was part of, and last but not least the Winamp for Android app.
-Finishing the website was just not my top prio at that time.&lt;/p&gt;
+<p>At the time I was also busy with university, the startup Songpier, which I was part of, and last but not least the Winamp for Android app.
+Finishing the website was just not my top prio at that time.</p>
 
-&lt;h1 id=&quot;the-hiatus&quot;&gt;The hiatus&lt;/h1&gt;
+<h1 id="the-hiatus">The hiatus</h1>
 
-&lt;p&gt;Somewhen in 2014 I’ve decided to take all content off and just place my Twitter feed and link to social accounts (like LinkedIn and Strava) on the site until I find time to finish it.&lt;/p&gt;
+<p>Somewhen in 2014 I’ve decided to take all content off and just place my Twitter feed and link to social accounts (like LinkedIn and Strava) on the site until I find time to finish it.</p>
 
-&lt;p&gt;The result was rather bold and looked like this:&lt;/p&gt;
+<p>The result was rather bold and looked like this:</p>
 
-&lt;p&gt;&lt;img src=&quot;hiatus.png&quot; alt=&quot;Intermediate site&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+<p><img src="hiatus.png" alt="Intermediate site" class="align-center" data-lity="500px" /></p>
 
-&lt;p&gt;In the meantime I posted tech-savvy posts on my company’s blog, so the immediate need for a personal blog was no longer given.
-Still, I had ideas for more controversial or personal posts that did not fit on the company blog.&lt;/p&gt;
+<p>In the meantime I posted tech-savvy posts on my company’s blog, so the immediate need for a personal blog was no longer given.
+Still, I had ideas for more controversial or personal posts that did not fit on the company blog.</p>
 
-&lt;h1 id=&quot;the-relaunch&quot;&gt;The relaunch&lt;/h1&gt;
+<h1 id="the-relaunch">The relaunch</h1>
 
-&lt;p&gt;In 2019 I decided to increase my priority for the website as I have lots of time while &lt;em&gt;working&lt;/em&gt; on my “vacation-backlog”.
+<p>In 2019 I decided to increase my priority for the website as I have lots of time while <em>working</em> on my “vacation-backlog”.
 Soon I decided that using the old markup and stylesheets will not play ball as Jekyll has seen several new releases with breaking changes.
 I also did not want to lose momentum by migrating these or even starting on a green field.
 So it was pretty clear that I wanted to use an existing theme for Jekyll.
-I evaluated several themes but have finally chosen &lt;a href=&quot;https://mmistakes.github.io/so-simple-theme/&quot;&gt;So Simple&lt;/a&gt; by Michael Rose.
-It’s a very basic theme and turned out to be quite customizable with CSS.&lt;/p&gt;
+I evaluated several themes but have finally chosen <a href="https://mmistakes.github.io/so-simple-theme/">So Simple</a> by Michael Rose.
+It’s a very basic theme and turned out to be quite customizable with CSS.</p>
 
-&lt;p&gt;As next step I changed a few bits and pieces regarding the theme to make it fitting my personal taste and started to migrate content step by step from the old site.
+<p>As next step I changed a few bits and pieces regarding the theme to make it fitting my personal taste and started to migrate content step by step from the old site.
 It also turned out that the folks behind Jekyll decided to ditch the Textile markup support, so I had to migrate the posts to Markdown as well – don’t ask me why I’ve chosen Textile a few years (or better a decade) back…
-I also cross-linked the posts on my &lt;a href=&quot;/posts/tags/#cqse&quot;&gt;company blog&lt;/a&gt; to bridge the gap between the old content and today.&lt;/p&gt;
+I also cross-linked the posts on my <a href="/posts/tags/#cqse">company blog</a> to bridge the gap between the old content and today.</p>
 
-&lt;h1 id=&quot;the-result&quot;&gt;The result&lt;/h1&gt;
+<h1 id="the-result">The result</h1>
 
-&lt;p&gt;Roughly three months later—at the end of my vacation period—I am done with the first iteration.
+<p>Roughly three months later—at the end of my vacation period—I am done with the first iteration.
 The site features all old blog posts, an up-to-date bio and also some required legal information.
-In addition I’ve added &lt;a href=&quot;https://help.github.com/en/articles/securing-your-github-pages-site-with-https&quot;&gt;SSL encryption&lt;/a&gt; and changed the primary domain from &lt;a href=&quot;https://mpdeimos.com&quot;&gt;mpdeimos.com&lt;/a&gt; to the more professional looking &lt;a href=&quot;https://martinpoehlmann.com&quot;&gt;martinpoehlmann.com&lt;/a&gt;.&lt;/p&gt;
+In addition I’ve added <a href="https://help.github.com/en/articles/securing-your-github-pages-site-with-https">SSL encryption</a> and changed the primary domain from <a href="https://mpdeimos.com">mpdeimos.com</a> to the more professional looking <a href="https://martinpoehlmann.com">martinpoehlmann.com</a>.</p>
 
-&lt;p&gt;&lt;strong&gt;The time for a relaunch is finally there!&lt;/strong&gt;&lt;/p&gt;
+<p><strong>The time for a relaunch is finally there!</strong></p>
 
-&lt;p&gt;I also have some new posts in the pipeline that I’ll release step by step.
-Of course a project or portfolio section is planned as well, but putting these pieces together might take some additional time…&lt;/p&gt;
+<p>I also have some new posts in the pipeline that I’ll release step by step.
+Of course a project or portfolio section is planned as well, but putting these pieces together might take some additional time…</p>
 
-&lt;h1 id=&quot;some-early-mockups&quot;&gt;Some early mockups&lt;/h1&gt;
+<h1 id="some-early-mockups">Some early mockups</h1>
 
-&lt;p&gt;For your viewing pleasure I want to share some early mockups of the site.
-Btw, the very first mockup (pre-2010) already had a “dark-mode” :)&lt;/p&gt;
+<p>For your viewing pleasure I want to share some early mockups of the site.
+Btw, the very first mockup (pre-2010) already had a “dark-mode” :)</p>
 
-&lt;p&gt;&lt;img src=&quot;design1.png&quot; alt=&quot;Initial design&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+<p><img src="design1.png" alt="Initial design" class="align-center" data-lity="500px" /></p>
 
-&lt;p&gt;&lt;img src=&quot;design2.png&quot; alt=&quot;Brighter revamp&quot; class=&quot;align-center&quot; data-lity=&quot;500px&quot; /&gt;&lt;/p&gt;
+<p><img src="design2.png" alt="Brighter revamp" class="align-center" data-lity="500px" /></p>
 
-&lt;hr /&gt;
+<hr />
 
-&lt;p&gt;vacation backlog
-martinpoehlmann.com&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="myself" /><category term="jekyll" /><summary type="html">I was a bit too optimistic when I announced the “Beta Launch” of this site – almost 8 years ago! Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it. Until now! I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Shrinking the Size of our Teamscale Docker Image</title><link href="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/" rel="alternate" type="text/html" title="Shrinking the Size of our Teamscale Docker Image" /><published>2018-07-04T00:00:00+00:00</published><updated>2018-07-04T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/shrinking-docker-image-size</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/">&lt;p&gt;In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="docker" /><category term="cqse" /><summary type="html">In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Freedoms of working at CQSE</title><link href="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/" rel="alternate" type="text/html" title="Freedoms of working at CQSE" /><published>2018-04-20T00:00:00+00:00</published><updated>2018-04-20T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/freedoms-of-working-at-cqse</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/">&lt;p&gt;I often get asked by friends why I stick working at CQSE for almost six years now.
+<p>vacation backlog
+martinpoehlmann.com</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="myself" /><category term="jekyll" /><summary type="html"><![CDATA[I was a bit too optimistic when I announced the “Beta Launch” of this site – almost 8 years ago! Since then I had several ideas of blog posts and content to put on the site, but simply never found the time to finish it. Until now! I decided to start all over a again and can finally announce the “first” (not final!) release of my personal place on the web.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2019-07-02-site-relaunch/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Shrinking the Size of our Teamscale Docker Image</title><link href="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/" rel="alternate" type="text/html" title="Shrinking the Size of our Teamscale Docker Image" /><published>2018-07-04T00:00:00+00:00</published><updated>2018-07-04T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/shrinking-docker-image-size</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/"><![CDATA[<p>In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="docker" /><category term="cqse" /><summary type="html"><![CDATA[In this post on my company’s blog I present the steps we took to cut our product Docker images in half—from over 1GB down to under 500MB. It outlines some common pitfalls when working with Docker images and shows some tricks of dealing with required third party dependencies.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2018-07-04-shrinking-docker-image-size/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Freedoms of working at CQSE</title><link href="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/" rel="alternate" type="text/html" title="Freedoms of working at CQSE" /><published>2018-04-20T00:00:00+00:00</published><updated>2018-04-20T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/freedoms-of-working-at-cqse</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/"><![CDATA[<p>I often get asked by friends why I stick working at CQSE for almost six years now.
 One reason simply is that I’m quite free in arranging my workday in a way that it fits for me.
-Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><summary type="html">I often get asked by friends why I stick working at CQSE for almost six years now. One reason simply is that I’m quite free in arranging my workday in a way that it fits for me. Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT—One year later</title><link href="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/" rel="alternate" type="text/html" title="Our Journey to GIT—One year later" /><published>2017-12-01T00:00:00+00:00</published><updated>2017-12-01T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/our-journey-to-git-one-year-later</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/">&lt;p&gt;The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process.
-This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="git" /><category term="continuous integration" /><summary type="html">The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process. This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT</title><link href="https://martinpoehlmann.com/posts/tech/2016-11-09-our-journey-to-git/" rel="alternate" type="text/html" title="Our Journey to GIT" /><published>2016-11-09T00:00:00+00:00</published><updated>2016-11-09T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/our-journey-to-git</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2016-11-09-our-journey-to-git/">&lt;p&gt;This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed &lt;em&gt;svn:exterenal&lt;/em&gt; links.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="git" /><category term="cqse" /><summary type="html">This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed svn:exterenal links.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code</title><link href="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code" /><published>2016-03-21T00:00:00+00:00</published><updated>2016-03-21T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/lessons-from-code-reviews-pt2</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/">&lt;p&gt;This is the second post of two posts concerning code reviews on my company’s blog.
-This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.&lt;/p&gt;
+Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><summary type="html"><![CDATA[I often get asked by friends why I stick working at CQSE for almost six years now. One reason simply is that I’m quite free in arranging my workday in a way that it fits for me. Hence, I’ve recapitulated a (not so typical) workday on my company’s blog that illustrates the benefits and freedoms of working at CQSE.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2018-04-20-freedoms-of-working-at-cqse/hero.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT—One year later</title><link href="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/" rel="alternate" type="text/html" title="Our Journey to GIT—One year later" /><published>2017-12-01T00:00:00+00:00</published><updated>2017-12-01T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/our-journey-to-git-one-year-later</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/"><![CDATA[<p>The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process.
+This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="git" /><category term="continuous integration" /><summary type="html"><![CDATA[The migration of our code hosting from Subversion to Git enabled us to scale and professionalize our development process. This post on my company’s blog sheds some light on changes the migration allowed (or forced) us to perform.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Our Journey to GIT</title><link href="https://martinpoehlmann.com/posts/tech/2016-11-09-our-journey-to-git/" rel="alternate" type="text/html" title="Our Journey to GIT" /><published>2016-11-09T00:00:00+00:00</published><updated>2016-11-09T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/our-journey-to-git</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2016-11-09-our-journey-to-git/"><![CDATA[<p>This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed <em>svn:exterenal</em> links.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="git" /><category term="cqse" /><summary type="html"><![CDATA[This post on my company’s blog summarizes the the hurdles I had to take when migrating our code hosting from Subversion to Git: I had to combine the history of several Subversion repositories into one large Git repository and cleaning history from unneeded and big files. Oh—I also had to find an alternate solution for these cursed svn:exterenal links.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2017-12-01-our-journey-to-git-one-year-later/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code</title><link href="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 2): Get rid of unnecessary code" /><published>2016-03-21T00:00:00+00:00</published><updated>2016-03-21T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/lessons-from-code-reviews-pt2</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/"><![CDATA[<p>This is the second post of two posts concerning code reviews on my company’s blog.
+This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.</p>
 
-&lt;blockquote&gt;
-  &lt;p&gt;Beginners do not write verbose code out of malice. They do it to help themselves. To make the code readable to them.&lt;/p&gt;
+<blockquote>
+  <p>Beginners do not write verbose code out of malice. They do it to help themselves. To make the code readable to them.</p>
 
-  &lt;p&gt;&lt;cite&gt;&lt;a href=&quot;https://github.com/kbilsted/CodeQualityAndReadability/blob/master/Articles/Readability/TheChangingNotionOfReadability.md&quot;&gt;Kasper B. Graversen&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html">This is the second post of two posts concerning code reviews on my company’s blog. This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist</title><link href="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist" /><published>2015-08-05T00:00:00+00:00</published><updated>2015-08-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/lessons-from-code-reviews-pt1</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/">&lt;p&gt;This is the first post of two posts concerning code reviews on my company’s blog.
-I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.&lt;/p&gt;</content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html">This is the first post of two posts concerning code reviews on my company’s blog. I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+  <p><cite><a href="https://github.com/kbilsted/CodeQualityAndReadability/blob/master/Articles/Readability/TheChangingNotionOfReadability.md">Kasper B. Graversen</a></cite></p>
+</blockquote>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html"><![CDATA[This is the second post of two posts concerning code reviews on my company’s blog. This time I emphasis on one of the benefits of code reviews: Getting rid of unnecessary code.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2016-03-21-lessons-from-code-reviews-pt2/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist</title><link href="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/" rel="alternate" type="text/html" title="Lessons from Code Reviews in the Wild (part 1): There is no exhaustive Review Checklist" /><published>2015-08-05T00:00:00+00:00</published><updated>2015-08-05T00:00:00+00:00</updated><id>https://martinpoehlmann.com/posts/tech/lessons-from-code-reviews-pt1</id><content type="html" xml:base="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/"><![CDATA[<p>This is the first post of two posts concerning code reviews on my company’s blog.
+I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.</p>]]></content><author><name>Martin Pöhlmann</name></author><category term="Tech" /><category term="cqse" /><category term="clean code" /><summary type="html"><![CDATA[This is the first post of two posts concerning code reviews on my company’s blog. I’m motivating why code reviews are an essential part of our daily work (also besides code) and then giving some insights why there is no exhaustive review checklist—a question I often got asked at customers when introducing peer reviews.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" /><media:content medium="image" url="https://martinpoehlmann.com/posts/tech/2015-08-05-lessons-from-code-reviews-pt1/hero.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
