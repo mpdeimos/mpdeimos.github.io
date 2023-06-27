@@ -2,10 +2,13 @@
 title: About
 ---
 
-![This is me!](/assets/images/about/me.jpg)
-{: .align-right .mugshot-about }
 
-Hi, my name is Martin Pöhlmann --- [Software Engineer](https://github.com/mpdeimos) and [Consultant](https://cqse.eu/poehlmann) hailing from Munich, Germany.
+> Hi, my name is Martin Pöhlmann --- DevOps Engineer, Consultant and [Developer](https://github.com/mpdeimos) hailing from Munich, Germany.
+> <br>
+> I'm currently working at [Munich Re](https://www.munichre.com/) as Solution Architect for Container and Kubernetes.
+
+![This is me!](/assets/images/about/me-2023.jpg)
+{: .align-right .mugshot-about }
 
 Born in a small town in the Bavarian forest my digital life begun with my [passion for music](https://www.last.fm/user/mpdeimos).
 Using the popular media player [Winamp](https://winamp.com) for listening to music on a daily basis, I became interested in designing and coding interface designs for Winamp.
@@ -18,14 +21,17 @@ During these years I co-founded a mobile music promotion platform called [Songpi
 After a total of 9 semesters, I obtained the Master Degree in Computer Science in early 2012.
 
 Succeeding my studies, I started working as software engineer and consultant at [CQSE](https://www.cqse.eu).
-I started in a consulting project for one of our largest customer in the reinsurance sector.
-Our main focus there is to preserve maintainability of source code and accompany the testing activities of the complete business application portfolio.
+During the first years I was primarily consultant for their largest customer in the reinsurance sector.
+My main focus there was to preserve maintainability of source code and accompany the testing activities of the complete business application portfolio.
 I led this project till mid 2019 and joined our development team thereafter.
-I am focusing on integration points of our software intelligence suite suite [Teamscale](https://teamscale.com) with code collaboration platforms like GitHub or Azure DevOps and the Microsoft ecosystem (e.g. Visual Studio integration, .net Profiling, ...) using Java and C#.
+There I focuses on integration points of our software intelligence suite suite [Teamscale](https://teamscale.com) with code collaboration platforms like GitHub or Azure DevOps and the Microsoft ecosystem (e.g. Visual Studio integration, .net Profiling, ...) using Java and C#.
+In 2021 I took over the lead of the CQSE IT team.
+I was responsible for developing and running internal services on our Docker infrastructure, as well as integrating and administrating cloud services (Google Workspace, Atlassian Cloud, 1password,  ...).
+In addition, I transformed the [Teamscale cloud-offering](https://www.cqse.eu/en/teamscale/cloud/) from being server-based to a Kubernetes-backed architecture.
+Last but not least, as information security officer (ISO) I had to keep an eye on all security relevant aspects of CQSE and successfully lead the company to an TISAX AL3 certification.
 
-Since 2021 I am leading the CQSE IT team.
-I am responsible for developing and running internal services on our Docker infrastructure, as well as integrating and administrating cloud services (Google Workspace, Atlassian Cloud, ...).
-As ISO I also have to keep an eye on all security relevant aspects of our company.
+After 11 great years at CQSE I joined Munich Re as solution architect in 2023 combining my passion for DevOps and SRE with in-house consulting.
+In my team we're building a GitOps-enabled Kubernetes platform for the whole group focusing on secure hosting of applications.
 
 As antipole to tech I keep myself in shape with running or hiking, (re-)started dancing a few years back and vastly enjoy metal and dark electronic music.
 
