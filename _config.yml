@@ -4,7 +4,7 @@ locale: en-US
 title: "martinpoehlmann.com"
 description: "Martin Pöhlmann"
 copyright: |
-  ⓒ 2021 martinpoehlmann.com
+  © 2023 martinpoehlmann.com
   • [About](/about/) 
   • [Impressum](/impressum/)
 baseurl: / # the subpath of your site, e.g. "/blog"
