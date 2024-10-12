@@ -108,18 +108,18 @@ footer_links:
   - title: Feed
     url: atom.xml
     icon: fas fa-rss
-  - title: Twitter
-    url: https://twitter.com/mpdeimos
-    icon: fab fa-twitter
+#  - title: Twitter
+#    url: https://twitter.com/mpdeimos
+#    icon: fab fa-twitter
   - title: GitHub
     url: https://github.com/mpdeimos
     icon: fab fa-github
   - title: LinkedIn
     url: https://www.linkedin.com/in/martinpoehlmann/
     icon: fab fa-linkedin-in 
-  - title: Strava
-    url: https://www.strava.com/athletes/181593
-    icon: fab fa-strava
+#  - title: Strava
+#    url: https://www.strava.com/athletes/181593
+#    icon: fab fa-strava
   - title: Last.FM
     url: https://www.last.fm/user/mpdeimos
     icon: fab fa-lastfm
